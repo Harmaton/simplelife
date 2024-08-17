@@ -2,32 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 240 50% 95%; /* Light blue with a touch of purple */
+    --foreground: 240 60% 15%; /* Darker blue */
+    --primary: 260 55% 60%; /* Blue-Purple mix */
+    --primary-foreground: 240 45% 15%; /* Darker Blue */
+    --secondary: 280 55% 75%; /* Light purple */
+    --secondary-foreground: 240 60% 20%; /* Darker Blue */
+    --accent: 260 65% 65%; /* Bright Blue-Purple */
+    --accent-foreground: 240 72% 20%; /* Dark Blue */
+    --destructive: 0 84% 37%; /* Keeping the red for destructive actions */
+    --destructive-foreground: 0 0% 98%;
+    --muted: 240 20% 70%; /* Muted Blue-Purple */
+    --muted-foreground: 240 45% 25%;
+    --card: 240 45% 88%; /* Light blue background */
+    --card-foreground: 240 60% 20%; /* Dark Blue */
+    --popover: 240 100% 100%; /* White for popovers */
+    --popover-foreground: 240 10% 3.9%; /* Dark Blue */
+    --border: 240 20% 70%; /* Muted Blue */
+    --input: 240 20% 70%; /* Muted Blue */
+    --ring: 260 65% 65%; /* Bright Blue-Purple */
+    --radius: 0rem;
+
+    --chart-1: 240 70% 60%; /* Blue */
+    --chart-2: 260 60% 55%; /* Blue-Purple */
+    --chart-3: 280 50% 50%; /* Purple */
+    --chart-4: 300 60% 70%; /* Light Purple */
+    --chart-5: 320 70% 75%; /* Pinkish Purple */
+
+    .dark {
+      --chart-1: 240 60% 45%; /* Dark Blue */
+      --chart-2: 260 50% 40%; /* Dark Blue-Purple */
+      --chart-3: 280 40% 35%; /* Dark Purple */
+      --chart-4: 300 50% 50%; /* Darker Purple */
+      --chart-5: 320 60% 55%; /* Dark Pinkish Purple */
+    }
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+@layer base {
+  .font-body {
+    @apply font-sans;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .font-heading {
+    @apply font-serif;
   }
 }

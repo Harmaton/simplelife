@@ -1,0 +1,441 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Answer {
+  id         String   @id
+  text       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  questionId String
+
+  @@index([questionId])
+}
+
+model Appointment {
+  id             String    @id
+  title          String?
+  appdate        DateTime?
+  apptime        String?
+  teachername    String?
+  description    String?
+  userId         String
+  senderEmail    String?
+  senderWhatsapp String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime
+}
+
+model Attachment {
+  id        String   @id
+  name      String
+  url       String
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([courseId])
+}
+
+model Attendee {
+  id        String @id
+  userEmail String
+  meetingID String
+
+  @@index([meetingID])
+}
+
+model Book {
+  id          String   @id
+  userId      String?
+  title       String
+  description String?
+  imageUrl    String?
+  pointRedeem String?
+  author      String?
+  price       String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+}
+
+model BookAttachment {
+  id        String   @id
+  name      String
+  url       String
+  bookId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([bookId])
+}
+
+model BookPurchase {
+  id        String   @id
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  bookId    String
+
+  @@index([bookId])
+}
+
+model CalendarEvent {
+  id          String    @id
+  title       String?
+  start       DateTime?
+  end         DateTime?
+  date        DateTime?
+  imageUrl    String?
+  allDay      Boolean   @default(false)
+  timerange   String?
+  isPublished Boolean   @default(false)
+  userId      String?
+  hostName    String?
+  daysOfWeek  String?
+  description String?
+  eventLink   String?
+  meetingID   String?   @unique
+  passCode    String?
+
+  @@index([hostName])
+}
+
+model Category {
+  id          String   @id
+  name        String   @unique
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  description String?
+}
+
+model Chapter {
+  id             String   @id
+  title          String
+  description    String?
+  videoUrl       String?
+  position       Int
+  isPublished    Boolean  @default(false)
+  isFree         Boolean  @default(false)
+  googleFormLink String?
+  youtubeLink    String?
+  courseId       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+
+  @@index([courseId])
+}
+
+model ChapterAnswer {
+  id         String   @id
+  text       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  questionId String
+
+  @@index([questionId])
+}
+
+model ChapterAttachment {
+  id        String   @id
+  name      String
+  url       String
+  courseId  String
+  chapterId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([chapterId])
+}
+
+model ChapterQuestion {
+  id        String @id
+  text      String
+  chapterId String
+  courseId  String
+
+  @@index([chapterId])
+}
+
+model Comment {
+  id        String   @id
+  courseId  String
+  userId    String
+  content   String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([courseId])
+  @@index([userId])
+}
+
+model Course {
+  id             String    @id
+  userId         String
+  title          String
+  description    String?
+  imageUrl       String?
+  price          Float?
+  duration       String?
+  isPublished    Boolean   @default(false)
+  averageRating  Int?      @default(0)
+  subcategoryId  String?
+  startDate      DateTime?
+  endDate        DateTime?
+  paymentLink    String?
+  prerequisites  String?
+  whatsapp       String?
+  googleFormLink String?
+  link_to_url    String?
+  teacherId      String?
+  isBought       Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime
+  categoryId     String?
+
+  @@index([categoryId])
+  @@index([subcategoryId])
+  @@index([teacherId])
+}
+
+model CoursePurchase {
+  id        String   @id
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+model FAQ {
+  id       String @id
+  question String
+  answer   String
+}
+
+model InHouseEvent {
+  id            String    @id
+  userId        String
+  organizer     String
+  title         String
+  description   String
+  price         String
+  requirements  String
+  isPublished   Boolean   @default(false)
+  logoimg       String?
+  imageUrl      String?
+  pointRedeem   String?
+  hotmartLink   String?
+  location      String?
+  sociaLink     String?
+  instagramLink String?
+  facebookLink  String?
+  WhatsappLink  String?
+  showDay       DateTime?
+  startTime     String?
+  isCancelled   Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+}
+
+model MentoringEvent {
+  id          String    @id
+  title       String?
+  userId      String
+  start       DateTime?
+  end         DateTime?
+  date        DateTime?
+  allDay      Boolean   @default(false)
+  timerange   String?
+  hostName    String?
+  daysOfWeek  String?
+  description String?
+  url         String?
+}
+
+model Message {
+  id        String   @id
+  createdAt DateTime @default(now())
+  userId    String
+  content   String
+  role      EnumRole
+}
+
+model MuxData {
+  id         String  @id
+  assetId    String
+  playbackId String?
+  chapterId  String  @unique
+}
+
+model Option {
+  id         String @id
+  text       String
+  questionId String
+
+  @@index([questionId])
+}
+
+model PurchasePack {
+  id        String   @id
+  userId    String
+  isBought  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+
+model Question {
+  id       String @id
+  text     String
+  courseId String
+
+  @@index([courseId])
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  courseId  String
+  userEmail String
+  value     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([courseId])
+  @@index([userEmail])
+}
+
+model Session {
+  id          String    @id
+  userId      String
+  title       String?
+  startTime   DateTime?
+  endTime     DateTime?
+  duration    String?
+  sessionLink String?
+  status      String?
+  note        String?
+  moderator   String?
+  imageUrl    String?
+  isPublished Boolean   @default(false)
+  from        String?
+  to          String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime
+}
+
+model SubCategory {
+  id          String   @id
+  name        String   @unique
+  imageUrl    String?
+  categoryId  String?
+  isBought    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  description String?
+
+  @@index([categoryId])
+}
+
+model User {
+  id                     String    @id
+  clerkId                String    @unique
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime
+  email                  String    @unique
+  isadmin                Boolean   @default(false)
+  isTeacher              Boolean   @default(false)
+  isStudent              Boolean   @default(false)
+  studentStatusExpiresAt DateTime?
+  image                  String?
+  nickname               String?   @unique
+  country                String?
+  description            String?
+  linkedIn               String?
+  facebook               String?
+  youtube                String?
+  twitter                String?
+  whatsapp               String?
+  instagram              String?
+  mail                   String?
+  points                 Int?
+}
+
+model UserProgress {
+  id          String   @id
+  userId      String
+  chapterId   String
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+}
+
+model UserTokens {
+  id        String   @id
+  createdAt DateTime @default(now())
+  userId    String
+  value     Int
+}
+
+model CourseToPurchasePack {
+  A String
+  B String
+
+  @@unique([A, B], map: "_CourseToPurchasePack_AB_unique")
+  @@index([B], map: "_CourseToPurchasePack_B_index")
+  @@map("_CourseToPurchasePack")
+}
+
+model PurchasePackToSubCategory {
+  A String
+  B String
+
+  @@unique([A, B], map: "_PurchasePackToSubCategory_AB_unique")
+  @@index([B], map: "_PurchasePackToSubCategory_B_index")
+  @@map("_PurchasePackToSubCategory")
+}
+
+model notes {
+  id        String   @id
+  title     String
+  content   String?
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+
+model subCategoryPurchase {
+  id            String   @id
+  userId        String
+  paymentcode   String?
+  subcategoryId String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime
+
+  @@index([subcategoryId])
+}
+
+enum EnumRole {
+  user
+  assistant
+}
+
+enum EnumStatus {
+  APPROVAL_PENDING
+  APPROVED
+  ACTIVE
+  SUSPENDED
+  CANCELLED
+  EXPIRED
+}
