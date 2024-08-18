@@ -16,6 +16,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { useAuth } from "@/providers/AuthProvider";
 import CarouselHero from "./carousel";
+import {
+  checkIsAdmin,
+  checkIsStudent,
+  checkIsTeacher,
+} from "@/app/actions/user";
 
 const Hero: React.FC = () => {
   const user = useAuth();
@@ -25,11 +30,10 @@ const Hero: React.FC = () => {
   const [isTeacher, setIsTeacher] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
   const [admin, setAdmin] = useState(false);
-  const email = user.user?.email
+  const email = user.user?.email;
 
   useEffect(() => {
     const fetchIsTeacherStatus = async () => {
-     
       if (email) {
         const status = await checkIsTeacher(email);
         setIsTeacher(status);
@@ -101,32 +105,32 @@ const Hero: React.FC = () => {
 
   return (
     <>
-    <svg
-  className="absolute inset-0 z-[-1] h-full w-full stroke-gray-200 animate-scroll-up"
-  style={{
-    maskImage: "radial-gradient(100% 100% at center, white, transparent)",
-  }}
-  aria-hidden="true"
->
-  <defs>
-    <pattern
-      id="0787a7c5-978c-4f66-83c7-11c213f99cb7"
-      width={150}
-      height={150}
-      x="50%"
-      y={-1}
-      patternUnits="userSpaceOnUse"
-    >
-      <path d="M.5 200V.5H200" fill="none" />
-    </pattern>
-  </defs>
-  <rect
-    width="100%"
-    height="100%"
-    strokeWidth={0}
-    fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
-  />
-</svg>
+      <svg
+        className="absolute inset-0 z-[-1] h-full w-full stroke-gray-200 animate-scroll-up"
+        style={{
+          maskImage: "radial-gradient(100% 100% at center, white, transparent)",
+        }}
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern
+            id="0787a7c5-978c-4f66-83c7-11c213f99cb7"
+            width={150}
+            height={150}
+            x="50%"
+            y={-1}
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M.5 200V.5H200" fill="none" />
+          </pattern>
+        </defs>
+        <rect
+          width="100%"
+          height="100%"
+          strokeWidth={0}
+          fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
+        />
+      </svg>
 
       <div className="container relative mt-4 antialiased ">
         <div className="flex flex-wrap md:flex-nowrap justify-between items-center p-2  rounded-lg">

@@ -195,6 +195,7 @@ model Course {
   googleFormLink String?
   link_to_url    String?
   teacherId      String?
+  User User? @relation(fields: [teacherId], references: [id])
   isBought       Boolean   @default(false)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime
@@ -203,6 +204,7 @@ model Course {
   @@index([categoryId])
   @@index([subcategoryId])
   @@index([teacherId])
+  
 }
 
 model CoursePurchase {
@@ -268,13 +270,6 @@ model Message {
   userId    String
   content   String
   role      EnumRole
-}
-
-model MuxData {
-  id         String  @id
-  assetId    String
-  playbackId String?
-  chapterId  String  @unique
 }
 
 model Option {
@@ -367,6 +362,7 @@ model User {
   instagram              String?
   mail                   String?
   points                 Int?
+  courses Course[]
 }
 
 model UserProgress {

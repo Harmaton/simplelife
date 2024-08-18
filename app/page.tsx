@@ -1,3 +1,4 @@
+import LatestCourses from "@/components/courses/latest-courses";
 import CoursesHeader from "@/components/landing-page/course-header";
 import Features from "@/components/landing-page/features";
 import FeaturesHeader from "@/components/landing-page/features-header";
@@ -13,7 +14,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <CoursesHeader />
-      Latest Courses
+      <LatestCourses />
       <FeaturesHeader />
       <Features />
       <CompanyPartners />
