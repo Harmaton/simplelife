@@ -10,7 +10,7 @@ import { CompanyPartners } from "@/components/landing-page/partners";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between ">
+    <main className="flex flex-col items-center justify-between scrollbar scrollbar-thin">
       <Navbar />
       <Hero />
       <CoursesHeader />

@@ -68,3 +68,25 @@ export async function checkIsTeacher(email: string) {
   }
 }
 
+
+
+export const fetchStudent = async (userId: string) => {
+
+  try{
+      const student = await db.user.findUnique({
+          where: {
+              clerkId: userId
+          },
+          select: {
+              isStudent: true
+          }    
+      })
+      if(student === null || student === undefined){
+        return false
+      }
+      return student.isStudent
+  } catch (error){
+      console.log("[GET_STUDENT_ACTIONS]", error)
+      return false
+  }
+}

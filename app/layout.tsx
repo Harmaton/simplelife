@@ -36,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-    <html lang="en">
+    <html lang="en" className="scrollbar-thumb-sky-700 scrollbar-track-sky-300">
     <body 
         className={cn(
           'antialiased',

@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
-
 import { JSX, SVGProps } from "react";
 import { useAuth } from "@/providers/AuthProvider";
 import { ArrowRightCircle } from "lucide-react";
@@ -179,7 +178,7 @@ export default function Navbar() {
                 <span className="text-xl mr-2 font-mono">Sign Out</span>
               </Button>
               <Link href={"/dashboard"}>
-                <Button className=" bg-red-800 text-white p-2">
+                <Button className=" bg-violet-500 hover:bg-blue-300 text-white p-2">
                   <span className="text-xl mr-2 font-mono">Dashboard</span>
                   <ArrowRightCircle className="h-6 w-6 mr-2" />
                 </Button>

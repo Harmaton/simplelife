@@ -1,10 +1,10 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model Answer {
@@ -113,6 +113,7 @@ model Category {
   createdAt   DateTime @default(now())
   updatedAt   DateTime
   description String?
+  Courses     Course[]
 }
 
 model Chapter {
@@ -126,6 +127,7 @@ model Chapter {
   googleFormLink String?
   youtubeLink    String?
   courseId       String
+  course         Course   @relation(fields: [courseId], references: [id])
   createdAt      DateTime @default(now())
   updatedAt      DateTime
 
@@ -177,16 +179,17 @@ model Comment {
 }
 
 model Course {
-  id             String    @id
+  id             String           @id
   userId         String
   title          String
   description    String?
   imageUrl       String?
   price          Float?
   duration       String?
-  isPublished    Boolean   @default(false)
-  averageRating  Int?      @default(0)
+  isPublished    Boolean          @default(false)
+  averageRating  Int?             @default(0)
   subcategoryId  String?
+  subcategory    SubCategory?     @relation(fields: [subcategoryId], references: [id])
   startDate      DateTime?
   endDate        DateTime?
   paymentLink    String?
@@ -195,26 +198,29 @@ model Course {
   googleFormLink String?
   link_to_url    String?
   teacherId      String?
-  User User? @relation(fields: [teacherId], references: [id])
-  isBought       Boolean   @default(false)
-  createdAt      DateTime  @default(now())
+  User           User?            @relation(fields: [teacherId], references: [id])
+  isBought       Boolean          @default(false)
+  createdAt      DateTime         @default(now())
   updatedAt      DateTime
   categoryId     String?
+  category       Category?        @relation(fields: [categoryId], references: [id])
+  CoursePurchase CoursePurchase[]
+  Chapter        Chapter[]
 
   @@index([categoryId])
   @@index([subcategoryId])
   @@index([teacherId])
-  
 }
 
 model CoursePurchase {
-  id        String   @id
+  id        String   @id @default(uuid())
   userId    String
   courseId  String
+  price     String?
+  course    Course   @relation(fields: [courseId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 
-  @@unique([userId, courseId])
   @@index([courseId])
 }
 
@@ -336,6 +342,7 @@ model SubCategory {
   createdAt   DateTime @default(now())
   updatedAt   DateTime
   description String?
+  Course      Course[]
 
   @@index([categoryId])
 }
@@ -362,7 +369,7 @@ model User {
   instagram              String?
   mail                   String?
   points                 Int?
-  courses Course[]
+  courses                Course[]
 }
 
 model UserProgress {
