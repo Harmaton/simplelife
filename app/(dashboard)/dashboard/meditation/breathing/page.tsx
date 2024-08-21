@@ -2,7 +2,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { ArrowDownLeftIcon, LogOut, PauseCircle, Play, PlayCircle, StopCircle } from 'lucide-react'
+import { ArrowDownLeftIcon,  PauseCircle, PlayCircle } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { PageHeader, PageHeaderHeading } from '@/components/page-header'
