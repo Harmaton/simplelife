@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/firebase";
 import { db } from "@/lib/db";
 
 
@@ -89,4 +90,45 @@ export const fetchStudent = async (userId: string) => {
       console.log("[GET_STUDENT_ACTIONS]", error)
       return false
   }
+}
+
+export async function deleteTeacherProfile() {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      await db.user.delete({
+        where: {
+          clerkId: user.uid,
+        },
+      });
+    }
+   
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getTeacherDeatails() {
+  try {
+    const user = auth.currentUser
+    if(!user || user === undefined){
+      return null
+    }
+
+    const teacherDetails = await db.user.findUnique({
+      where: {
+        clerkId: user.uid,
+        isTeacher: true
+      }
+    })
+
+    if(!teacherDetails){
+      return null
+    }
+
+    return teacherDetails
+  } catch (error) {
+    return null
+  }
+  
 }

@@ -51,7 +51,7 @@ model Attendee {
 }
 
 model Book {
-  id          String   @id
+  id          String           @id
   userId      String?
   title       String
   description String?
@@ -59,18 +59,21 @@ model Book {
   pointRedeem String?
   author      String?
   price       String?
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
+  resourceUrl BookAttachment[]
+  isPublished Boolean          @default(false)
+  createdAt   DateTime         @default(now())
   updatedAt   DateTime
 }
 
 model BookAttachment {
-  id        String   @id
-  name      String
-  url       String
-  bookId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime
+  id          String   @id
+  name        String
+  url         String
+  bookId      String
+  resourceUrl String?
+  createdAt   DateTime @default(now())
+  book        Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  updatedAt   DateTime
 
   @@index([bookId])
 }
@@ -107,17 +110,18 @@ model CalendarEvent {
 }
 
 model Category {
-  id          String   @id
-  name        String   @unique
-  imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime
-  description String?
-  Courses     Course[]
+  id            String        @id @default(uuid())
+  name          String        @unique
+  imageUrl      String?       @db.Text
+  description String?     @db.Text
+  subcategories SubCategory[]
+  courses       Course[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Chapter {
-  id             String   @id
+  id             String   @id @default(uuid())
   title          String
   description    String?
   videoUrl       String?
@@ -129,7 +133,7 @@ model Chapter {
   courseId       String
   course         Course   @relation(fields: [courseId], references: [id])
   createdAt      DateTime @default(now())
-  updatedAt      DateTime
+  updatedAt      DateTime @updatedAt
 
   @@index([courseId])
 }
@@ -145,19 +149,19 @@ model ChapterAnswer {
 }
 
 model ChapterAttachment {
-  id        String   @id
+  id        String   @id @default(uuid())
   name      String
   url       String
   courseId  String
   chapterId String
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 
   @@index([chapterId])
 }
 
 model ChapterQuestion {
-  id        String @id
+  id        String @id  @default(uuid())
   text      String
   chapterId String
   courseId  String
@@ -166,13 +170,13 @@ model ChapterQuestion {
 }
 
 model Comment {
-  id        String   @id
+  id        String   @id @default(uuid())
   courseId  String
   userId    String
   content   String
   email     String
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 
   @@index([courseId])
   @@index([userId])
@@ -225,13 +229,15 @@ model CoursePurchase {
 }
 
 model FAQ {
-  id       String @id
+  id       String @id @default(uuid())
   question String
   answer   String
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 
 model InHouseEvent {
-  id            String    @id
+  id            String     @id @default(uuid())
   userId        String
   organizer     String
   title         String
@@ -252,11 +258,11 @@ model InHouseEvent {
   startTime     String?
   isCancelled   Boolean   @default(false)
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime @updatedAt
 }
 
 model MentoringEvent {
-  id          String    @id
+  id          String    @id @default(uuid())
   title       String?
   userId      String
   start       DateTime?
@@ -268,6 +274,7 @@ model MentoringEvent {
   daysOfWeek  String?
   description String?
   url         String?
+  createdAt DateTime 
 }
 
 model Message {
@@ -291,11 +298,11 @@ model PurchasePack {
   userId    String
   isBought  Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 }
 
 model Question {
-  id       String @id
+  id       String @id @default(uuid())
   text     String
   courseId String
 
@@ -315,7 +322,7 @@ model Rating {
 }
 
 model Session {
-  id          String    @id
+  id          String    @id @default(uuid())
   userId      String
   title       String?
   startTime   DateTime?
@@ -334,21 +341,22 @@ model Session {
 }
 
 model SubCategory {
-  id          String   @id
+  id          String   @id @default(uuid())
   name        String   @unique
   imageUrl    String?
-  categoryId  String?
+  categoryId  String
+  category Category @relation(fields: [categoryId], references: [id])
   isBought    Boolean  @default(false)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime @updatedAt
   description String?
-  Course      Course[]
+  Courses      Course[]
 
   @@index([categoryId])
 }
 
 model User {
-  id                     String    @id
+  id                     String    @id @default(uuid())
   clerkId                String    @unique
   createdAt              DateTime  @default(now())
   updatedAt              DateTime

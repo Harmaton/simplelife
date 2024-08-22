@@ -1,12 +1,15 @@
-"use client"; 
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle, Clock } from "lucide-react";
 import { InfoCard } from "./_components/info-card";
 import { CoursesList } from "./_components/course-list";
-import { CourseWithProgressWithCategory, getDashboardCourses } from "@/app/actions/courses";
-import { useAuth } from "@/providers/AuthProvider"; // Firebase auth hook
+import {
+  CourseWithProgressWithCategory,
+  getDashboardCourses,
+} from "@/app/actions/courses";
+import { useAuth } from "@/providers/AuthProvider";
 
 interface CoursesState {
   completedCourses: CourseWithProgressWithCategory[];
@@ -30,8 +33,10 @@ export default function Dashboard() {
 
     const fetchCourses = async () => {
       const userId = user.uid;
-      const { completedCourses, coursesInProgress } = await getDashboardCourses(userId);
-      
+      const { completedCourses, coursesInProgress } = await getDashboardCourses(
+        userId
+      );
+
       setCourses({
         completedCourses,
         coursesInProgress,
@@ -44,7 +49,7 @@ export default function Dashboard() {
   }, [user, router]);
 
   if (loading) {
-    return <div  className="p-6 space-y-4 s">Loading... </div>;
+    return <div className="p-6 space-y-4 s">Loading... </div>;
   }
 
   return (
@@ -63,7 +68,9 @@ export default function Dashboard() {
           variant="success"
         />
       </div>
-      <CoursesList items={[...courses.coursesInProgress, ...courses.completedCourses]} />
+      <CoursesList
+        items={[...courses.coursesInProgress, ...courses.completedCourses]}
+      />
     </div>
   );
 }

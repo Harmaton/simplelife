@@ -32,7 +32,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
 
   if (!user) {
-    // If user is not authenticated, redirect them to the login page
     return (
       <main className="text-center mt-10">
         <h2>You are not logged in</h2>
