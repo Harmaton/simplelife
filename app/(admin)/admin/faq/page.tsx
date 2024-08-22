@@ -1,5 +1,6 @@
 
 'use client'
+
 import { Header } from '@/components/Header'
 // import { AddfaqForm } from './_components/form'
 import React from 'react'

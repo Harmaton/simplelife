@@ -11,7 +11,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { isAdmin } from "@/lib/admin";
+
 
 import listPlugin from "@fullcalendar/list";
 
@@ -30,6 +30,7 @@ import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import esLocale from "@fullcalendar/core/locales/es";
 import { auth } from "@/firebase";
+import { isAdmin } from "@/lib/isAdmin";
 
 interface Event {
   title: string;
