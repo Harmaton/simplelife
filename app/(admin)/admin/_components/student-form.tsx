@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import getAllStudents from '@/lib/getAllStudents';
+import { getAllStudents } from '@/app/actions/user';
+
 
 type Student = {
   email: string;

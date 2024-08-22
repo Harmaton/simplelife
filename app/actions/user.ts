@@ -132,3 +132,15 @@ export async function getTeacherDeatails() {
   }
   
 }
+
+export async function getAllStudents(){
+  try {
+    const students = await db.user.findMany({where: {
+      isStudent: true
+    }})
+    return students
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
