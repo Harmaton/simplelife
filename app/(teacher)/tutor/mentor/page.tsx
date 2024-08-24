@@ -7,13 +7,10 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import Interaction, { Draggable, DropArg } from "@fullcalendar/interaction";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon, ExclamationTriangleIcon } from "@heroicons/react/20/solid";
-
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { isAdmin } from "@/lib/admin";
-import { useUser } from "@clerk/nextjs";
 import listPlugin from "@fullcalendar/list";
 
 import {
@@ -30,6 +27,8 @@ import {
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import esLocale from "@fullcalendar/core/locales/es";
+import { auth } from "@/firebase";
+import { isAdmin } from "@/lib/isAdmin";
 
 interface Event {
   title: string;
@@ -42,7 +41,7 @@ interface Event {
 }
 
 export default function Calendar() {
-  const user = useUser();
+  const user = auth.currentUser
   const [showmodal, setShowmodal] = useState(false);
   const [showdeletemodal, setShowDeleteModal] = useState(false);
 
@@ -54,6 +53,8 @@ export default function Calendar() {
     hostName: "",
     daysOfWeek: "",
   });
+
+
 
   const handleDateClick = (arg: { dateStr: any }) => {
     setShowmodal(true);
@@ -175,8 +176,8 @@ export default function Calendar() {
 
   return (
     <div>
-      {isAdmin(user.user?.id) && (
-        <div className=" p-4 m-2">
+      {user && isAdmin(user.uid) && (
+        <div className="p-4 m-2">
           <AlertDialog>
             <AlertDialogTrigger>
               <Button className="bg-red-500">
