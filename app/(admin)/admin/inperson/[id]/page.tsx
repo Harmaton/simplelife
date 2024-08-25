@@ -4,7 +4,6 @@ import { MoveLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { auth } from '@clerk/nextjs'
 import { db } from '@/lib/db'
 import { EventLogoForm } from '../_components/event-logo'
 import { LinkForm } from '../_components/link'
@@ -16,13 +15,15 @@ import { AppLinkForm } from '../_components/whatsapp'
 import { SocialLinkForm } from '../_components/social-link'
 import { EventActions } from '../_components/event-actions'
 import { LocationForm } from '../_components/location'
+import { auth } from '@/firebase'
 
 const EventIdPage = async ({
     params
   }: {
     params: { id: string }
   }) => {
-    const { userId } = auth();
+    const user = auth.currentUser
+    const  userId  = user?.uid
   
     if (!userId) {
       return redirect("/");

@@ -1,19 +1,15 @@
-import { auth} from "@clerk/nextjs";
+
 import { redirect } from "next/navigation";
-import { FacebookIcon, HandIcon, InstagramIcon, LifeBuoy, Link2Icon, Linkedin, LinkedinIcon, MessageSquareDashed, Youtube } from "lucide-react";
-
+import {  LifeBuoy, Link2Icon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-
-import { getTeacher } from "@/app/actions/get-teacher";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Footer } from "@/components/Footer";
-import { ChatBubbleBottomCenterTextIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { getSession } from "@/app/actions/get-sessions";
 import { Button } from "@/components/ui/button";
+import { auth } from "@/firebase";
+import { getSession } from "@/app/actions/sessions";
 
 
 const MeditationIdPage = async ({
@@ -21,7 +17,8 @@ const MeditationIdPage = async ({
 }: {
   params: { id: string; }
 }) => {
-  const { userId } = auth();
+  const user = auth.currentUser
+  const userId = user?.uid
 
   if (!userId) {
     return redirect("/");

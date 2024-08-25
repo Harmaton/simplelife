@@ -13,7 +13,7 @@ export default function Stat() {
   ];
 
   return (
-    <div className="bg-background p-4">
+    <div className="bg-background p-4 mt-2">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <div key={index} className="flex flex-col items-center justify-center p-4 rounded-lg ">

@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/card";
 import { formatPrice } from "@/lib/format";
 
+
 interface DataCardProps {
   value: number;
   label: string;
