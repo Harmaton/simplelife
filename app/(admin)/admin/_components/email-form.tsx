@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import addTeachers from '@/lib/addTeacher';
-import getAllTeachers from '@/lib/getAllTeachers';
 import { useRouter } from 'next/navigation';
+import { getAllTeachers } from '@/app/actions/user';
 
 type Teacher = {
   email: string;
@@ -72,7 +71,7 @@ const EmailForm = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     // Call the addTeacher function to handle input
-    addTeachers(emailList)
+    // addTeachers(emailList)
     console.log('Teachers submitted:', emailList);
     router.refresh()
     setEmailList([]); // Clear the list after submission

@@ -144,3 +144,14 @@ export async function getAllStudents(){
     return []
   }
 }
+
+export async function getAllTeachers(){
+  try {
+    const teachers = await db.user.findMany({where: {
+      isTeacher: true
+    }})
+    return teachers
+  } catch (error) {
+    return []
+  }
+}
