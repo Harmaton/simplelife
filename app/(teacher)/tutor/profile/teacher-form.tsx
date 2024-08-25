@@ -27,12 +27,7 @@ interface EditTeacherProps {
 
 export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
   const router = useRouter();
-
   const { user } = useAuth();
-
-  if(!user){
-    return <div> Not Signed In </div>
-  }
 
   const form = useForm<TeacherSchema>({
     resolver: zodResolver(teacherSchema),
@@ -50,6 +45,11 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
   });
 
   const onSubmit = async (values: TeacherSchema) => {
+    if (!user) {
+      toast.error("No se ha iniciado sesión");
+      return;
+    }
+
     try {
       await axios.patch("/api/teacher", {
         email: user.email,
@@ -59,10 +59,14 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
       toast.success("Detalles del profesor actualizados correctamente");
     } catch (error) {
       console.error("Error al actualizar los detalles del profesor:", error);
-      toast.error("Detalles del maestro no actualizadosd");
+      toast.error("Detalles del maestro no actualizados");
     }
     console.log(values);
   };
+
+  if (!user) {
+    return <div>No se ha iniciado sesión</div>;
+  }
 
   return (
     <>
