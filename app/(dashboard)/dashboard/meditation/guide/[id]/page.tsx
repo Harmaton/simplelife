@@ -24,7 +24,7 @@ const MeditationIdPage = async ({
     return redirect("/");
   }
    
-  const { session } = await getSession({ id: params.id });
+  const { session } = await getSession( params.id );
 
   if (!session) {
     return redirect("/");
