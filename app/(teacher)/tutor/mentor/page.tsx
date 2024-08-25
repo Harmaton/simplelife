@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import listPlugin from "@fullcalendar/list";
-
 import {
   AlertDialog,
   AlertDialogAction,
