@@ -9,7 +9,6 @@ export const getSession = async (id: string) => {
                 isPublished: true
             },   
         })
-
         return {
             session 
         }

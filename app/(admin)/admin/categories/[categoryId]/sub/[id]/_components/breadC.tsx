@@ -1,4 +1,3 @@
-import { SlashIcon } from "@radix-ui/react-icons";
 
 import {
   Breadcrumb,
@@ -8,6 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { SlashIcon } from "lucide-react";
 
 interface Props {
   categoryName: string;
