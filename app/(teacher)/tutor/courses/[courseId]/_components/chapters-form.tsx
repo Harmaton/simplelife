@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { ChaptersList } from "./chapters-list";
 
 interface ChaptersFormProps {
-  initialData: Course & { chapters: Chapter[] };
+  initialData: Course & { Chapter: Chapter[] };
   courseId: string;
 };
 
@@ -140,13 +140,13 @@ export const ChaptersForm = ({
       {!isCreating && (
         <div className={cn(
           "text-sm mt-2",
-          !initialData.chapters.length && "text-slate-500 italic"
+          !initialData.Chapter.length && "text-slate-500 italic"
         )}>
-          {!initialData.chapters.length && "Sin capítulos"}
+          {!initialData.Chapter.length && "Sin capítulos"}
           <ChaptersList
             onEdit={onEdit}
             onReorder={onReorder}
-            items={initialData.chapters || []}
+            items={initialData.Chapter || []}
           />
         </div>
       )}
