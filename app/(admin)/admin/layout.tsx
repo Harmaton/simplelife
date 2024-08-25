@@ -15,12 +15,18 @@ import { auth } from "@/firebase";
 import Link from "next/link";
 import { useAuth } from "@/providers/AuthProvider";
 import {
+  BarChart,
   BellDot,
+  BookmarkIcon,
   CalendarCheck,
   CalendarCog,
   Goal,
+  LineChart,
   ListVideoIcon,
+  PartyPopper,
+  PenBox,
   TicketSlash,
+  UserCircle,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 
@@ -38,67 +44,55 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <Link href="/login">
           <Button className="mt-10 bg-purple-800">Sign In</Button>
         </Link>
+        
       </main>
     );
   }
 
   const links = [
     {
-      label: "Cursos Panel",
-      href: "/dashboard",
+      label: "Maestros",
+      href: "/admin",
       icon: (
-        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <PenBox className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Horario del curso",
-      href: "/dashboard/schedule",
+      label: "Categorías",
+      href: "/admin/categories",
       icon: (
-        <CalendarCheck className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <LineChart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Entradas de clase",
-      href: "/dashboard/tickets",
+      label: "Estudiante",
+      href: "/admin/students",
       icon: (
-        <ListVideoIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <UserCircle className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Calendario de tutorías",
-      href: "/dashboard/free-mentoring",
+      label: "Admino Analitica",
+      href: "/admin/analytics",
       icon: (
-        <CalendarCog className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <BarChart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Eventos",
-      href: "/dashboard/inperson-events",
+      label: "Administrar eventos",
+      href: "/admin/inperson",
       icon: (
         <TicketSlash className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Meditacion",
-      href: "/dashboard/meditation",
+      label: "Administrar libros",
+      href: "/admin/addbook",
       icon: (
-        <BellDot className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <BookmarkIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
-    {
-      label: "Teillen Team",
-      href: "https://teilenteam.com/",
-      icon: (
-        <Goal className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Donación",
-      href: "https://paypal.me/BiblioOnlineCoaching?country.x=PE&locale.x=en_US",
-      icon: (
-        <FaMoneyBill className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    
   ];
 
   return (
