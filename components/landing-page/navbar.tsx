@@ -63,14 +63,14 @@ export default function Navbar() {
                 className="text-lg font-medium transition-colors hover:text-primary"
                 prefetch={false}
               >
-                Certifications
+                Certificaciones
               </Link>
               <Link
                 href="/tutors"
                 className="text-lg font-medium transition-colors hover:text-primary"
                 prefetch={false}
               >
-                Tutors
+                Tutores
               </Link>
               <Link
                 href="/courses"
@@ -84,56 +84,80 @@ export default function Navbar() {
                 className="text-lg font-medium transition-colors hover:text-primary"
                 prefetch={false}
               >
-                Packages
+                Paquetes
               </Link>
               <Link
                 href="/aboutus"
                 className="text-lg font-medium transition-colors hover:text-primary"
                 prefetch={false}
               >
-                About Us
+                Sobre nosotros
               </Link>
               <Link
                 href="/faq"
                 className="text-lg font-medium transition-colors hover:text-primary"
                 prefetch={false}
               >
-                FAQ
+                Preguntas frecuentes
               </Link>
               <Link
                 href="/contact"
                 className="text-lg font-medium transition-colors hover:text-primary"
                 prefetch={false}
               >
-                Contact Us
+                Contáctanos
               </Link>
 
               <Link
                 href="/become-tutor"
-                className="text-lg font-medium border p-2 border-violet-500 m-auto transition-colors hover:text-primary"
+                className="text-lg font-medium border p-2 border-violet-500 tex-center transition-colors hover:text-primary"
                 prefetch={false}
               >
                Conviértete en tutor
               </Link>
              
             </nav>
+            <div className="hidden md:flex items-center gap-4">
+          {user ? (
+            <>
+              <Button onClick={() => signOut(auth)} variant="outline">
+                <span className="text-xl mr-2 font-mono">Cerrar sesión</span>
+              </Button>
+              <Link href={"/dashboard"}>
+                <Button className="bg-violet-500 hover:bg-blue-300 text-white p-2 border border-violet-500 m-auto">
+                  <span className="text-xl mr-2 font-mono">Panel de control</span>
+                  <ArrowRightCircle className="h-6 w-6 mr-2" />
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="outline">Iniciar sesión</Button>
+              </Link>
+              <Link href="/sign-up">
+                <Button>Comenzar</Button>
+              </Link>
+            </>
+          )}
+        </div>
             <div className="mt-auto flex flex-col gap-4">
               {user ? (
                 <>
                   <Button onClick={() => signOut(auth)} variant="outline">
-                    Sign Out
+                    Cerrar sesión
                   </Button>
                   <Link href="/dashboard">
-                    <Button className="bg-background">Dashboard</Button>
+                    <Button className="bg-background border text-center border-violet-500 m-auto">Panel de control</Button>
                   </Link>
                 </>
               ) : (
                 <>
                   <Link href="/login">
-                    <Button variant="outline">Sign In</Button>
+                    <Button variant="outline">Iniciar sesión</Button>
                   </Link>
                   <Link href="/signup">
-                    <Button className="bg-background">Get Started</Button>
+                    <Button className="bg-background">Comenzar</Button>
                   </Link>
                 </>
               )}
@@ -147,30 +171,7 @@ export default function Navbar() {
             </nav>
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
-          {user ? (
-            <>
-              <Button onClick={() => signOut(auth)} variant="outline">
-                <span className="text-xl mr-2 font-mono">Sign Out</span>
-              </Button>
-              <Link href={"/dashboard"}>
-                <Button className=" bg-violet-500 hover:bg-blue-300 text-white p-2">
-                  <span className="text-xl mr-2 font-mono">Dashboard</span>
-                  <ArrowRightCircle className="h-6 w-6 mr-2" />
-                </Button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button variant="outline">Sign In</Button>
-              </Link>
-              <Link href="/sign-up">
-                <Button>Get Started</Button>
-              </Link>
-            </>
-          )}
-        </div>
+       
       </div>
     </header>
   );

@@ -17,10 +17,11 @@ export default function Home() {
       <Hero />
       <CoursesHeader />
       <LatestCourses />
-      <FeaturesHeader />
-      <Features />
       <TutorsHeader />
       {/* Tutors With most reviews, and ratings */}
+      <FeaturesHeader />
+      <Features />
+    
       <CompanyPartners />
       <FloatingActionButton />
       <Footer />
