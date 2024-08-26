@@ -110,14 +110,12 @@ model CalendarEvent {
 }
 
 model Category {
-  id            String        @id @default(uuid())
-  name          String        @unique
-  imageUrl      String?       @db.Text
-  description String?     @db.Text
-  subcategories SubCategory[]
-  courses       Course[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id           String         @id @default(uuid())
+  name         String         @unique
+  SubCategories SubCategory[]
+  Courses      Course[]
+  purchases    CategoryPurchase[]
+  packs Pack[]
 }
 
 model Chapter {
@@ -210,6 +208,7 @@ model Course {
   category       Category?        @relation(fields: [categoryId], references: [id])
   CoursePurchase CoursePurchase[]
   Chapter        Chapter[]
+  
 
   @@index([categoryId])
   @@index([subcategoryId])
@@ -219,6 +218,7 @@ model Course {
 model CoursePurchase {
   id        String   @id @default(uuid())
   userId    String
+  user User @relation(fields: [userId], references: [id])
   courseId  String
   price     String?
   course    Course   @relation(fields: [courseId], references: [id])
@@ -345,12 +345,13 @@ model SubCategory {
   name        String   @unique
   imageUrl    String?
   categoryId  String
-  category Category @relation(fields: [categoryId], references: [id])
+  category    Category @relation(fields: [categoryId], references: [id])
   isBought    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   description String?
-  Courses      Course[]
+  Courses     Course[]
+  purchases   SubCategoryPurchase[]
 
   @@index([categoryId])
 }
@@ -377,7 +378,28 @@ model User {
   instagram              String?
   mail                   String?
   points                 Int?
+  referralLinkId         String?
+  referredBy             Referral? @relation("ReferredUsers", fields: [referralLinkId], references: [id])
   courses                Course[]
+  ownReferral            Referral? @relation("UserReferral")
+  coursePurchases       CoursePurchase[]
+  subCategoryPurchases  SubCategoryPurchase[]
+  categoryPurchases     CategoryPurchase[]
+  packPurchases         PackPurchase[]
+
+  @@index([referralLinkId])
+}
+
+model Referral {
+  id              String   @id @default(uuid())
+  link            String   @unique
+  user            User     @relation("UserReferral", fields: [userId], references: [id])
+  userId          String   @unique
+  referredUsers   User[]   @relation("ReferredUsers")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model UserProgress {
@@ -452,21 +474,65 @@ enum EnumStatus {
 }
 
 model Pack {
-  id       Int      @id @default(autoincrement())
-  title    String
-  price    Decimal  @db.Decimal(10, 2)
-  imageUrl String
+  id          String       @id @default(uuid())
+  name        String       @unique
+  description String?
+  price       Float
+  categories  Category[]
+  purchases   PackPurchase[]
   features Feature[]
 }
 
 model Feature {
   id      Int    @id @default(autoincrement())
   name    String
-  packId  Int
+  packId  String
   pack    Pack   @relation(fields: [packId], references: [id])
-
   @@index(packId)
 }
 
 
+model SubCategoryPurchase {
+  id            String      @id @default(uuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  subCategoryId String
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [id])
+  price         Float
+  isPaid        Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
+  @@index([userId])
+  @@index([subCategoryId])
+}
+
+model CategoryPurchase {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  price      Float
+  isPaid     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
+  @@index([categoryId])
+}
+
+model PackPurchase {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  packId    String
+  pack      Pack     @relation(fields: [packId], references: [id])
+  price     Float
+  isPaid    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([packId])
+}
