@@ -16,6 +16,7 @@ import { JSX, SVGProps } from "react";
 import { useAuth } from "@/providers/AuthProvider";
 import { ArrowRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { NavigationMenuDemo } from "../navbar-shadcn";
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -72,6 +73,13 @@ export default function Navbar() {
                 Tutors
               </Link>
               <Link
+                href="/courses"
+                className="text-lg font-medium transition-colors hover:text-primary"
+                prefetch={false}
+              >
+                Diploma y cursos
+              </Link>
+              <Link
                 href="/pricing"
                 className="text-lg font-medium transition-colors hover:text-primary"
                 prefetch={false}
@@ -99,6 +107,15 @@ export default function Navbar() {
               >
                 Contact Us
               </Link>
+
+              <Link
+                href="/become-tutor"
+                className="text-lg font-medium border p-2 border-violet-500 m-auto transition-colors hover:text-primary"
+                prefetch={false}
+              >
+               Conviértete en tutor
+              </Link>
+             
             </nav>
             <div className="mt-auto flex flex-col gap-4">
               {user ? (
@@ -126,48 +143,7 @@ export default function Navbar() {
 
         <div className="hidden md:flex justify-center mr-8 items-center gap-6">
           <nav className="flex items-center gap-6">
-          <Link
-                href="/search"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                prefetch={false}
-              >
-                Certifications
-              </Link>
-              <Link
-                href="/tutors"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                prefetch={false}
-              >
-                Tutors
-              </Link>
-              <Link
-                href="/pricing"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                prefetch={false}
-              >
-                Packages
-              </Link>
-              <Link
-                href="/aboutus"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                prefetch={false}
-              >
-                About Us
-              </Link>
-              <Link
-                href="/faq"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                prefetch={false}
-              >
-                FAQ
-              </Link>
-              <Link
-                href="/contact"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                prefetch={false}
-              >
-                Contact Us
-              </Link>
+          <NavigationMenuDemo />
             </nav>
         </div>
 

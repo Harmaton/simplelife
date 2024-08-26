@@ -60,9 +60,10 @@ const faqs = [
   return (
     <>
     <Navbar />
+    <div className='p-4'>
     <Top header='PREGUNTAS FRECUENTES' text='No dudes en contactarnos si tienes más preguntas.' />
+    </div>
     <div className='lg:h-[80vh] grid place-items-center mb-10 '>
-
       <Card className='max-w-7xl mt-2 drop-shadow-lg mx-4 md:mx-auto p-4 font-serif'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-white'>
           <div className=' p-5 shadow-inner'>

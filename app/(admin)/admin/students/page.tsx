@@ -7,6 +7,7 @@ import StudentForm from '../_components/student-form'
 export default function page() {
   return (
     <div>
+      {/* LIST OF ALL STUDENTS */}
       <StudentForm />
     </div>
   )

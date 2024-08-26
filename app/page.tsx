@@ -7,6 +7,8 @@ import { Footer } from "@/components/landing-page/footer";
 import Hero from "@/components/landing-page/hero";
 import Navbar from "@/components/landing-page/navbar";
 import { CompanyPartners } from "@/components/landing-page/partners";
+import TutorsHeader from "@/components/landing-page/top-tutors-header";
+import { NavigationMenuDemo } from "@/components/navbar-shadcn";
 
 export default function Home() {
   return (
@@ -17,6 +19,8 @@ export default function Home() {
       <LatestCourses />
       <FeaturesHeader />
       <Features />
+      <TutorsHeader />
+      {/* Tutors With most reviews, and ratings */}
       <CompanyPartners />
       <FloatingActionButton />
       <Footer />
