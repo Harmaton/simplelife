@@ -117,30 +117,6 @@ export default function Navbar() {
               </Link>
              
             </nav>
-            <div className="hidden md:flex items-center gap-4">
-          {user ? (
-            <>
-              <Button onClick={() => signOut(auth)} variant="outline">
-                <span className="text-xl mr-2 font-mono">Cerrar sesión</span>
-              </Button>
-              <Link href={"/dashboard"}>
-                <Button className="bg-violet-500 hover:bg-blue-300 text-white p-2 border border-violet-500 m-auto">
-                  <span className="text-xl mr-2 font-mono">Panel de control</span>
-                  <ArrowRightCircle className="h-6 w-6 mr-2" />
-                </Button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button variant="outline">Iniciar sesión</Button>
-              </Link>
-              <Link href="/sign-up">
-                <Button>Comenzar</Button>
-              </Link>
-            </>
-          )}
-        </div>
             <div className="mt-auto flex flex-col gap-4">
               {user ? (
                 <>
@@ -171,7 +147,30 @@ export default function Navbar() {
             </nav>
         </div>
 
-       
+        <div className="hidden md:flex items-center gap-4">
+          {user ? (
+            <>
+              <Button onClick={() => signOut(auth)} variant="outline">
+                <span className="text-xl mr-2 font-mono">Cerrar sesión</span>
+              </Button>
+              <Link href={"/dashboard"}>
+                <Button className="bg-violet-500 hover:bg-blue-300 text-white p-2 border border-violet-500 m-auto">
+                  <span className="text-xl mr-2 font-mono">Panel de control</span>
+                  <ArrowRightCircle className="h-6 w-6 mr-2" />
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="outline">Iniciar sesión</Button>
+              </Link>
+              <Link href="/sign-up">
+                <Button>Comenzar</Button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

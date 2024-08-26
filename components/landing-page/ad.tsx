@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import React, { useState } from 'react'
 
 export default function Ad() {
@@ -10,7 +11,7 @@ export default function Ad() {
     <div className="relative bg-violet-500 text-white py-2">
       <div className="container mx-auto text-center mr-2">
         <p className="font-bold">
-          <span className="text-black">Actúa ahora y ahorra en grande,</span> hasta un 10% en todos los cursos
+          <span className="text-black">Actúa ahora y <Link href='/pricing' className='underline'>ahorra en grande</Link> ,</span> hasta un 10% en todos los cursos
         </p>
       </div>
       <button
