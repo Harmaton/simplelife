@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Navbar from '@/components/landing-page/navbar'
 import PackComponent from './_components/pack-component'
+import Top from '@/components/top-page'
+
 
 const pricingData = {
   packs: [
@@ -470,10 +472,11 @@ export default function Page() {
     <>
     <Navbar />
     <div className="container mx-auto px-4">
-      <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-600 via-sky-600 to-indigo-600 py-12 mb-8 text-center font-serif text-white">
+      {/* <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-600 via-sky-600 to-indigo-600 py-12 mb-8 text-center font-serif text-white">
         <h1 className="text-4xl font-bold mb-4">Precios</h1>
         <p className="text-lg">Elige el plan que mejor se adapte a ti</p>
-      </div>
+      </div> */}
+      <Top header='Precios' text='Elige el plan que mejor se adapte a ti' />
 
       <Tabs defaultValue="packs" className="mb-10">
         <TabsList className="grid w-full grid-cols-3">

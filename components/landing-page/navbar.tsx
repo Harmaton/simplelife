@@ -21,7 +21,7 @@ export default function Navbar() {
   const { user } = useAuth();
 
   return (
-    <header className="absolute top-0 left-0 right-0 flex h-17 w-full items-center justify-between px-6 md:px-8 p-6 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky" style={{ position: 'sticky', top: '-100px', transform: 'translateY(0)', zIndex: 50 }}>
+    <header className="absolute top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 md:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky" style={{ position: 'sticky', top: '-100px', transform: 'translateY(0)', zIndex: 50 }}>
         <div className="absolute inset-0 bg-white/70 backdrop-blur-lg z-[-1]"></div>
       <Link
         href="/"
