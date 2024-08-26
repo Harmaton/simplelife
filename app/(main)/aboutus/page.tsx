@@ -5,37 +5,16 @@ import Navbar from "@/components/landing-page/navbar";
 import { Footer } from "@/components/landing-page/footer";
 import AboutHeader from "./header";
 import { TracingBeam } from "./tracing-beam";
+import Top from "@/components/top-page";
 
 export default function Page() {
   return (
     <>
-    <svg
-  className="absolute inset-0 z-0 h-full w-full stroke-gray-200 "
-  style={{ maskImage: 'radial-gradient(100% 100% at center, white, transparent)' }}
-  aria-hidden="true"
->
-              <defs>
-                <pattern
-                  id="0787a7c5-978c-4f66-83c7-11c213f99cb7"
-                  width={150}
-                  height={150}
-                  x="50%"
-                  y={-1}
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path d="M.5 200V.5H200" fill="none" />
-                </pattern>
-              </defs>
-              <rect
-                width="100%"
-                height="100%"
-                strokeWidth={0}
-                fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
-              />
-            </svg>
     <Navbar />
-    <AboutHeader />
-    <TracingBeam className="px-6">
+     <div className="p-4">
+    <Top header=" Conozca sobre nosotros" text="Visión de la Comunidad SimpleLife y mucho más..." />
+    
+    <TracingBeam className="px-6 ">
       <div className="max-w-2xl mx-auto antialiased pt-4 relative font-serif">
         {dummyContent.map((item, index) => (
           <div key={`content-${index}`} className="mb-10">
@@ -49,6 +28,8 @@ export default function Page() {
         ))}
       </div>
     </TracingBeam>
+    
+    </div>
     </>
   );
 }

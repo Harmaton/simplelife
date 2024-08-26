@@ -29,8 +29,6 @@ import {
   UserCircle,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
-
-import { FaMoneyBill } from "react-icons/fa";
 import Avatar from "@/components/icon-avatar";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {

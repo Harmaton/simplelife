@@ -427,7 +427,7 @@ model notes {
 }
 
 model subCategoryPurchase {
-  id            String   @id
+  id            String   @id @default(uuid())
   userId        String
   paymentcode   String?
   subcategoryId String?
@@ -450,3 +450,23 @@ enum EnumStatus {
   CANCELLED
   EXPIRED
 }
+
+model Pack {
+  id       Int      @id @default(autoincrement())
+  title    String
+  price    Decimal  @db.Decimal(10, 2)
+  imageUrl String
+  features Feature[]
+}
+
+model Feature {
+  id      Int    @id @default(autoincrement())
+  name    String
+  packId  Int
+  pack    Pack   @relation(fields: [packId], references: [id])
+
+  @@index(packId)
+}
+
+
+

@@ -4,6 +4,7 @@ import Image from "next/image";
 import SubCategories from "./subcategories";
 import { GetAllCategories, GetCategorySubCategories } from "../actions/courses";
 import { Categories } from "./categories";
+import Top from "@/components/top-page";
 interface SearchPageProps {
   searchParams: {
     name: string;
@@ -18,7 +19,8 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   return (
     <>
       <Navbar />
-      <div className="py-3 pt-6 flex flex-col space-y-4 m-6">
+      <div className=" flex flex-col space-y-4 m-6">
+        <Top header="Certificaciones" text="Perfeccione sus habilidades con paquetes profesionales de diplomas y obtenga certificados" />
         {/* <SearchInput /> */}
         <Categories items={categories} />
       </div>

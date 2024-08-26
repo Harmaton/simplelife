@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/landing-page/navbar";
 import { Footer } from "@/components/landing-page/footer";
 import ContactFormNew from "./contact-form";
+import Top from "@/components/top-page";
 
 const variants = {
   hidden: { opacity: 0, x: "-100vw" },
@@ -23,12 +24,7 @@ const ContactPage = () => {
     <>
       <Navbar />
       <div className="p-6 font-serif">
-        <div className="text-center m-5">
-          <h1 className="font-bold text-3xl">Contacta con nosotras</h1>
-          <p className="font-italic">
-            ¿Alguna pregunta o comentario? Sólo escríbenos un mensaje
-          </p>
-        </div>
+        <Top header="Contacta con nosotras" text=" ¿Alguna pregunta o comentario? Sólo escríbenos un mensaje" />
 
         <div className="flex flex-col  space-y-4 md:space-y-0 md:flex-row p-4">
           <div className="md:w-1/3 p-4 flex justify-center">

@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import Navbar from '@/components/landing-page/navbar';
+import Top from '@/components/top-page';
 // import { getFaqs } from '@/app/_actions/faq';
 
 async function FAQ() {
@@ -59,12 +60,10 @@ const faqs = [
   return (
     <>
     <Navbar />
+    <Top header='PREGUNTAS FRECUENTES' text='No dudes en contactarnos si tienes más preguntas.' />
     <div className='lg:h-[80vh] grid place-items-center mb-10 '>
-      <Card className='max-w-7xl my-8 drop-shadow-lg mx-4 md:mx-auto p-4 font-serif'>
-        <h1 className='text-center font-lato lg:text-5xl text-3xl my-8'>
-        PREGUNTAS FRECUENTES
 
-        </h1>
+      <Card className='max-w-7xl mt-2 drop-shadow-lg mx-4 md:mx-auto p-4 font-serif'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-white'>
           <div className=' p-5 shadow-inner'>
             <Image src='/faqimage.svg' alt='FAQ' width={500} height={500} className=' bg-cover  p-2' />
