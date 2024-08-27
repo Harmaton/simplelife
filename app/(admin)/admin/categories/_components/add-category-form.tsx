@@ -18,6 +18,7 @@ import { Category } from "@prisma/client";
 
 const categorySchema = z.object({
   name: z.string().min(3),
+  pcode: z.number()
 });
 
 type Inputs = z.infer<typeof categorySchema>;
@@ -33,11 +34,12 @@ export function AddCategoryForm({ categories }: CategoryProp) {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
+      pcode: 1234
     },
   });
 
   async function handleSubmit(values: z.infer<typeof categorySchema>) {
-    await addCtegoriesAction(values.name);
+    await addCtegoriesAction(values.name, values.pcode);
     toast.success("Delicioso");
   }
 
@@ -54,6 +56,17 @@ export function AddCategoryForm({ categories }: CategoryProp) {
               <Input
                 placeholder="Categoría de entrada"
                 {...form.register("name")}
+              />
+            </FormControl>
+          </FormItem>
+
+          <FormItem>
+            <FormLabel>Código de Producto</FormLabel>
+            <FormControl>
+              <Input
+                type="number"
+                placeholder="Código de producto"
+                {...form.register("pcode", { valueAsNumber: true })}
               />
             </FormControl>
           </FormItem>

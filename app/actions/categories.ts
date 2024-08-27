@@ -3,7 +3,7 @@
 import { auth } from "@/firebase";
 import { db } from "@/lib/db";
 
-export async function addCtegoriesAction(name: string) {
+export async function addCtegoriesAction(name: string, pcode: number) {
   const user = auth.currentUser;
   const userId = user?.uid;
 
@@ -24,7 +24,8 @@ export async function addCtegoriesAction(name: string) {
 
   await db.category.create({
     data: {
-      name: name
+      name: name,
+      productCode: pcode
     },
   });
 
