@@ -110,12 +110,14 @@ model CalendarEvent {
 }
 
 model Category {
-  id           String         @id @default(uuid())
-  name         String         @unique
+  id            String             @id @default(uuid())
+  name          String             @unique
+  productCode   Int                @unique
+  imageUrl      String?             @db.Text()
   SubCategories SubCategory[]
-  Courses      Course[]
-  purchases    CategoryPurchase[]
-  packs Pack[]
+  Courses       Course[]
+  purchases     CategoryPurchase[]
+  packs         Pack[]
 }
 
 model Chapter {
@@ -159,7 +161,7 @@ model ChapterAttachment {
 }
 
 model ChapterQuestion {
-  id        String @id  @default(uuid())
+  id        String @id @default(uuid())
   text      String
   chapterId String
   courseId  String
@@ -181,17 +183,18 @@ model Comment {
 }
 
 model Course {
-  id             String           @id
+  id             String       @id
   userId         String
   title          String
+  productcode    Int          @unique
   description    String?
   imageUrl       String?
   price          Float?
   duration       String?
-  isPublished    Boolean          @default(false)
-  averageRating  Int?             @default(0)
+  isPublished    Boolean      @default(false)
+  averageRating  Int?         @default(0)
   subcategoryId  String?
-  subcategory    SubCategory?     @relation(fields: [subcategoryId], references: [id])
+  subcategory    SubCategory? @relation(fields: [subcategoryId], references: [id])
   startDate      DateTime?
   endDate        DateTime?
   paymentLink    String?
@@ -200,15 +203,15 @@ model Course {
   googleFormLink String?
   link_to_url    String?
   teacherId      String?
-  User           User?            @relation(fields: [teacherId], references: [id])
-  isBought       Boolean          @default(false)
-  createdAt      DateTime         @default(now())
+  User           User?        @relation(fields: [teacherId], references: [id])
+  isBought       Boolean      @default(false)
+  createdAt      DateTime     @default(now())
   updatedAt      DateTime
   categoryId     String?
+
   category       Category?        @relation(fields: [categoryId], references: [id])
   CoursePurchase CoursePurchase[]
   Chapter        Chapter[]
-  
 
   @@index([categoryId])
   @@index([subcategoryId])
@@ -218,7 +221,7 @@ model Course {
 model CoursePurchase {
   id        String   @id @default(uuid())
   userId    String
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   courseId  String
   price     String?
   course    Course   @relation(fields: [courseId], references: [id])
@@ -229,15 +232,15 @@ model CoursePurchase {
 }
 
 model FAQ {
-  id       String @id @default(uuid())
-  question String
-  answer   String
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
 
 model InHouseEvent {
-  id            String     @id @default(uuid())
+  id            String    @id @default(uuid())
   userId        String
   organizer     String
   title         String
@@ -258,7 +261,7 @@ model InHouseEvent {
   startTime     String?
   isCancelled   Boolean   @default(false)
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime @updatedAt
+  updatedAt     DateTime  @updatedAt
 }
 
 model MentoringEvent {
@@ -274,7 +277,7 @@ model MentoringEvent {
   daysOfWeek  String?
   description String?
   url         String?
-  createdAt DateTime 
+  createdAt   DateTime
 }
 
 model Message {
@@ -341,14 +344,14 @@ model Session {
 }
 
 model SubCategory {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String                @id @default(uuid())
+  name        String                @unique
   imageUrl    String?
   categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
-  isBought    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  category    Category              @relation(fields: [categoryId], references: [id])
+  isBought    Boolean               @default(false)
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
   description String?
   Courses     Course[]
   purchases   SubCategoryPurchase[]
@@ -357,17 +360,17 @@ model SubCategory {
 }
 
 model User {
-  id                     String    @id @default(uuid())
-  clerkId                String    @unique
-  createdAt              DateTime  @default(now())
+  id                     String                @id @default(uuid())
+  clerkId                String                @unique
+  createdAt              DateTime              @default(now())
   updatedAt              DateTime
-  email                  String    @unique
-  isadmin                Boolean   @default(false)
-  isTeacher              Boolean   @default(false)
-  isStudent              Boolean   @default(false)
+  email                  String                @unique
+  isadmin                Boolean               @default(false)
+  isTeacher              Boolean               @default(false)
+  isStudent              Boolean               @default(false)
   studentStatusExpiresAt DateTime?
   image                  String?
-  nickname               String?   @unique
+  nickname               String?               @unique
   country                String?
   description            String?
   linkedIn               String?
@@ -379,25 +382,25 @@ model User {
   mail                   String?
   points                 Int?
   referralLinkId         String?
-  referredBy             Referral? @relation("ReferredUsers", fields: [referralLinkId], references: [id])
+  referredBy             Referral?             @relation("ReferredUsers", fields: [referralLinkId], references: [id])
   courses                Course[]
-  ownReferral            Referral? @relation("UserReferral")
-  coursePurchases       CoursePurchase[]
-  subCategoryPurchases  SubCategoryPurchase[]
-  categoryPurchases     CategoryPurchase[]
-  packPurchases         PackPurchase[]
+  ownReferral            Referral?             @relation("UserReferral")
+  coursePurchases        CoursePurchase[]
+  subCategoryPurchases   SubCategoryPurchase[]
+  categoryPurchases      CategoryPurchase[]
+  packPurchases          PackPurchase[]
 
   @@index([referralLinkId])
 }
 
 model Referral {
-  id              String   @id @default(uuid())
-  link            String   @unique
-  user            User     @relation("UserReferral", fields: [userId], references: [id])
-  userId          String   @unique
-  referredUsers   User[]   @relation("ReferredUsers")
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id            String   @id @default(uuid())
+  link          String   @unique
+  user          User     @relation("UserReferral", fields: [userId], references: [id])
+  userId        String   @unique
+  referredUsers User[]   @relation("ReferredUsers")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([userId])
 }
@@ -419,24 +422,6 @@ model UserTokens {
   createdAt DateTime @default(now())
   userId    String
   value     Int
-}
-
-model CourseToPurchasePack {
-  A String
-  B String
-
-  @@unique([A, B], map: "_CourseToPurchasePack_AB_unique")
-  @@index([B], map: "_CourseToPurchasePack_B_index")
-  @@map("_CourseToPurchasePack")
-}
-
-model PurchasePackToSubCategory {
-  A String
-  B String
-
-  @@unique([A, B], map: "_PurchasePackToSubCategory_AB_unique")
-  @@index([B], map: "_PurchasePackToSubCategory_B_index")
-  @@map("_PurchasePackToSubCategory")
 }
 
 model notes {
@@ -474,23 +459,25 @@ enum EnumStatus {
 }
 
 model Pack {
-  id          String       @id @default(uuid())
-  name        String       @unique
+  id          String         @id @default(uuid())
+  name        String         @unique
+  productCode Int            @unique
   description String?
   price       Float
+  isbought    Boolean        @default(false)
   categories  Category[]
   purchases   PackPurchase[]
-  features Feature[]
+  features    Feature[]
 }
 
 model Feature {
-  id      Int    @id @default(autoincrement())
-  name    String
-  packId  String
-  pack    Pack   @relation(fields: [packId], references: [id])
+  id     Int    @id @default(autoincrement())
+  name   String
+  packId String
+  pack   Pack   @relation(fields: [packId], references: [id])
+
   @@index(packId)
 }
-
 
 model SubCategoryPurchase {
   id            String      @id @default(uuid())
@@ -508,15 +495,16 @@ model SubCategoryPurchase {
 }
 
 model CategoryPurchase {
-  id         String   @id @default(uuid())
+  id         String @id @default(uuid())
   userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User   @relation(fields: [userId], references: [id])
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-  price      Float
-  isPaid     Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+
+  category  Category @relation(fields: [categoryId], references: [id])
+  price     Float
+  isPaid    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([categoryId])
@@ -535,4 +523,16 @@ model PackPurchase {
 
   @@index([userId])
   @@index([packId])
+}
+
+model Allpurchase {
+  id           String   @id
+  userId       String
+  productId    String
+  productUcode Int
+  productName  String
+  buyerEmail   String
+  price        String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
