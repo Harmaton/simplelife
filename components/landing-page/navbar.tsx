@@ -17,6 +17,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { ArrowRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { NavigationMenuDemo } from "../navbar-shadcn";
+import { Logo } from "../logo";
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -50,11 +51,11 @@ export default function Navbar() {
             </nav>
           </SheetTrigger>
           <SheetContent
-            side="right"
-            className="w-64 bg-background mt-4 mr-4 p-4"
+            side="left"
+            className="w-64 bg-background mt-4 mr-2 p-4"
           >
             <SheetHeader className="mb-4">
-              <SheetTitle></SheetTitle>
+              <Logo /> 
               <SheetDescription></SheetDescription>
             </SheetHeader>
             <nav className="grid gap-6 mb-4 ">

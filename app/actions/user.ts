@@ -3,7 +3,6 @@
 import { auth } from "@/firebase";
 import { db } from "@/lib/db";
 
-
 export async function checkIsStudent(email: string) {
   try {
     const user = await db.user.findUnique({

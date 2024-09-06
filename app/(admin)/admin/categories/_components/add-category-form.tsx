@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 
 import { addCtegoriesAction, removeCategory } from "@/app/actions/categories";
 import { SplineIcon, Trash } from "lucide-react";
-import { useOptimistic } from "react";
 import Link from "next/link";
 import { Category } from "@prisma/client";
 
