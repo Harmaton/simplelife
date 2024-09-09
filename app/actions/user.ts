@@ -1,8 +1,11 @@
 "use server";
 
+import { EmailTemplate } from "@/components/email-template";
 import { auth } from "@/firebase";
 import { db } from "@/lib/db";
+import { Resend } from 'resend'
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 export async function checkIsStudent(email: string) {
   try {
     const user = await db.user.findUnique({
@@ -257,7 +260,23 @@ export async function ApproveTeacher(teacherId: string) {
       }
     });
 
-    return { success: true, approved }; // Return the approved user object for further use
+    const to = approved.email
+    const nickname = approved.nickname
+    const subject = 'Approval for Teacher Status on Simplelife'
+    const replyContent = `Estimado/a ${nickname}, ha sido añadido/a a la plataforma de enseñanza Simple Life. Por favor, acceda al siguiente enlace para actualizar su perfil y ser visible en nuestra plataforma. Asegúrese de publicar su información.`
+
+    const {data, error } = await resend.emails.send({
+      from: 'Simple Life Admin <simplelifeofficial.com>',
+      to: [to],
+      subject: subject,
+      react: EmailTemplate({ to, subject, replyContent }),
+    });
+
+    if (error) {
+      return Response.json({ error }, { status: 500 });
+    }
+
+    return { success: true, approved }; 
   } catch (error) {
     console.error("Error approving teacher:", error); // Log the error for debugging
     return { success: false, message: "Failed to approve teacher" }; // Return a failure response

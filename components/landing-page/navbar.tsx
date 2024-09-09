@@ -18,6 +18,7 @@ import { ArrowRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { NavigationMenuDemo } from "../navbar-shadcn";
 import { Logo } from "../logo";
+import Image from "next/image";
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -121,8 +122,12 @@ export default function Navbar() {
             <div className="mt-auto flex flex-col gap-4">
               {user ? (
                 <>
-                  <Button onClick={() => signOut(auth)} variant="outline">
-                    Cerrar sesión
+                  <Button className="rounded-full flex items-center justify-center p-2">
+                  {user?.photoURL ? (
+                  <Image src={user.photoURL} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                ) : (
+                  <span className="text-xl">{user?.email?.charAt(0).toUpperCase()}</span>
+                )}
                   </Button>
                   <Link href="/dashboard">
                     <Button className="bg-background border text-center border-violet-500 m-auto">Panel de control</Button>
@@ -151,9 +156,13 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           {user ? (
             <>
-              <Button onClick={() => signOut(auth)} variant="outline">
-                <span className="text-xl mr-2 font-mono">Cerrar sesión</span>
-              </Button>
+              <div className="rounded-full flex items-center bg-gray-300 m-auto justify-center p-2">
+                {user?.photoURL ? (
+                  <Image src={user.photoURL} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                ) : (
+                  <span className="text-xl">{user?.email?.charAt(0).toUpperCase()}</span>
+                )}
+              </div>
               <Link href={"/dashboard"}>
                 <Button className="bg-violet-500 hover:bg-blue-300 text-white p-2 border border-violet-500 m-auto">
                   <span className="text-xl mr-2 font-mono">Panel de control</span>

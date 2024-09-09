@@ -56,7 +56,7 @@ export default function Page() {
   const handleApprove = async (teacherId: string) => {
     setLoading(true);
     const approvestate = await ApproveTeacher(teacherId);
-    if (approvestate.success) {
+    if (approvestate) {
       toast.success('Estado del profesor actualizado.');
       setLoading(false)
     } else {
