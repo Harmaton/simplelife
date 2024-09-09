@@ -8,19 +8,17 @@ import { Footer } from "@/components/landing-page/footer";
 import Hero from "@/components/landing-page/hero";
 import Navbar from "@/components/landing-page/navbar";
 import { CompanyPartners } from "@/components/landing-page/partners";
-import TutorsHeader from "@/components/landing-page/top-tutors-header";
-
 
 export default function Home() {
   return (
     <>
     <Ad />
-    <main className="flex flex-col items-center justify-between scrollbar scrollbar-thin">
+    <main className="flex flex-col items-center justify-between ">
       <Navbar />
       <Hero />
       <CoursesHeader />
       <LatestCourses />
-      <TutorsHeader />
+      {/* <TutorsHeader /> */}
       {/* Tutors With most reviews, and ratings */}
       <FeaturesHeader />
       <Features />

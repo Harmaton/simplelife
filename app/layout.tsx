@@ -36,14 +36,15 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-    <html lang="en" className="scrollbar-thumb-sky-700 scrollbar-track-sky-300">
+    <html lang="en" className="scrollbar-thumb-sky-700 scrollbar-track-sky-200">
     <body 
         className={cn(
           'antialiased',
           fontHeading.variable,
           fontBody.variable
         )}
-      >{children}
+      >
+        <main className="scrollbar-thin overflow-y-scroll">{children}</main>
       <Toaster />
       </body>
     </html>
