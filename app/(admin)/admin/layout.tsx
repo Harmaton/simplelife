@@ -25,11 +25,13 @@ import {
   ListVideoIcon,
   PartyPopper,
   PenBox,
+  PlusIcon,
   TicketSlash,
   UserCircle,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
+import { GrUserAdd } from "react-icons/gr";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
@@ -56,6 +58,20 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     },
     {
+      label: "Solicitudes",
+      href: "/admin/teacher-applications",
+      icon: (
+        <PlusIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Admino Analitica",
+      href: "/admin/analytics",
+      icon: (
+        <BarChart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
       label: "Categorías",
       href: "/admin/categories",
       icon: (
@@ -67,13 +83,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       href: "/admin/students",
       icon: (
         <UserCircle className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Admino Analitica",
-      href: "/admin/analytics",
-      icon: (
-        <BarChart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {

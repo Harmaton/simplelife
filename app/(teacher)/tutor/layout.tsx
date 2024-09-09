@@ -15,16 +15,13 @@ import { auth } from "@/firebase";
 import Link from "next/link";
 import { useAuth } from "@/providers/AuthProvider";
 import {
-  BellDot,
-  CalendarCheck,
-  CalendarCog,
-  Goal,
-  ListVideoIcon,
-  TicketSlash,
+  BookOpen,
+  Calendar,
+  Locate,
+  UserCog,
+  Users,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
-
-import { FaMoneyBill } from "react-icons/fa";
 import Avatar from "@/components/icon-avatar";
 
 const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
@@ -45,61 +42,40 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
 
   const links = [
     {
-      label: "Cursos Panel",
-      href: "/dashboard",
+      label: "Gestionar Perfil",
+      href: "/tutor/profile",
       icon: (
-        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <UserCog className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Horario del curso",
-      href: "/dashboard/schedule",
+      label: "Gestionar Cursos",
+      href: "/tutor/courses",
       icon: (
-        <CalendarCheck className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <BookOpen className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Entradas de clase",
-      href: "/dashboard/tickets",
+      label: "Programar Clases",
+      href: "/tutor/calendar",
       icon: (
-        <ListVideoIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <Calendar className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Calendario de tutorías",
-      href: "/dashboard/free-mentoring",
+      label: "Sesiones de Mentoría",
+      href: "/tutor/mentor",
       icon: (
-        <CalendarCog className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <Users className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Eventos",
-      href: "/dashboard/inperson-events",
+      label: "Meditación",
+      href: "/tutor/meditation",
       icon: (
-        <TicketSlash className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <Locate className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
-    },
-    {
-      label: "Meditacion",
-      href: "/dashboard/meditation",
-      icon: (
-        <BellDot className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Teillen Team",
-      href: "https://teilenteam.com/",
-      icon: (
-        <Goal className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Donación",
-      href: "https://paypal.me/BiblioOnlineCoaching?country.x=PE&locale.x=en_US",
-      icon: (
-        <FaMoneyBill className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    }
   ];
 
   return (
@@ -152,14 +128,14 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
           <Link href={"/"}>
-            <Button className="mt-5 bg-violet-800 text-white">Home</Button>
+            <Button className="mt-5 bg-violet-800 text-white">Inicio</Button>
           </Link>
           <Button
             onClick={() => signOut(auth)}
             variant={"outline"}
             className="mt-5"
           >
-            Sign out
+            Carrear Sesion
           </Button>
         </div>
         {children}

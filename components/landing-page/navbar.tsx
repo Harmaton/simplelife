@@ -168,6 +168,7 @@ export default function Navbar() {
               </Link>
               <Link href="/sign-up">
                 <Button>Comenzar</Button>
+                
               </Link>
             </>
           )}

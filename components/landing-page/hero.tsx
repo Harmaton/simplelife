@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 import { motion } from "framer-motion";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, PenBox } from "lucide-react";
 import { Button } from "../ui/button";
 import { useAuth } from "@/providers/AuthProvider";
 import CarouselHero from "./carousel";
@@ -92,7 +92,7 @@ const Hero: React.FC = () => {
   }
 
   function TeacherLogin() {
-    router.push("/dashboard/teacher/profile");
+    router.push("/teacher/profile");
   }
 
   function exploreCoursesRoue() {
@@ -157,55 +157,54 @@ const Hero: React.FC = () => {
               emocional.
             </motion.p>
 
-            <div className="flex space-x-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {!user?.user?.email && (
-                <>
-                  <motion.div
-                    className="flex space-x-4"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                  >
-                    <Button
-                      className="border-2 text-center py-2 rounded-lg border-blue-300  hover:border-blue-500"
-                      variant={"ghost"}
-                      onClick={exploreCoursesRoue}
-                    >
-                      Nuestras Certificaciones
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </motion.div>
-                </>
-              )}
-
-              {!isStudent && user?.user?.email && (
-                <Button
-                  className="border-2 text-center py-2 rounded-lg border-blue-300  hover:border-blue-500"
-                  variant={"ghost"}
-                  onClick={exploreCoursesRoue}
-                >
-                  Nuestras Certificaciones
-                </Button>
-              )}
-              {isTeacher && (
                 <motion.div
-                  className="flex space-x-4"
+                  className="flex"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   <Button
-                    className="border-2 border-violet-300 hover:border-violet-500 text-center p-4 py-2 px-6 rounded-lg font-semibold"
+                    className="border-2 text-center py-2 rounded-lg border-blue-300 hover:border-blue-500"
+                    variant={"ghost"}
+                    onClick={exploreCoursesRoue}
+                  >
+                    Nuestras Certificaciones
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </motion.div>
+              )}
+
+             
+                <Button
+                  className="border-2 text-center py-2 rounded-lg border-blue-300 hover:border-blue-500"
+                  variant={"ghost"}
+                  onClick={exploreCoursesRoue}
+                >
+                  Nuestras Certificaciones
+                </Button>
+             
+              {isTeacher && (
+                <motion.div
+                  className="flex"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  <Button
+                    className="border-2 border-violet-300 hover:border-violet-500 text-center p-4 py-2 px-6 rounded-lg flex font-semibold"
                     onClick={TeacherLogin}
                     variant={"ghost"}
                   >
                     Maestra Modo
+                    <PenBox className="h-4 w-4 ml-2" />
                   </Button>
                 </motion.div>
               )}
-              {!isStudent && user?.user?.email && (
+              {!isTeacher && (
                 <Button
-                  className=" text-center py-2 rounded-lg  bg-transparent bg:border-blue-500"
+                  className="text-center py-2 rounded-lg bg-transparent border border-violet-300  border-blue-500"
                   variant={"ghost"}
                   onClick={exploreTeachersRoue}
                 >
@@ -215,23 +214,12 @@ const Hero: React.FC = () => {
               )}
               {admin && (
                 <Button
-                  className="border-2  text-center p-4 py-2 px-6 rounded-lg font-semibold border-violet-300 hover:border-violet-500"
+                  className="border-2 text-center p-4 py-2 px-6 rounded-lg font-semibold border-red-300 hover:border-violet-500"
                   onClick={AdminLogin}
                   variant={"ghost"}
                 >
                   Admin
                   <FingerPrintIcon className="ml-2 w-4 h-4" />
-                </Button>
-              )}
-
-              {isStudent && (
-                <Button
-                  className="border-2 text-center py-2 rounded-lg border-blue-300 hover:border-blue-500"
-                  variant={"ghost"}
-                  onClick={StudentAfterLoginRoute}
-                >
-                  Modo estudiante
-                  <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               )}
             </div>

@@ -113,7 +113,7 @@ model Category {
   id            String             @id @default(uuid())
   name          String             @unique
   productCode   Int                @unique
-  imageUrl      String?             @db.Text()
+  imageUrl      String?            @db.Text()
   SubCategories SubCategory[]
   Courses       Course[]
   purchases     CategoryPurchase[]
@@ -360,35 +360,39 @@ model SubCategory {
 }
 
 model User {
-  id                     String                @id @default(uuid())
-  clerkId                String                @unique
-  createdAt              DateTime              @default(now())
-  updatedAt              DateTime
-  email                  String                @unique
-  isadmin                Boolean               @default(false)
-  isTeacher              Boolean               @default(false)
-  isStudent              Boolean               @default(false)
+  id                     String    @id @default(uuid())
+  clerkId                String    @unique
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  email                  String    @unique
+  isadmin                Boolean   @default(false)
+  isTeacher              Boolean   @default(false)
+  isStudent              Boolean   @default(false)
   studentStatusExpiresAt DateTime?
   image                  String?
-  nickname               String?               @unique
-  country                String?
-  description            String?
-  linkedIn               String?
-  facebook               String?
-  youtube                String?
-  twitter                String?
-  whatsapp               String?
-  instagram              String?
-  mail                   String?
-  points                 Int?
-  referralLinkId         String?
-  referredBy             Referral?             @relation("ReferredUsers", fields: [referralLinkId], references: [id])
-  courses                Course[]
-  ownReferral            Referral?             @relation("UserReferral")
-  coursePurchases        CoursePurchase[]
-  subCategoryPurchases   SubCategoryPurchase[]
-  categoryPurchases      CategoryPurchase[]
-  packPurchases          PackPurchase[]
+  nickname               String?
+  profession             String?
+
+  country        String?
+  description    String?
+  linkedIn       String?
+  facebook       String?
+  youtube        String?
+  twitter        String?
+  whatsapp       String?
+  instagram      String?
+  mail           String?
+  points         Int?
+  isRegistered   Boolean @default(false)
+  referralLinkId String?
+
+  referredBy           Referral?             @relation("ReferredUsers", fields: [referralLinkId], references: [id])
+  courses              Course[]
+  ownReferral          Referral?             @relation("UserReferral")
+  coursePurchases      CoursePurchase[]
+  subCategoryPurchases SubCategoryPurchase[]
+  categoryPurchases    CategoryPurchase[]
+  packPurchases        PackPurchase[]
 
   @@index([referralLinkId])
 }

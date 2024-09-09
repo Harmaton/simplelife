@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { CheckCircle, Clock } from "lucide-react";
 import { InfoCard } from "./_components/info-card";
 import { CoursesList } from "./_components/course-list";
@@ -10,6 +10,7 @@ import {
   getDashboardCourses,
 } from "@/app/actions/courses";
 import { useAuth } from "@/providers/AuthProvider";
+import Loadingdash from "./_components/loadingdash";
 
 interface CoursesState {
   completedCourses: CourseWithProgressWithCategory[];
@@ -27,8 +28,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/");
-      return;
+      redirect('/')
     }
 
     const fetchCourses = async () => {
@@ -49,7 +49,7 @@ export default function Dashboard() {
   }, [user, router]);
 
   if (loading) {
-    return <div className="p-6 space-y-4 s">Loading... </div>;
+   <Loadingdash />
   }
 
   return (

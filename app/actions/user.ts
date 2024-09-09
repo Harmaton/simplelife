@@ -154,3 +154,112 @@ export async function getAllTeachers(){
     return []
   }
 }
+
+export async function getAllRegistredTeachers(){
+  try {
+    const teachers = await db.user.findMany({where: {
+      isRegistered: true,
+      isTeacher: false
+    }})
+    return teachers
+  } catch (error) {
+    return []
+  }
+}
+
+export async function checkTeacherMode(userid: string): Promise<boolean> {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        id: userid
+      }
+    });
+
+    if(!user){
+      return false
+    }
+    
+    return user.isTeacher // Returns true if user exists and is a teacher, false otherwise
+  } catch (error) {
+    console.error("Error checking teacher mode:", error);
+    return false; // Return false in case of any error
+  }
+}
+
+export async function submitTutorRegistration({ name, profession, description, whatsappFull, linkedin, userId, email }: {
+  name: string;
+  profession: string;
+  description: string;
+  whatsappFull: string;
+  linkedin: string;
+  userId: string;
+  email: string
+
+}) {
+  try {
+    // Upsert the user record based on the user schema
+    await db.user.upsert({
+      where: { clerkId: userId },
+      update: {
+        nickname: name,
+        linkedIn: linkedin,
+        whatsapp: whatsappFull,
+        description: description,
+        profession: profession, 
+        isRegistered: true
+      },
+      create: {
+        clerkId: userId,
+        nickname: name,
+        linkedIn: linkedin,
+        whatsapp: whatsappFull,
+        description: description,
+        email: email,
+        profession: profession,
+        isRegistered: true
+      },
+    });
+
+    return { success: true, message: "Tutor registration submitted successfully"};
+  } catch (error) {
+    console.error("Error submitting tutor registration:", error);
+    throw new Error("Failed to submit tutor registration");
+  }
+}
+
+export async function DisApproveTeacher(teacherId: string) {
+  try {
+    const approved = await db.user.update({
+      where: {
+        id: teacherId
+      },
+      data: {
+        isTeacher: false,
+        isRegistered: false
+      }
+    });
+
+    return { success: true, approved };
+  } catch (error) {
+    console.error("Error approving teacher:", error); // Log the error for debugging
+    return { success: false, message: "Failed to approve teacher" }; // Return a failure response
+  }
+}
+
+export async function ApproveTeacher(teacherId: string) {
+  try {
+    const approved = await db.user.update({
+      where: {
+        id: teacherId
+      },
+      data: {
+        isTeacher: true
+      }
+    });
+
+    return { success: true, approved }; // Return the approved user object for further use
+  } catch (error) {
+    console.error("Error approving teacher:", error); // Log the error for debugging
+    return { success: false, message: "Failed to approve teacher" }; // Return a failure response
+  }
+}

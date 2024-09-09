@@ -1,26 +1,33 @@
+'use client'
 import React from 'react'
-import Image from 'next/image'
-import Navbar from '@/components/landing-page/navbar'
-import { Button } from '@/components/ui/button'
 import { CardSpotlightDemo } from './card-spotlight-steps'
+import TutorRegForm from './tutorReg-form'
+import { useAuth } from '@/providers/AuthProvider'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+
 export default function TutorHero() {
+  const { user } = useAuth()
+
   return (
     <div className="container mx-auto px-4 py-2">       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-2">
-      <div className="m-auto">
-         <CardSpotlightDemo />
+        <div className="m-auto">
+          <CardSpotlightDemo />
         </div>
         <div className="space-y-6 flex flex-col items-center justify-center text-left">
           <h1 className="text-4xl font-serif text-left font-bold">Conviértete en tutora</h1>
           <p className="text-lg max-w-md mx-auto font-serif">Únete a nuestra comunidad y comienza a enseñar con más de 2000 tutores. Crece junto a 10 000 estudiantes. Crece a nivel internacional.</p>
-          <Button className="opacity-90 text-white px-6 py-3 rounded-lg  transition duration-300 flex items-center space-x-2 hover:bg-blue-500">
-            <span>Conviértete en instructora</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-          </Button>
+          {user && user.email ? (
+            <TutorRegForm userId={user.uid}  />
+          ) : (
+            <Link href="/login">
+              <Button className="bg-violet-500 text-white px-6 py-3 rounded-lg transition duration-300 hover:bg-blue-500">
+                Iniciar sesión para continuar
+              </Button>
+            </Link>
+          )}
         </div>
-       
       </div>
     </div>
   )
