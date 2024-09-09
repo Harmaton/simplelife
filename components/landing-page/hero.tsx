@@ -92,7 +92,7 @@ const Hero: React.FC = () => {
   }
 
   function TeacherLogin() {
-    router.push("/teacher/profile");
+    router.push("/tutor/profile");
   }
 
   function exploreCoursesRoue() {

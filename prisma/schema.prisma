@@ -372,19 +372,19 @@ model User {
   image                  String?
   nickname               String?
   profession             String?
-
-  country        String?
-  description    String?
-  linkedIn       String?
-  facebook       String?
-  youtube        String?
-  twitter        String?
-  whatsapp       String?
-  instagram      String?
-  mail           String?
-  points         Int?
-  isRegistered   Boolean @default(false)
-  referralLinkId String?
+  isPublished            Boolean   @default(false)
+  country                String?
+  description            String?
+  linkedIn               String?
+  facebook               String?
+  youtube                String?
+  twitter                String?
+  whatsapp               String?
+  instagram              String?
+  mail                   String?
+  points                 Int?
+  isRegistered           Boolean   @default(false)
+  referralLinkId         String?
 
   referredBy           Referral?             @relation("ReferredUsers", fields: [referralLinkId], references: [id])
   courses              Course[]

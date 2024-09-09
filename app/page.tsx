@@ -16,13 +16,14 @@ export default function Home() {
     <main className="flex flex-col items-center justify-between ">
       <Navbar />
       <Hero />
+      {/* <TutorsHeader />  TOP CATEGORIES*/}
+      {/* Tutors With most reviews, and ratings */}
       <CoursesHeader />
       <LatestCourses />
-      {/* <TutorsHeader /> */}
-      {/* Tutors With most reviews, and ratings */}
       <FeaturesHeader />
       <Features />
-    
+      {/* <TutorsHeader />  TOP TUTORS*/}
+      {/* Tutors With most reviews, and ratings */}
       <CompanyPartners />
       <FloatingActionButton />
       <Footer />

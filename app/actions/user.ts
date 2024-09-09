@@ -110,16 +110,11 @@ export async function deleteTeacherProfile() {
   }
 }
 
-export async function getTeacherDeatails() {
+export async function getTeacherDeatails(userid: string) {
   try {
-    const user = auth.currentUser
-    if(!user || user === undefined){
-      return null
-    }
-
     const teacherDetails = await db.user.findUnique({
       where: {
-        clerkId: user.uid,
+        clerkId: userid,
         isTeacher: true
       }
     })
