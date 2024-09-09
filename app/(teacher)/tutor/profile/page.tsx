@@ -21,7 +21,7 @@ function ProfilePage() {
   const { data: teacherdata, isLoading } = useQuery<User | null>(
     ['teacherDetails', user?.uid],
     async () => {
-      const userid = user?.uid; // Access uid directly from user
+      const userid = user?.uid; 
       if (!userid) {
         return null;
       }

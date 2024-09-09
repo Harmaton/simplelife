@@ -32,22 +32,15 @@ import {
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
 import { GrUserAdd } from "react-icons/gr";
+import Loadingpage from "@/components/loading-page";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
 
   if (!user) {
-    return (
-      <main className="text-center mt-10">
-        <h2>You are not logged in</h2>
-        <Link href="/login">
-          <Button className="mt-10 bg-purple-800">Sign In</Button>
-        </Link>
-        
-      </main>
-    );
-  }
+    return <Loadingpage />
+    }
 
   const links = [
     {

@@ -12,6 +12,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { auth } from "@/firebase";
+import { db } from "@/lib/db";
+import { updateUserImage } from "@/app/actions/user";
 
 export interface ImageTeacherProps {
   teacherToEdit: User;
@@ -42,11 +44,11 @@ export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
 
   const onSubmit = async (values: z.infer<typeof imgSchema>) => {
     try {
-      await axios.patch("/api/teacher", {
-        email: user.email,
-        ...values,
-      });
-      toast.success("Imagen actualizada");
+
+    if(user.uid){
+      await updateUserImage( user.uid, values)
+      toast.success("Imagen Actualizada");
+    }
       toggleEdit();
       router.refresh();
     } catch {

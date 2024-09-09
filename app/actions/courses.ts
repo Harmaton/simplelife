@@ -138,3 +138,20 @@ export const getProgress = async (
     return 0;
   }
 }
+
+export async function createCourse(values: any, userId: string) { 
+  try {
+    const newCourse = await db.course.create({
+      data: {
+        ...values,
+        userId: userId, 
+        productcode: 3564117,
+        updatedAt: new Date(),
+      },
+    });
+    return newCourse;
+  } catch (error) {
+    console.error("[CREATE_COURSE]", error);
+  }
+}
+

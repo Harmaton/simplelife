@@ -87,10 +87,6 @@ const Hero: React.FC = () => {
     router.push("/admin");
   }
 
-  function StudentAfterLoginRoute() {
-    router.push("/dashboard");
-  }
-
   function TeacherLogin() {
     router.push("/tutor/profile");
   }
@@ -157,26 +153,7 @@ const Hero: React.FC = () => {
               emocional.
             </motion.p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {!user?.user?.email && (
-                <motion.div
-                  className="flex"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  <Button
-                    className="border-2 text-center py-2 rounded-lg border-blue-300 hover:border-blue-500"
-                    variant={"ghost"}
-                    onClick={exploreCoursesRoue}
-                  >
-                    Nuestras Certificaciones
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </motion.div>
-              )}
-
-             
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">             
                 <Button
                   className="border-2 text-center py-2 rounded-lg border-blue-300 hover:border-blue-500"
                   variant={"ghost"}

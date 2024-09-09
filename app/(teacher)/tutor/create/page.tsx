@@ -19,8 +19,10 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { createCourse } from "@/app/actions/courses";
+import { useAuth } from "@/providers/AuthProvider";
 
-const formSchema = z.object({
+export const createCourseformSchema = z.object({
   title: z.string().min(1, {
     message: "Se requiere título",
   }),
@@ -28,8 +30,8 @@ const formSchema = z.object({
 
 const CreatePage = () => {
   const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof createCourseformSchema>>({
+    resolver: zodResolver(createCourseformSchema),
     defaultValues: {
       title: ""
     },
@@ -37,11 +39,19 @@ const CreatePage = () => {
 
   const { isSubmitting, isValid } = form.formState;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const {user} = useAuth()
+
+  const onSubmit = async (values: z.infer<typeof createCourseformSchema>) => {
     try {
-      const response = await axios.post("/api/courses", values);
-      router.push(`/tutor/courses/${response.data.id}`);
-      toast.success("Curso creado");
+      if (!user) {
+        toast.error('Please Log in to continue');
+        return null;
+      }
+      const response = await createCourse(values, user.uid);
+      if(response){
+      router.push(`/tutor/courses/${response.id}`);
+      toast.success("Curso Creado");
+      }
     } catch {
       toast.error("Algo salió mal");
     }

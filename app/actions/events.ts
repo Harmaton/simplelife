@@ -15,10 +15,10 @@ export const getEvent = async ({
                 id: id
             }
         })
-
         return {event}
     } catch (error){
         console.log("[GET_EVENTS_ACTIONS]", error)
         return {event: null}
     }
 }
+

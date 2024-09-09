@@ -277,3 +277,17 @@ export async function ApproveTeacher(teacherId: string) {
     return { success: false, message: "Failed to approve teacher" }; // Return a failure response
   }
 }
+
+export async function updateUserImage(uid: string, values: any){
+  try {
+    
+    const user = await db.user.update({where: {
+      clerkId: uid
+    }, data : {
+      ...values
+    }})
+    return {success: true, user}
+  } catch (error) {
+    console.log('[Update User Image]', error)
+  }
+}
