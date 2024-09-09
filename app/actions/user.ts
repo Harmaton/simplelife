@@ -278,7 +278,7 @@ export async function ApproveTeacher(teacherId: string) {
   }
 }
 
-export async function updateUserImage(uid: string, values: any){
+export async function updateUser(uid: string, values: any){
   try {
     
     const user = await db.user.update({where: {

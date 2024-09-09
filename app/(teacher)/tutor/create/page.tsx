@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { createCourse } from "@/app/actions/courses";
 import { useAuth } from "@/providers/AuthProvider";
 
-export const createCourseformSchema = z.object({
+const createCourseformSchema = z.object({
   title: z.string().min(1, {
     message: "Se requiere título",
   }),

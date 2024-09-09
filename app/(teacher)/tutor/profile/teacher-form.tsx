@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import { teacherSchema, TeacherSchema } from "@/lib/validations/teacher";
 import { useAuth } from "@/providers/AuthProvider";
+import { updateUser } from "@/app/actions/user";
 
 interface EditTeacherProps {
   teacherToEdit: User;
@@ -51,17 +52,15 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
     }
 
     try {
-      await axios.patch("/api/teacher", {
-        email: user.email,
-        ...values,
-      });
-      router.refresh();
-      toast.success("Detalles del profesor actualizados correctamente");
-    } catch (error) {
-      console.error("Error al actualizar los detalles del profesor:", error);
-      toast.error("Detalles del maestro no actualizados");
-    }
-    console.log(values);
+
+      if(user.uid){
+        await updateUser( user.uid, values)
+        toast.success("Imagen Actualizada");
+      }
+        router.refresh();
+      } catch {
+        toast.error("Algo salió mal");
+      }
   };
 
   if (!user) {

@@ -184,9 +184,8 @@ model Comment {
 
 model Course {
   id             String       @id @default(uuid())
-  userId         String
   title          String
-  productcode    Int         
+  productcode    Int
   description    String?
   imageUrl       String?
   price          Float?

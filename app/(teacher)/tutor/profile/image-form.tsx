@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { auth } from "@/firebase";
 import { db } from "@/lib/db";
-import { updateUserImage } from "@/app/actions/user";
+import { updateUser } from "@/app/actions/user";
 
 export interface ImageTeacherProps {
   teacherToEdit: User;
@@ -46,7 +46,7 @@ export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
     try {
 
     if(user.uid){
-      await updateUserImage( user.uid, values)
+      await updateUser( user.uid, values)
       toast.success("Imagen Actualizada");
     }
       toggleEdit();
@@ -79,16 +79,16 @@ export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
       {!isEditing &&
         (!teacherToEdit.image ? (
           <div className="flex items-center justify-center h-30 bg-slate-200 rounded-full">
-            <ImageIcon className="h-10 w-10 text-slate-500" />
+            <ImageIcon className="h-12 w-12 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">
+          <div className="flex items-center justify-center mt-2">
             <Image
               alt="Upload"
-              className="object-cover w-full  rounded-md"
+              className="object-cover w-24 h-24 rounded-full"
               src={teacherToEdit.image}
-              width={100}
-              height={50}
+              width={96}
+              height={96}
             />
           </div>
         ))}
@@ -106,6 +106,5 @@ export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
           />
         </div>
       )}
-    </div>
-  );
-};
+    </div>)
+}
