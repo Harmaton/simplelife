@@ -26,6 +26,8 @@ import {
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
 import Loadingpage from "@/components/loading-page";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
@@ -72,6 +74,14 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     }
   ];
+
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    toast.success('Logged Out')
+    router.push('/')
+  };
 
   return (
     <SidebarProvider>
@@ -123,7 +133,7 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
         <Button
-            onClick={() => signOut(auth)}
+            onClick={handleSignOut}
             variant={"outline"}
             className="flex items-center"
           >

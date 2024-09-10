@@ -35,6 +35,8 @@ import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
 import { GrUserAdd } from "react-icons/gr";
 import Loadingpage from "@/components/loading-page";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
@@ -97,6 +99,14 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     
   ];
 
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    toast.success('Logged Out')
+    router.push('/')
+  };
+
   return (
     <SidebarProvider>
       <div className="h-full scrollbar-thin scrollbar-rounded-full">
@@ -147,7 +157,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
         <Button
-            onClick={() => signOut(auth)}
+            onClick={handleSignOut}
             variant={"outline"}
             className="flex items-center"
           >

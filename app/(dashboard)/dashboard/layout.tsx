@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
 import Link from "next/link";
-import { useAuth } from "@/providers/AuthProvider";
 import {
   BellDot,
   CalendarCheck,
@@ -30,13 +29,19 @@ import { FaMoneyBill } from "react-icons/fa";
 import Avatar from "@/components/icon-avatar";
 import { redirect } from "next/navigation";
 import TeacherMode from "./_components/teacher-mode";
+import { useAuth } from "@/providers/AuthProvider";
+import Loadingpage from "@/components/loading-page";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const user = auth.currentUser
+  
   const [open, setOpen] = useState(false);
 
-  if (!user?.uid) {
-   redirect('/login')
+  const {user} = useAuth()
+
+  if(!user){
+    return <Loadingpage />
   }
 
   const links = [
@@ -98,6 +103,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    toast.success('Logged Out')
+    router.push('/')
+  };
+
   return (
     <SidebarProvider>
       <div className="h-full scrollbar-thin">
@@ -150,7 +163,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <TeacherMode userId={user?.uid} />
          
           <Button
-            onClick={() => signOut(auth)}
+            onClick={handleSignOut}
             variant={"outline"}
             className="flex items-center"
           >
