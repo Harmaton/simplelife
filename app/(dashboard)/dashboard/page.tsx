@@ -54,7 +54,11 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-4 scrollbar-thin scrollbar-track-slate-200">
-      <div className="p-4 flex flex-row space-x-4"></div>
+      <div className="p-4 flex flex-col space-y-2">
+        <h1 className="text-2xl font-bold">Gestiona tus cursos</h1>
+        {user && user.displayName && <h3 className="text-lg font-semibold">Bienvenido, {user.displayName}!</h3>}
+        <p>Todos los cursos y certificaciones que pagues aparecerán aquí. Los cursos terminados y en curso se rastrearán aquí.</p>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <InfoCard
           icon={Clock}

@@ -166,7 +166,7 @@ export default function Navbar() {
               <Link href={"/dashboard"}>
                 <Button className="bg-violet-500 hover:bg-blue-300 text-white p-2 border border-violet-500 m-auto">
                   <span className="text-xl mr-2 font-mono">Panel de control</span>
-                  <ArrowRightCircle className="h-6 w-6 mr-2" />
+                  <ArrowRightCircle className="h-4 w-4 mr-2" />
                 </Button>
               </Link>
             </>

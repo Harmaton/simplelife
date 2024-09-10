@@ -98,7 +98,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarProvider>
-      <div className="h-full scrollbar-thin scrollbar-rounded-full">
+      <div className="h-full scrollbar-thin">
         {/* Mobile Sidebar */}
         <div className="md:hidden">
           <MobileSidebar>
@@ -119,7 +119,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         {/* Desktop Sidebar */}
-        <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
+        <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50 scrollbar scrollbar-thin">
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="justify-between gap-10">
               <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
