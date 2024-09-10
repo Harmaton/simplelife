@@ -140,18 +140,46 @@ export const getProgress = async (
 }
 
 export async function createCourse(values: any, userId: string) { 
+
   try {
-    const newCourse = await db.course.create({
-      data: {
-        ...values,
-        userId: userId, 
-        productcode: 3564117,
-        updatedAt: new Date(),
-      },
-    });
-    return newCourse;
+
+    const teacher = await db.user.findUnique({where: {
+      clerkId: userId
+    }})
+
+    if(teacher){
+      const newCourse = await db.course.create({
+        data: {
+          ...values,
+          teacherId: teacher.id, 
+          productcode: 3564117,
+          updatedAt: new Date(),
+        },
+      });
+  
+      return newCourse;
+    }    
   } catch (error) {
     console.error("[CREATE_COURSE]", error);
+  }
+}
+
+export async function getAllTeacherCourses(userid: string){
+  try {
+
+    const user = await db.user.findUnique({where: {
+      clerkId: userid
+    }})
+
+    if(user){
+    const courses = await db.course.findMany({where: {
+      teacherId: user.id
+    }})
+    return courses
+  }
+    
+  } catch (error) {
+    console.log(error)
   }
 }
 

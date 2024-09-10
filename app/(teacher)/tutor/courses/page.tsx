@@ -21,9 +21,15 @@ const CoursesPage = () => {
             redirect("/tutor/create");
             return [];
         }
+        const userdb = await db.user.findUnique({where: {
+          clerkId: user.uid
+        }})
+        if(!userdb) {
+          return []
+        }
         const courses = await db.course.findMany({
             where: {
-                userId: user.uid
+                teacherId: userdb.id
             },
             orderBy: {
                 createdAt: "desc",
@@ -33,11 +39,16 @@ const CoursesPage = () => {
     });
 
     if (isLoading) {
-       <Loadingpage />
+        return <Loadingpage />
     }
 
     return(
         <div className="p-6 justify-center">
+         <Link href='/dashboard/teacher/create'>
+         <h2 className="text-center justify-center text-indigo-500 font-italic underline ">
+         Comenzar
+         </h2>
+         </Link>
          {coursedata ? (
              <DataTable columns={columns} data={coursedata} />
          ) : (
