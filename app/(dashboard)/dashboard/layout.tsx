@@ -19,7 +19,9 @@ import {
   CalendarCheck,
   CalendarCog,
   Goal,
+  Home,
   ListVideoIcon,
+  LogOut,
   TicketSlash,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
@@ -150,12 +152,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <Button
             onClick={() => signOut(auth)}
             variant={"outline"}
-            className=""
+            className="flex items-center"
           >
-            Cerrar sesión
+            <LogOut className="m-auto" />            
           </Button>
           <Link href={"/"}>
-            <Button className=" bg-violet-800 text-white">Inicio</Button>
+            <Button className="flex items-center bg-violet-800 text-white">
+              <Home className="m-auto" />
+            </Button>
           </Link>
         </div>
         {children}
