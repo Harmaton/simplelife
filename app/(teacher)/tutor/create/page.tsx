@@ -49,7 +49,7 @@ const CreatePage = () => {
       }
       const response = await createCourse(values, user.uid);
       if(response){
-      router.push(`/tutor/courses/${response.id}`);
+      router.push(`/tutor/courses/${response.id}?userId=${user.uid}`);
       toast.success("Curso Creado");
       }
     } catch {

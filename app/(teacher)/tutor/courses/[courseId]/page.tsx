@@ -13,7 +13,6 @@ import {
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
-
 import { TitleForm } from "./_components/title-form";
 import { DescriptionForm } from "./_components/description-form";
 import { ImageForm } from "./_components/image-form";
@@ -29,20 +28,27 @@ import { LinkForm } from "./_components/link";
 import { EvaluationsForm } from "./_components/evaluation";
 import { WhatsappForm } from "./_components/whatsapp";
 import { SubCategoryForm } from "./_components/sub-category";
-import { auth } from "@/firebase";
+import Loadingpage from "@/components/loading-page";
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const user = auth.currentUser
-  const userId = user?.uid;
+const CourseIdPage = async ({ params, searchParams }: { params: { courseId: string }, searchParams: { userId: string } }) => {
+  const userId = searchParams.userId;
 
   if (!userId) {
-    return redirect("/");
+    return <Loadingpage />;
   }
+
+  const teacher = await db.user.findUnique({where : {
+    clerkId: userId
+  }})
+
+ if(!teacher){
+  return  <Loadingpage />;
+ }
 
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
-      userId,
+      teacherId: teacher.id,
     },
     include: {
       Chapter: {
