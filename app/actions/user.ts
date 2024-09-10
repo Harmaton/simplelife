@@ -145,7 +145,7 @@ export async function getAllStudents(){
 export async function getAllTeachers(){
   try {
     const teachers = await db.user.findMany({where: {
-      isTeacher: true
+      isTeacher: true,
     }})
     return teachers
   } catch (error) {

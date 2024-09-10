@@ -48,24 +48,17 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string, userId: string } } 
+  { params }: { params: { courseId: string } } 
 ) {
   try {
-    const { courseId, userId } = params; 
+    const { courseId } = params; 
 
-    const user = await db.user.findUnique({ where: {
-      clerkId: userId
-    }});
-    if (!user) {
-      return NextResponse.json({ message: "No user" }, { status: 401 });
-    }
 
     const values = await req.json();
 
     const course = await db.course.update({
       where: {
-        id: courseId,
-        teacherId: user.id,
+        id: courseId
       },
       data: {
         ...values,
