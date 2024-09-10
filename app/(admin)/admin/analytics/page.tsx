@@ -9,7 +9,7 @@ const AnalyticsPage = async () => {
   const userId = user?.uid;
 
   if (!userId) {
-    return redirect("/");
+    return redirect("/admin");
   }
   const analyticsData = await getAnalytics(userId);
   const data = analyticsData?.data || [];

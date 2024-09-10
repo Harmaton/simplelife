@@ -26,6 +26,9 @@ const createCourseformSchema = z.object({
   title: z.string().min(1, {
     message: "Se requiere título",
   }),
+  productCode: z.number().min(1, {
+    message: "Se requiere un código de producto válido",
+  }),
 });
 
 const CreatePage = () => {
@@ -33,13 +36,14 @@ const CreatePage = () => {
   const form = useForm<z.infer<typeof createCourseformSchema>>({
     resolver: zodResolver(createCourseformSchema),
     defaultValues: {
-      title: ""
+      title: "",
+      productCode: 0, // Default value for productCode
     },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
-  const {user} = useAuth()
+  const { user } = useAuth();
 
   const onSubmit = async (values: z.infer<typeof createCourseformSchema>) => {
     try {
@@ -48,23 +52,23 @@ const CreatePage = () => {
         return null;
       }
       const response = await createCourse(values, user.uid);
-      if(response){
-      router.push(`/tutor/courses/${response.id}?userId=${user.uid}`);
-      toast.success("Curso Creado");
+      if (response) {
+        router.push(`/tutor/courses/${response.id}?userId=${user.uid}`);
+        toast.success("Curso Creado");
       }
     } catch {
       toast.error("Algo salió mal");
     }
   }
 
-  return ( 
+  return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
       <div>
         <h1 className="text-2xl">
-        Nombra tu curso
+          Nombra tu curso
         </h1>
         <p className="text-sm text-slate-600">
-        ¿Cómo te gustaría llamar tu curso? Don&apos;t Preocúpate, puedes cambiar esto más tarde.
+          ¿Cómo te gustaría llamar tu curso? Don&apos;t Preocúpate, puedes cambiar esto más tarde.
         </p>
         <Form {...form}>
           <form
@@ -77,7 +81,7 @@ const CreatePage = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                  Título del curso
+                    Título del curso
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -87,7 +91,30 @@ const CreatePage = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                  ¿Qué enseñarás en este curso?
+                    ¿Qué enseñarás en este curso?
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="productCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Código del producto
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      disabled={isSubmitting}
+                      placeholder="p.ej. 12345"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Introduce un código de producto único.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -99,7 +126,7 @@ const CreatePage = () => {
                   type="button"
                   variant="ghost"
                 >
-                 Cancelar
+                  Cancelar
                 </Button>
               </Link>
               <Button
@@ -113,7 +140,7 @@ const CreatePage = () => {
         </Form>
       </div>
     </div>
-   );
+  );
 }
- 
+
 export default CreatePage;

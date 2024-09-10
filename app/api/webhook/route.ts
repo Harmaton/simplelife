@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { db } from '../../../lib/db';
 import { updateSaleAndAccess } from "@/app/actions/payments";
-// Define your expected Hotmart token here
+
 const HM_TOKEN = process.env.HOTTOK;
 
 export const POST = async (req: Request) => {
@@ -36,18 +35,7 @@ export const POST = async (req: Request) => {
     switch (event) {
       case "PURCHASE_APPROVED":
       case "PURCHASE_COMPLETE":
-        const buyerDetails = {
-          email: data.buyer.email,
-          name: data.buyer.name,
-          phone: data.buyer.checkout_phone,
-          address: data.buyer.address
-        };
-        const productDetails = {
-          name: data.product.name,
-          id: data.product.id,
-          ucode: data.product.ucode
-        };
-        await updateSaleAndAccess(data, id, buyerDetails, productDetails);
+        await updateSaleAndAccess(data);
         break;
       case "PURCHASE_CANCELED":
       case "PURCHASE_REFUNDED":

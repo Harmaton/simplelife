@@ -2,35 +2,42 @@
 
 import { auth } from "@/firebase";
 import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
 
-export async function updateSaleAndAccess(data: any, id: string, buyerDetails: any, productDetails: any) {
-    // const productId = productDetails.ucode;
-    const productUcode = productDetails.id;
-    const productName = productDetails.name;
+import { PurchaseData } from "@/types"; // Importing the PurchaseData type
 
-    const user = auth.currentUser
-    const userId = user?.uid
+export async function updateSaleAndAccess(data: PurchaseData) {
+    
+    const productUcode = data.data.product.id
+    const productName = data.data.product.name
+    const buyerEmail =  data.data.buyer.email
 
-    if(!userId){
-        return null
+    if (!buyerEmail) {
+        return null;
     }
+
+    const user = await db.user.findUnique({where: {
+        email: buyerEmail
+    }})
+
+    if (!user) {
+        return null;
+    }
+    
     // Create a new schema to track purchases
-     await db.allpurchase.create({
+    await db.allpurchase.create({
         data: {
-            id: id,
-            userId: userId,
+            userId: user.id,
             productId: productUcode,
             productUcode: productUcode,
             productName: productName,
-            buyerEmail: buyerDetails.email,
-            price: data.purchase.price.toString(),
+            buyerEmail: buyerEmail,
+            price: data.data.purchase.price.value
         }
     });
 
     // Query the product type based on ucode
     const pack = await db.pack.findUnique({
-        where: {productCode: productUcode },
+        where: { productCode: productUcode },
         include: { categories: true }
     });
 
@@ -39,8 +46,10 @@ export async function updateSaleAndAccess(data: any, id: string, buyerDetails: a
         include: { Courses: true }
     });
 
-    const course = await db.course.findUnique({
-        where: { productcode: productUcode }
+    const course = await db.course.findMany({
+        where: { productcode: productUcode, 
+            
+         } 
     });
 
     if (pack) {
@@ -55,9 +64,9 @@ export async function updateSaleAndAccess(data: any, id: string, buyerDetails: a
         // Create a PackPurchase record
         await db.packPurchase.create({
             data: {
-                userId: userId,
+                userId: user.id,
                 packId: pack.id,
-                price: parseFloat(data.purchase.price),
+                price: data.data.purchase.price.value, // Assuming price is still part of data
                 isPaid: true
             }
         });
@@ -71,29 +80,25 @@ export async function updateSaleAndAccess(data: any, id: string, buyerDetails: a
         // Create a CategoryPurchase record
         await db.categoryPurchase.create({
             data: {
-                userId: userId,
+                userId: user.id,
                 categoryId: category.id,
-                price: parseFloat(data.purchase.price),
+                price: data.data.purchase.price.value, // Changed to number type
                 isPaid: true
             }
         });
     } else if (course) {
         // If it's a single course, update the course
-        await db.course.update({
-            where: { productcode: productUcode },
+      const purchasedcourse =  await db.course.update({
+            where: { productcode: productUcode }, 
             data: { isBought: true }
         });
-         // Create a purchase record
-    await db.coursePurchase.create({
-        data: {
-            userId: userId,
-            courseId: course.id,
-            price: data.purchase.price.toString(),
-        }
-    });
+        
+        // Create a purchase record
+        await db.coursePurchase.create({
+            data: {
+                userId: user.id,
+                courseId: purchasedcourse.id,
+                price: data.data.purchase.price.value          }
+        });
     }
-
- 
-   
-
 }

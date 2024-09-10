@@ -152,7 +152,6 @@ export async function createCourse(values: any, userId: string) {
         data: {
           ...values,
           teacherId: teacher.id, 
-          productcode: 3564117,
           updatedAt: new Date(),
         },
       });
