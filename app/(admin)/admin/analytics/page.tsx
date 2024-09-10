@@ -11,8 +11,10 @@ const AnalyticsPage = async () => {
   if (!userId) {
     return redirect("/");
   }
-
-  const { data, totalRevenue, totalSales } = await getAnalytics(userId);
+  const analyticsData = await getAnalytics(userId);
+  const data = analyticsData?.data || [];
+  const totalRevenue = analyticsData?.totalRevenue || 0;
+  const totalSales = analyticsData?.totalSales || 0;
 
   return (
     <div className="p-6">
