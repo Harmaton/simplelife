@@ -22,46 +22,42 @@ const groupByCourse = (purchases: PurchaseWithCourse[]) => {
 
 export const getAnalytics = async (userId: string) => {
   try {
+    const user = await db.user.findUnique({ where: { clerkId: userId } });
 
-    const user = await db.user.findUnique({where: {
-      clerkId: userId
-    }})
-
-    if(user){
-    const purchases = await db.coursePurchase.findMany({
-      where: {
-        course: {
-          teacherId: user.id
+    if (user) {
+      const purchases = await db.coursePurchase.findMany({
+        where: {
+          course: {
+            teacherId: user.id
+          }
+        },
+        include: {
+          course: true,
         }
-      },
-      include: {
-        course: true,
-      }
-    });
+      });
 
-    const groupedEarnings = groupByCourse(purchases);
-    const data = Object.entries(groupedEarnings).map(([courseTitle, total]) => ({
-      name: courseTitle,
-      total: total,
-    }));
+      const groupedEarnings = groupByCourse(purchases);
+      const data = Object.entries(groupedEarnings).map(([courseTitle, total]) => ({
+        name: courseTitle,
+        total: total,
+      }));
 
-    const totalRevenue = data.reduce((acc, curr) => acc + curr.total, 0);
-    const totalSales = purchases.length;
+      const totalRevenue = data.reduce((acc, curr) => acc + curr.total, 0);
+      const totalSales = purchases.length;
 
-    return {
-      data,
-      totalRevenue,
-      totalSales,
+      return {
+        data: data || [], // Ensure data is always an array
+        totalRevenue,
+        totalSales,
+      };
     }
-  }
 
-    
   } catch (error) {
     console.log("[GET_ANALYTICS]", error);
     return {
       data: [],
       totalRevenue: 0,
       totalSales: 0,
-    }
+    };
   }
 }
