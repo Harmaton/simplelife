@@ -5,6 +5,7 @@ import SubCategories from "./subcategories";
 import { GetAllCategories, GetCategorySubCategories } from "../actions/courses";
 import { Categories } from "./categories";
 import Top from "@/components/top-page";
+import Ad from "@/components/landing-page/ad";
 interface SearchPageProps {
   searchParams: {
     name: string;
@@ -18,6 +19,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const subcategories = await GetCategorySubCategories(searchParams.categoryId);
   return (
     <>
+      <Ad />
       <Navbar />
       <div className=" flex flex-col space-y-4 m-6">
         <Top header="Certificaciones" text="Perfeccione sus habilidades con paquetes profesionales de diplomas y obtenga certificados" />
