@@ -103,12 +103,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
-  const router = useRouter()
 
   const handleSignOut = async () => {
     await signOut(auth);
-    toast.success('Logged Out')
-    redirect('/')
+    toast.success('Sesión cerrada');
+    window.location.href = '/'; 
   };
 
   return (

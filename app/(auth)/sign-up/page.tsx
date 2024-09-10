@@ -11,10 +11,12 @@ import { db } from "@/lib/db";
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when signup starts
 
     const auth = getAuth();
     try {
@@ -50,6 +52,8 @@ export default function Signup() {
       } else {
         toast.error("An unexpected error occurred");
       }
+    } finally {
+      setLoading(false); // Set loading to false when signup is done
     }
   };
 
@@ -58,6 +62,7 @@ export default function Signup() {
     const provider = new GoogleAuthProvider();
 
     try {
+      setLoading(true)
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
@@ -80,10 +85,11 @@ export default function Signup() {
         });
 
         if (!response.ok) {
+          setLoading(false)
           throw new Error('Failed to create user in the database');
         }
       }
-
+      
       toast.success('Cuenta creada');
       router.push("/dashboard");
     } catch (error) {
@@ -94,6 +100,7 @@ export default function Signup() {
         const credential = GoogleAuthProvider.credentialFromError(error as any);
 
         console.error("Google sign-up error", errorCode, errorMessage);
+
         toast.error('Error en el registro con Google'); // Use toast.error for Google sign-up errors
       } else {
         toast.error("An unexpected error occurred during Google sign-up");
@@ -137,9 +144,10 @@ export default function Signup() {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className={`w-full ${loading ? 'bg-gray-400' : 'bg-blue-600'} text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600`}
+            disabled={loading} // Disable button while loading
           >
-            Registrarse
+            {loading ? 'Cargando...' : 'Registrarse'} {/* Change button text based on loading state */}
           </button>
         </form>
         <div className="flex items-center my-4">

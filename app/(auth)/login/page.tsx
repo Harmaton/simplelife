@@ -11,7 +11,7 @@ import { db } from "@/lib/db";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
   const router = useRouter();
   
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setLoading(true); // Set loading to true when login starts
 
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
@@ -51,8 +51,9 @@ export default function Login() {
       toast.success('Inicio de sesión exitoso');
       router.push("/dashboard");
     } catch (error) {
-      setError("Error en el inicio de sesión");
-      toast.error('Error en el inicio de sesión');
+      toast.error('Error en el inicio de sesión'); // Use toast.error to render the error message
+    } finally {
+      setLoading(false); // Set loading to false when login is done
     }
   };
 
@@ -61,6 +62,7 @@ export default function Login() {
     const provider = new GoogleAuthProvider();
     
     try {
+      setLoading(true); // Set loading to true when Google login starts
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
@@ -86,11 +88,11 @@ export default function Login() {
         const errorMessage = error.message;
         console.error("Google login error", errorMessage);
         toast.error('Error en el inicio de sesión con Google');
-        setError(errorMessage);
       } else {
-        setError("An unexpected error occurred during Google login");
         toast.error('Error inesperado en el inicio de sesión con Google');
       }
+    } finally {
+      setLoading(false); // Set loading to false when Google login is done
     }
   };
 
@@ -101,7 +103,6 @@ export default function Login() {
           <Image src={'/logo-1.png'} className="m-auto" width={100} height={100} alt={'logo'} />
         </Link>
         <h2 className="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -131,9 +132,10 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className={`w-full ${loading ? 'bg-gray-400' : 'bg-blue-600'} text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600`}
+            disabled={loading} // Disable button while loading
           >
-            Iniciar Sesión
+            {loading ? 'Cargando...' : 'Iniciar Sesión'} 
           </button>
         </form>
         <div className="flex items-center my-4">
@@ -144,6 +146,7 @@ export default function Login() {
         <button
           onClick={handleGoogleLogin}
           className="w-full bg-white text-gray-700 border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 flex items-center justify-center"
+          disabled={loading} // Disable button while loading
         >
           <Image src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" className="w-5 h-5 mr-2" width={20} height={20} />
           Iniciar sesión con Google
