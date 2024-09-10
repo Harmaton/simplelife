@@ -108,7 +108,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const handleSignOut = async () => {
     await signOut(auth);
     toast.success('Logged Out')
-    router.push('/')
+    redirect('/')
   };
 
   return (

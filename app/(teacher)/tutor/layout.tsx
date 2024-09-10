@@ -26,7 +26,7 @@ import {
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
 import Loadingpage from "@/components/loading-page";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
@@ -80,7 +80,7 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
   const handleSignOut = async () => {
     await signOut(auth);
     toast.success('Logged Out')
-    router.push('/')
+    redirect('/')
   };
 
   return (

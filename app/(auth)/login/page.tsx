@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from "next/link";
 import { auth } from '@/firebase'
 import { toast } from "sonner";
+import { db } from "@/lib/db";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,23 @@ export default function Login() {
     setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+    const user =  await signInWithEmailAndPassword(auth, email, password);
+
+    if (user) {
+      const userdb = await db.user.findUnique({
+        where: {
+          clerkId: user.user.uid // Corrected 'clerkd' to 'clerkId'
+        }
+      });
+
+      if (!userdb) {
+        // Handle case where user is not found in the database
+        toast.error('Por favor, regístrate');
+        
+        return;
+      }
+    }
+    toast.success('Inicio de sesión exitoso');
       router.push("/dashboard");
     } catch (err) {
       if (err instanceof Error) {
@@ -50,6 +67,21 @@ export default function Login() {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const user = result.user;
+
+      if (user) {
+        const userdb = await db.user.findUnique({
+          where: {
+            clerkId: user.uid // Corrected 'clerkd' to 'clerkId'
+          }
+        });
+
+        if (!userdb) {
+          // Handle case where user is not found in the database
+          toast.error('Por favor, regístrate');
+
+          return;
+        }
+      }
       
       toast.success('Inicio de sesión con Google exitoso');
       

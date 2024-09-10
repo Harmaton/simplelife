@@ -35,7 +35,7 @@ import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
 import { GrUserAdd } from "react-icons/gr";
 import Loadingpage from "@/components/loading-page";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
@@ -104,7 +104,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const handleSignOut = async () => {
     await signOut(auth);
     toast.success('Logged Out')
-    router.push('/')
+    redirect('/')
   };
 
   return (
