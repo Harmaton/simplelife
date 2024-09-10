@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
+ // Start of Selection
 const nextConfig = {
   images: {
-    domains: ['utfs.io'],
+    domains: ['utfs.io', 'lh3.googleusercontent.com'],
   },
 };
 

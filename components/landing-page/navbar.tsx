@@ -158,7 +158,7 @@ export default function Navbar() {
             <>
               <div className="rounded-full flex items-center bg-gray-300 m-auto justify-center p-2">
                 {user?.photoURL ? (
-                  <Image src={user.photoURL} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                  <Image src={user.photoURL} alt="User Avatar" width={32} height={32} className="w-8 h-8 rounded-full" />
                 ) : (
                   <span className="text-xl">{user?.email?.charAt(0).toUpperCase()}</span>
                 )}
