@@ -21,8 +21,10 @@ import {
   CalendarCheck,
   CalendarCog,
   Goal,
+  Home,
   LineChart,
   ListVideoIcon,
+  LogOut,
   PartyPopper,
   PenBox,
   PlusIcon,
@@ -144,16 +146,18 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
-          <Link href={"/"}>
-            <Button className="mt-5 bg-violet-800 text-white">Home</Button>
-          </Link>
-          <Button
+        <Button
             onClick={() => signOut(auth)}
             variant={"outline"}
-            className="mt-5"
+            className="flex items-center"
           >
-            Sign out
+            <LogOut className="m-auto" />            
           </Button>
+          <Link href={"/"}>
+            <Button className="flex items-center bg-violet-800 text-white">
+              <Home className="m-auto" />
+            </Button>
+          </Link>
         </div>
         {children}
       </main>
