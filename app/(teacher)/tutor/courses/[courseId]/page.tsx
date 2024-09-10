@@ -66,6 +66,7 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
   if (!course) {
     return redirect("/");
   }
+  
   let subcategories: any[] = [];
   if (course.categoryId) {
     subcategories = await db.subCategory.findMany({
@@ -153,7 +154,7 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
             <EvaluationsForm courseId={course.id} initialData={course} />
           </div>
 
-          <div className="space-y-6">
+          <div className="">
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={ListChecks} />
                 <h2 className="text-xl">Capítulos del curso</h2>
@@ -198,7 +199,6 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
                 <IconBadge icon={File} />
                 <h2 className="text-xl">Recursos y archivos adjuntos</h2>
               </div>
-              {/* <AttachmentForm initialData={course} courseId={course.id} /> */}
             </div>
           </div>
         </div>

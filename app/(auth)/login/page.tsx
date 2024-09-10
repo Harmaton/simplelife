@@ -1,6 +1,4 @@
 'use client'
-'use client'
-
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -31,30 +29,30 @@ export default function Login() {
     setError("");
 
     try {
-    const user =  await signInWithEmailAndPassword(auth, email, password);
+      const user = await signInWithEmailAndPassword(auth, email, password);
 
-    if (user) {
-      const userdb = await db.user.findUnique({
-        where: {
-          clerkId: user.user.uid // Corrected 'clerkd' to 'clerkId'
+      if (user) {
+        const response = await fetch(`/api/user/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uid: user.user.uid }),
+        });
+
+        const data = await response.json(); // Expecting a JSON response
+
+        if (!response.ok || !data.exists) {
+          toast.error('Por favor, regístrate');
+          return;
         }
-      });
-
-      if (!userdb) {
-        // Handle case where user is not found in the database
-        toast.error('Por favor, regístrate');
-        
-        return;
       }
-    }
-    toast.success('Inicio de sesión exitoso');
+      
+      toast.success('Inicio de sesión exitoso');
       router.push("/dashboard");
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unexpected error occurred");
-      }
+    } catch (error) {
+      setError("Error en el inicio de sesión");
+      toast.error('Error en el inicio de sesión');
     }
   };
 
@@ -64,40 +62,29 @@ export default function Login() {
     
     try {
       const result = await signInWithPopup(auth, provider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
       const user = result.user;
 
       if (user) {
-        const userdb = await db.user.findUnique({
-          where: {
-            clerkId: user.uid // Corrected 'clerkd' to 'clerkId'
-          }
+        const response = await fetch('/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uid: user.uid }),
         });
 
-        if (!userdb) {
-          // Handle case where user is not found in the database
+        if (!response.ok) {
           toast.error('Por favor, regístrate');
-
           return;
         }
       }
       
       toast.success('Inicio de sesión con Google exitoso');
-      
-      // Redirect to the desired page after successful login
-      router.push("/dashboard"); // Change this to your desired route
+      router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
-        // Handle Errors here.
-        const errorCode = (error as any).code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = (error as any).customData?.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error as any);
-        
-        console.error("Google login error", errorCode, errorMessage);
+        console.error("Google login error", errorMessage);
         toast.error('Error en el inicio de sesión con Google');
         setError(errorMessage);
       } else {

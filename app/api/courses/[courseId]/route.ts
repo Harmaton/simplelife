@@ -7,20 +7,16 @@ import { auth } from "@/firebase";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: { courseId: string; userId: string } }
 ) {
   try {
-    const userId = auth.currentUser;
-
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    const user = await db.user.findUnique({ where: {
-        clerkId: userId.uid
-    }});
+    const user = await db.user.findUnique({
+      where: {
+        clerkId: params.userId,
+      },
+    });
     if (!user) {
-        return NextResponse.json({ message: "No user" }, { status: 401 });
+      return NextResponse.json({ message: "No user" }, { status: 401 });
     }
 
     const course = await db.course.findUnique({
@@ -30,7 +26,7 @@ export async function DELETE(
       },
       include: {
         Chapter: true,
-      }
+      },
     });
 
     if (!course) {
@@ -52,23 +48,18 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: { courseId: string, userId: string } } 
 ) {
   try {
-    const userId = auth.currentUser;
-
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
+    const { courseId, userId } = params; 
 
     const user = await db.user.findUnique({ where: {
-      clerkId: userId.uid
+      clerkId: userId
     }});
     if (!user) {
       return NextResponse.json({ message: "No user" }, { status: 401 });
     }
 
-    const { courseId } = params;
     const values = await req.json();
 
     const course = await db.course.update({

@@ -11,54 +11,23 @@ import { db } from "@/lib/db";
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     const auth = getAuth();
     try {
-     const userauth = await createUserWithEmailAndPassword(auth, email, password);
+      const userauth = await createUserWithEmailAndPassword(auth, email, password);
 
-     const user = userauth.user;
-     if(user && user.email){
-       await db.user.create({
-         data: {
-           clerkId: user.uid,
-           email: user.email,
-           isadmin: false,
-           isTeacher: false,
-           isStudent: true,
-           createdAt: new Date(),
-           updatedAt: new Date(),
-         },
-       });
-     }
-
-      router.push("/login");
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unexpected error occurred");
-      }
-    }
-  };
-
-  const handleGoogleSignup = async () => {
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-    
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
-      const user = result.user;
-      if(user && user.email){
-        await db.user.create({
-          data: {
+      const user = userauth.user;
+      if (user && user.email) {
+        const response = await fetch('/api/user/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
             clerkId: user.uid,
             email: user.email,
             isadmin: false,
@@ -66,29 +35,68 @@ export default function Signup() {
             isStudent: true,
             createdAt: new Date(),
             updatedAt: new Date(),
-          },
+          }),
         });
+
+        if (!response.ok) {
+          throw new Error('Failed to create user in the database');
+        }
       }
-      // Add user details to the database
-      
+
+      router.push("/login");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message); // Use toast.error instead of setting error state
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+      if (user && user.email) {
+        const response = await fetch('/api/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            clerkId: user.uid,
+            email: user.email,
+            isadmin: false,
+            isTeacher: false,
+            isStudent: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create user in the database');
+        }
+      }
+
       toast.success('Cuenta creada');
-      // Redirect to the desired page after successful sign-up
-      router.push("/dashboard"); // Change this to your desired route
+      router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
-        // Handle Errors here.
         const errorCode = (error as any).code;
         const errorMessage = error.message;
-        // The email of the user's account used.
         const email = (error as any).customData?.email;
-        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error as any);
-        
+
         console.error("Google sign-up error", errorCode, errorMessage);
-        toast.success('Error en el registro con Google')
-        setError(errorMessage);
+        toast.error('Error en el registro con Google'); // Use toast.error for Google sign-up errors
       } else {
-        setError("An unexpected error occurred during Google sign-up");
+        toast.error("An unexpected error occurred during Google sign-up");
       }
     }
   };
@@ -96,11 +104,10 @@ export default function Signup() {
   return (
     <div className="bg-background min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <Link href={'/'} >
+        <Link href={'/'}>
           <Image src={'/logo-1.png'} className="m-auto" width={100} height={100} alt={'logo'} />
         </Link>
         <h2 className="text-2xl font-bold mb-6 text-center">Registrarse</h2>
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <form onSubmit={handleSignup}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
