@@ -195,8 +195,7 @@ export async function submitTutorRegistration({ name, profession, description, w
 
 }) {
   try {
-    // Upsert the user record based on the user schema
-    await db.user.upsert({
+  const user =  await db.user.upsert({
       where: { clerkId: userId },
       update: {
         nickname: name,
@@ -217,11 +216,11 @@ export async function submitTutorRegistration({ name, profession, description, w
         isRegistered: true
       },
     });
-
-    return { success: true, message: "Tutor registration submitted successfully"};
+    console.log(user)
+    return { success: true, message: "Registro de tutor enviado con éxito" };
   } catch (error) {
     console.error("Error submitting tutor registration:", error);
-    throw new Error("Failed to submit tutor registration");
+    return { success: false, message: "Failed to Request Approval"}
   }
 }
 
@@ -251,7 +250,8 @@ export async function ApproveTeacher(teacherId: string) {
         id: teacherId
       },
       data: {
-        isTeacher: true
+        isTeacher: true,
+        isRegistered: false
       }
     });
 
@@ -292,15 +292,20 @@ export async function updateUser(uid: string, values: any){
   }
 }
 
-// export async function checkIsAnAdmin(uid: string): Promise<boolean> {
-//   try {
-//     const user = await db.user.findUnique({
-//       where: { clerkId: uid },
-//       select: { isAdmin: true }
-//     });
-//     return user ? user.isAdmin : false;
-//   } catch (error) {
-//     console.error("Error checking admin status:", error);
-//     return false;
-//   }
-// }
+export async function checkRegistration(email: string) {
+  try {
+    const user = await db.user.findUnique({
+      where : {
+        email: email
+      }
+    })
+    if(user){
+      const registred = user.isRegistered
+      return registred
+    }
+   return false
+    
+  } catch (error) {
+    return false
+  }
+}
