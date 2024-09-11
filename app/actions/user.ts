@@ -291,3 +291,16 @@ export async function updateUser(uid: string, values: any){
     console.log('[Update User Image]', error)
   }
 }
+
+// export async function checkIsAnAdmin(uid: string): Promise<boolean> {
+//   try {
+//     const user = await db.user.findUnique({
+//       where: { clerkId: uid },
+//       select: { isAdmin: true }
+//     });
+//     return user ? user.isAdmin : false;
+//   } catch (error) {
+//     console.error("Error checking admin status:", error);
+//     return false;
+//   }
+// }

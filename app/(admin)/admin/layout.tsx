@@ -7,7 +7,7 @@ import {
   SidebarLink,
   SidebarProvider,
 } from "@/components/ui/sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconBrandTabler } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "firebase/auth";
@@ -16,16 +16,10 @@ import Link from "next/link";
 import { useAuth } from "@/providers/AuthProvider";
 import {
   BarChart,
-  BellDot,
   BookmarkIcon,
-  CalendarCheck,
-  CalendarCog,
-  Goal,
   Home,
   LineChart,
-  ListVideoIcon,
   LogOut,
-  PartyPopper,
   PenBox,
   PlusIcon,
   TicketSlash,
@@ -33,18 +27,47 @@ import {
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
-import { GrUserAdd } from "react-icons/gr";
 import Loadingpage from "@/components/loading-page";
-import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { checkIsAdmin } from "@/app/actions/user";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
+  const [isAdmin, setAdmin] = useState(false);
 
-  if (!user) {
-    return <Loadingpage />
-    }
+  useEffect(() => {
+    const checkAdminState = async () => {
+      if (user?.email) {
+        const isAdmin = await checkIsAdmin(user.email);
+        setAdmin(isAdmin);
+      }
+    };
+    checkAdminState();
+  }, [user?.email]);
+
+  if (!user?.email) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
+        <div className="text-2xl mb-4">🔒</div>
+        <Link href="/login">
+          <Button>Iniciar Sesión como Admin</Button>
+        </Link>
+      </div>
+    );
+  }
+
+  if (user.email && !isAdmin) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
+        <div className="text-2xl mb-4">🚫</div>
+        <p className="text-lg">No tienes permisos de administrador.</p>
+        <Link href="/">
+          <Button>Volver a la plataforma</Button>
+        </Link>
+      </div>
+    );
+  }
 
   const links = [
     {
@@ -96,7 +119,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <BookmarkIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
-    
   ];
 
   const handleSignOut = async () => {
@@ -154,7 +176,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
-        <Button
+          <Button
             onClick={handleSignOut}
             variant={"outline"}
             className="flex items-center"
