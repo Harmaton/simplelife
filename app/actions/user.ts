@@ -243,40 +243,40 @@ export async function DisApproveTeacher(teacherId: string) {
   }
 }
 
-export async function ApproveTeacher(teacherId: string) {
-  try {
-    const approved = await db.user.update({
-      where: {
-        id: teacherId
-      },
-      data: {
-        isTeacher: true,
-        isRegistered: false
-      }
-    });
+// export async function ApproveTeacher(teacherId: string) {
+//   try {
+//     const approved = await db.user.update({
+//       where: {
+//         id: teacherId
+//       },
+//       data: {
+//         isTeacher: true,
+//         isRegistered: false
+//       }
+//     });
 
-    const to = approved.email
-    const nickname = approved.nickname
-    const subject = 'Approval for Teacher Status on Simplelife'
-    const replyContent = `Estimado/a ${nickname}, ha sido añadido/a a la plataforma de enseñanza Simple Life. Por favor, acceda al siguiente enlace para actualizar su perfil y ser visible en nuestra plataforma. Asegúrese de publicar su información.`
+//     const to = approved.email
+//     const nickname = approved.nickname
+//     const subject = 'Approval for Teacher Status on Simplelife'
+//     const replyContent = `Estimado/a ${nickname}, ha sido añadido/a a la plataforma de enseñanza Simple Life. Por favor, acceda al siguiente enlace para actualizar su perfil y ser visible en nuestra plataforma. Asegúrese de publicar su información.`
 
-    const {data, error } = await resend.emails.send({
-      from: 'Simple Life Admin <simplelifeofficial.com>',
-      to: [to],
-      subject: subject,
-      react: EmailTemplate({ to, subject, replyContent }),
-    });
+//     const {data, error } = await resend.emails.send({
+//       from: 'Simple Life Admin <simplelifeofficial.com>',
+//       to: [to],
+//       subject: subject,
+//       react: EmailTemplate({ to, subject, replyContent }),
+//     });
 
-    if (error) {
-      return Response.json({ error }, { status: 500 });
-    }
+//     if (error) {
+//       return Response.json({ error }, { status: 500 });
+//     }
 
-    return { success: true, approved }; 
-  } catch (error) {
-    console.error("Error approving teacher:", error); // Log the error for debugging
-    return { success: false, message: "Failed to approve teacher" }; // Return a failure response
-  }
-}
+//     return { success: true, approved }; 
+//   } catch (error) {
+//     console.error("Error approving teacher:", error); // Log the error for debugging
+//     return { success: false, message: "Failed to approve teacher" }; // Return a failure response
+//   }
+// }
 
 export async function updateUser(uid: string, values: any){
   try {

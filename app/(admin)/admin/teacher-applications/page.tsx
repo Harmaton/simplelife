@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from "react-query";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, PenBoxIcon, Plus, SkullIcon } from "lucide-react";
-import { ApproveTeacher, DisApproveTeacher, getAllRegistredTeachers } from "@/app/actions/user"; 
+import { DisApproveTeacher, getAllRegistredTeachers } from "@/app/actions/user"; 
 import { User } from '@prisma/client';
 import Link from "next/link";
 import { toast } from "sonner";
@@ -56,10 +56,21 @@ const ApplicationPage = () => {
   const handleApprove = async (teacherId: string) => {
     setIsActionLoading(true);
     try {
-      await ApproveTeacher(teacherId);
-      toast.success('Estado del profesor actualizado.');
-      refetch();
-      setSelectedTeacher(null);
+      const response = await fetch('/api/user/approved', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: teacherId }), 
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast.success('Estado del profesor actualizado.');
+        refetch();
+        setSelectedTeacher(null);
+      } else {
+        toast.error('Error al actualizar el estado del profesor.');
+      }
     } catch (error) {
       toast.error('Error al actualizar el estado del profesor.');
     } finally {
