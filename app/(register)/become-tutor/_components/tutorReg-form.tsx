@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { CircleArrowRight } from 'lucide-react'
 import { Select } from '@headlessui/react'
-import { checkIsTeacher, checkRegistration, submitTutorRegistration } from '@/app/actions/user'
+import { checkRegistration, submitTutorRegistration } from '@/app/actions/user'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/providers/AuthProvider'

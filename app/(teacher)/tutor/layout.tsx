@@ -7,8 +7,7 @@ import {
   SidebarLink,
   SidebarProvider,
 } from "@/components/ui/sidebar";
-import { useState } from "react";
-import { IconBrandTabler } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
@@ -25,18 +24,47 @@ import {
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
-import Loadingpage from "@/components/loading-page";
-import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { checkIsTeacher } from "@/app/actions/user";
 
 const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
+  const [isTeacher, setTeacher] = useState(false)
 
-  if (!user) {
-  return <Loadingpage />
+  useEffect(()=> {
+    const checkTeacherstatus = async() => {
+      if(user?.email){
+        const status = await checkIsTeacher(user?.email)
+        setTeacher(status)
+      }
+      
+    }
+    checkTeacherstatus()
+  }, [user?.email])
+
+  if (!user?.email) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
+        <div className="text-2xl mb-4">🔒</div>
+        <Link href="/login">
+          <Button>Get Started Here</Button>
+        </Link>
+      </div>
+    );
   }
 
+  if (!user?.email && !isTeacher ) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
+        <div className="text-2xl mb-4 mt-4">🚫</div>
+        <p className="text-lg">Lo siento, no estás registrado como profesor. Aplica para convertirte en tutor en la plataforma.</p>
+        <Link href="/become-tutor" className="mt-4">
+          <Button>Aplicar</Button>
+        </Link>
+      </div>
+    );
+  }
   const links = [
     {
       label: "Gestionar Perfil",
