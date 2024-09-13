@@ -21,13 +21,17 @@ import { Input } from "@/components/ui/input";
 import { createCourse } from "@/app/actions/courses";
 import { useAuth } from "@/providers/AuthProvider";
 
+// Update schema to handle productCode as a string
 const createCourseformSchema = z.object({
   title: z.string().min(1, {
     message: "Se requiere título",
   }),
-  productCode: z.number().min(1, {
-    message: "Se requiere un código de producto válido",
-  }),
+  productcode: z
+    .string()
+    .regex(/^\d{5}$/, {
+      message: "El código de producto debe tener exactamente 5 dígitos",
+    })
+    .transform((val) => parseInt(val, 10)), // Transform string to number
 });
 
 const CreatePage = () => {
@@ -36,7 +40,7 @@ const CreatePage = () => {
     resolver: zodResolver(createCourseformSchema),
     defaultValues: {
       title: "",
-      productCode: 0, 
+      productcode: 0, // Initialize as an empty string
     },
   });
 
@@ -47,7 +51,7 @@ const CreatePage = () => {
   const onSubmit = async (values: z.infer<typeof createCourseformSchema>) => {
     try {
       if (!user) {
-        toast.error('Please Log in to continue');
+        toast.error("Please Log in to continue");
         return null;
       }
       const response = await createCourse(values, user.uid);
@@ -58,16 +62,15 @@ const CreatePage = () => {
     } catch {
       toast.error("Algo salió mal");
     }
-  }
+  };
 
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
       <div>
-        <h1 className="text-2xl">
-          Nombra tu curso
-        </h1>
+        <h1 className="text-2xl">Nombra tu curso</h1>
         <p className="text-sm text-slate-600">
-          ¿Cómo te gustaría llamar tu curso? Don&apos;t Preocúpate, puedes cambiar esto más tarde.
+          ¿Cómo te gustaría llamar tu curso? No te preocupes, puedes cambiar
+          esto más tarde.
         </p>
         <Form {...form}>
           <form
@@ -79,9 +82,7 @@ const CreatePage = () => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Título del curso
-                  </FormLabel>
+                  <FormLabel>Título del curso</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
@@ -98,22 +99,20 @@ const CreatePage = () => {
             />
             <FormField
               control={form.control}
-              name="productCode"
+              name="productcode"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Código del producto
-                  </FormLabel>
+                  <FormLabel>Código del producto</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
+                      type="text" // Treat as text for proper validation
                       disabled={isSubmitting}
                       placeholder="p.ej. 12345"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Introduce un código de producto único.
+                    Introduce un código de producto único de 5 dígitos.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -121,18 +120,12 @@ const CreatePage = () => {
             />
             <div className="flex items-center gap-x-2">
               <Link href="/tutor/courses">
-                <Button
-                  type="button"
-                  variant="ghost"
-                >
+                <Button type="button" variant="ghost" disabled={isSubmitting}>
                   Cancelar
                 </Button>
               </Link>
-              <Button
-                type="submit"
-                disabled={!isValid || isSubmitting}
-              >
-                Continuar
+              <Button type="submit" disabled={!isValid || isSubmitting}>
+                {isSubmitting ? "Cargando..." : "Continuar"}
               </Button>
             </div>
           </form>
@@ -140,6 +133,6 @@ const CreatePage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default CreatePage;

@@ -4,7 +4,6 @@ import { AddCategoryForm } from "./_components/add-category-form";
 
 export default async function Page() {
   const categories = await GetCategoryNames();
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">

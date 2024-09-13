@@ -44,11 +44,6 @@ const CoursesPage = () => {
 
     return(
         <div className="p-6 justify-center">
-         <Link href='/dashboard/teacher/create'>
-         <h2 className="text-center justify-center text-indigo-500 font-italic underline ">
-         Comenzar
-         </h2>
-         </Link>
          {coursedata ? (
              <DataTable columns={columns} data={coursedata} />
          ) : (

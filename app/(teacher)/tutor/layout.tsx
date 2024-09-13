@@ -161,6 +161,11 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
+        <Link href={"/dashboard"}>
+            <Button className="flex items-center border bg-white text-black font-mono  hover:bg-violet-400 ">
+              🎓 Modo estudiante
+            </Button>
+          </Link>
         <Button
             onClick={handleSignOut}
             variant={"outline"}

@@ -186,12 +186,12 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end">
           <Link href={"/dashboard"}>
-            <Button className="flex items-center border text-white">
+            <Button className="flex items-center border bg-white font-mono text-black">
               🎓 Modo estudiante
             </Button>
           </Link>
           <Link href={"/tutor/profile"}>
-            <Button className="flex items-center bg-blue-500 text-white">
+            <Button className="flex font-mono items-center bg-blue-500 text-white">
               👨‍🏫 Modo profesor
             </Button>
           </Link>

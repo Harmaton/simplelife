@@ -3,10 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { db } from '@/lib/db';
 import { checkTeacherMode } from '@/app/actions/user';
-import Loadingpage from '@/components/loading-page';
-
 
 interface TeacherModeProps {
   userId: string;
@@ -51,7 +48,7 @@ export default function TeacherMode({ userId }: TeacherModeProps) {
   }
 
   return (
-    <Button className="bg-background border p-2 border-violet-500 tex-center transition-colors hover:violet-500" onClick={handleClick}>
+    <Button className="bg-background font-mono border p-2 border-violet-500 tex-center transition-colors hover:violet-500" onClick={handleClick}>
       {isTeacher ? '👨‍🏫 Ir al Modo Profesor' : '📝 Convertirse en Profesor'}
     </Button>
   );
