@@ -28,7 +28,6 @@ interface EvaluationsFormProps {
   courseId: string;
 }
 
-
 const formSchema = z.object({
   googleFormLink: z.string().min(1),
 });
@@ -39,12 +38,9 @@ export const EvaluationsForm = ({
 }: EvaluationsFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
 
-
   const toggleCreating = () => {
     setIsCreating((current) => !current);
   };
-
-  
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,17 +56,15 @@ export const EvaluationsForm = ({
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Curso actualizado");
       toggleCreating();
-
     } catch (error) {
       toast.error("Algo salió mal");
     }
   };
 
-
   return (
     <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-      Enlace de formulario de Google (evaluación)
+        Enlace de formulario de Google (evaluación)
         <Button onClick={toggleCreating} variant="ghost">
           {isCreating ? (
             <>Cancelar</>
@@ -81,11 +75,13 @@ export const EvaluationsForm = ({
             </>
           )}
         </Button>
-        
       </div>
       {isCreating && (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 mt-4"
+          >
             <FormField
               control={form.control}
               name="googleFormLink"
@@ -102,17 +98,14 @@ export const EvaluationsForm = ({
                 </FormItem>
               )}
             />
-
-            <Button disabled={!isValid || isSubmitting} type="submit">
-              Crear
-            </Button>
-
-           
+            <div className="flex justify-end">
+              <Button disabled={!isValid || isSubmitting} type="submit">
+                Ahorrar
+              </Button>
+            </div>
           </form>
         </Form>
       )}
-
-
     </div>
   );
 };

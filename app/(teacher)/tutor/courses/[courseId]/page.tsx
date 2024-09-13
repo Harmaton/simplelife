@@ -94,11 +94,11 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
   const isComplete = requiredFields.every(Boolean);
 
   return (
-    <>
+    <div className="p-8 border">
       {!course.isPublished && (
         <Banner label="Este curso es inédito. No será visible para los estudiantes." />
       )}
-      <div className="p-6">
+      <div className="p-8">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">Configuración del curso</h1>
@@ -202,7 +202,7 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
             </div>
           </div>
         </div>
-    </>
+    </div>
   );
 };
 
