@@ -118,6 +118,8 @@ model Category {
   Courses       Course[]
   purchases     CategoryPurchase[]
   packs         Pack[]
+
+  
 }
 
 model Chapter {
@@ -347,7 +349,7 @@ model SubCategory {
   name        String                @unique
   imageUrl    String?
   categoryId  String
-  category    Category              @relation(fields: [categoryId], references: [id])
+  category    Category              @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   isBought    Boolean               @default(false)
   createdAt   DateTime              @default(now())
   updatedAt   DateTime              @updatedAt

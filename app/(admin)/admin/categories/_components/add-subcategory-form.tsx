@@ -10,9 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import {
-  addsubCtegoriesAction,
-} from "@/app/actions/categories";
+import { addsubCtegoriesAction } from "@/app/actions/categories";
 import { SplineIcon, Trash } from "lucide-react";
 import { useOptimistic } from "react";
 import Link from "next/link";
@@ -47,17 +45,17 @@ export function AddSubCategoryForm({
   });
 
   const [optimisticsubCategories, updateOptimisticsubCategories] =
-    useOptimistic<SubCategoryProp[], { name: string; action: "add" | "remove" }>(
-      names,
-      (state, { name, action }) => {
-        if (action === "add") {
-          return [...state, { name }];
-        } else if (action === "remove") {
-          return state.filter((category) => category.name !== name);
-        }
-        return state;
+    useOptimistic<
+      SubCategoryProp[],
+      { name: string; action: "add" | "remove" }
+    >(names, (state, { name, action }) => {
+      if (action === "add") {
+        return [...state, { name }];
+      } else if (action === "remove") {
+        return state.filter((category) => category.name !== name);
       }
-    );
+      return state;
+    });
 
   return (
     <div className="flex justify-center items-center ">
@@ -83,11 +81,10 @@ export function AddSubCategoryForm({
                     router.refresh();
                     toast.success(result.message);
                   } else {
-                    toast.error(result.message)
+                    toast.error(result.message);
                     throw new Error(result.message);
                   }
                 } catch (error) {
-                  toast.error(error)
                   console.error("Error al añadir la subcategoría:", error);
                   toast.error(
                     error instanceof Error

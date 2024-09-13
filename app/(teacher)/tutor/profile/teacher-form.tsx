@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,7 @@ interface EditTeacherProps {
 export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
   const router = useRouter();
   const { user } = useAuth();
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<TeacherSchema>({
     resolver: zodResolver(teacherSchema),
@@ -52,15 +53,18 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
     }
 
     try {
-
-      if(user.uid){
-        await updateUser( user.uid, values)
-        toast.success("Imagen Actualizada");
+      setLoading(true);
+      if (user.uid) {
+        await updateUser(user.uid, values);
+        toast.success("Actualizada");
       }
-        router.refresh();
-      } catch {
-        toast.error("Algo salió mal");
-      }
+      router.refresh();
+      toast.success("Actualizada");
+    } catch {
+      toast.error("Algo salió mal");
+    }finally {
+      setLoading(false);
+    }
   };
 
   if (!user) {
@@ -69,7 +73,13 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
 
   return (
     <>
-      <div className="m-auto p-12">
+      <div className="space-y-1 mb-2 mt-2">
+        <h1 className="font-bold text-center text-2xl">Información del perfil</h1>
+        <p className="font-mono text-center">
+        Edite toda la información de su perfil a continuación para destacar{" "}
+        </p>
+      </div>
+      <div className="flex justify-center items-center mt-2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -98,11 +108,12 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                 <FormItem>
                   <FormLabel>País</FormLabel>
                   <FormControl>
-                    <Input placeholder="Perú, Argentina..." {...field} />
+                    <Input
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
+                      {...field}
+                    />
                   </FormControl>
-                  <FormDescription>
-                    Su país de origen será visible para los estudiantes
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -115,14 +126,11 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormLabel>Descripción</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="por ejemplo, en qué se destaca, etc."
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>
-                    Incluya detalles relevantes para que los estudiantes lo
-                    comprendan mejor.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -135,7 +143,8 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormLabel>LinkedIn</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Introduce un enlace que lleve a tu perfil. y no incluyas (https://) en tu enlace..."
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
                       {...field}
                     />
                   </FormControl>
@@ -151,7 +160,8 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormLabel>YouTube</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Introduce un enlace que lleve a tu perfil. y no incluyas (https://) en tu enlace..."
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
                       {...field}
                     />
                   </FormControl>
@@ -167,7 +177,8 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormLabel>Enlace Whatsapp</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Introduce un enlace que lleve a tu perfil. y no incluyas (https://) en tu enlace..."
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
                       {...field}
                     />
                   </FormControl>
@@ -183,7 +194,8 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormLabel>Facebook</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Introduce un enlace que lleve a tu perfil. y no incluyas (https://) en tu enlace..."
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
                       {...field}
                     />
                   </FormControl>
@@ -200,7 +212,8 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormLabel>Instagram</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Introduce un enlace que lleve a tu perfil. y no incluyas (https://) en tu enlace..."
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
                       {...field}
                     />
                   </FormControl>
@@ -209,7 +222,7 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="mail"
               render={({ field }) => (
@@ -217,17 +230,18 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormLabel>Mail</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Introduce un enlace que lleve a tu perfil. y no incluyas (https://) en tu enlace..."
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
-            <Button type="submit" className="justify-end">
-              Entregar
+            <Button type="submit" disabled={loading} className="justify-end">
+              {loading ? "Cargando..." : "Entregar"}
             </Button>
           </form>
         </Form>

@@ -26,7 +26,8 @@ export default function DeleteProfileDialog() {
   };
 
   return (
-    <AlertDialog>
+    <div className="flex justify-end">
+    <AlertDialog >
       <AlertDialogTrigger asChild>
         <Button variant="outline" className="mb-2 ml-5">
           Eliminar tu perfil
@@ -46,5 +47,6 @@ export default function DeleteProfileDialog() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+    </div>
   );
 }

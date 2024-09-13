@@ -120,10 +120,9 @@ export function AddCategoryForm({ categories }: CategoryProp) {
                   startTransition(async () => {
                     try {
                       await removeCategory(category.name);
-                      toast.success("Certificación eliminada");
-                      router.refresh(); // Ensure the page refreshes after removal
+                      router.refresh();
                     } catch (error) {
-                      toast.error("Error al eliminar la certificación");
+                      console.log(error)
                     }
                   });
                 }}

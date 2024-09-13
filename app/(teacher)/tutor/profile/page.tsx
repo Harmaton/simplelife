@@ -42,7 +42,7 @@ function ProfilePage() {
   }
 
   return (
-    <div className="p-6 m-2">
+    <div className="p-6 m-auto">
       {teacherdata ? (
         <>
           <Banner label="Tenga en cuenta que no todos los campos del enlace son obligatorios, pero el resto lo son en caso de que necesite editar sus datos. Puede editar la imagen por separado del resto del formulario, pero necesita completar todos los campos relevantes para poder ver sus detalles en la página de profesores." />
