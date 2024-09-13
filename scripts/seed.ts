@@ -6,7 +6,7 @@ const database = new PrismaClient();
 async function main() {
   try {
     
-    const adminEmail = "njagiiharmaton@gmail.com"; // Replace with the hardcoded admin email
+    const adminEmail = "gpietromoura@gmail.com"; // Replace with the hardcoded admin email
     const adminUser = await database.user.findUnique({
       where: { email: adminEmail },
     });

@@ -56,7 +56,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (user.email && !isAdmin) {
+  if (!isAdmin) {
     return (
       <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
         <div className="text-2xl mb-4">🚫</div>

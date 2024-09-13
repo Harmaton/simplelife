@@ -47,17 +47,20 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
     return (
       <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
         <div className="text-2xl mb-4">🔒</div>
+        <h1 className="text-3xl font-bold mb-2">Acceso Restringido</h1>
+        <p className="text-lg mb-4">Por favor, inicia sesión para continuar.</p>
         <Link href="/login">
-          <Button>Get Started Here</Button>
+          <Button>Comienza aquí</Button>
         </Link>
       </div>
     );
   }
 
-  if (!user?.email && !isTeacher ) {
+  if (!isTeacher) {
     return (
       <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
         <div className="text-2xl mb-4 mt-4">🚫</div>
+        <h1 className="text-3xl font-bold mb-2">Acceso Denegado</h1>
         <p className="text-lg">Lo siento, no estás registrado como profesor. Aplica para convertirte en tutor en la plataforma.</p>
         <Link href="/become-tutor" className="mt-4">
           <Button>Aplicar</Button>

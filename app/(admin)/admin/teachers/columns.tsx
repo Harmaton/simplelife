@@ -70,7 +70,6 @@ export const columns: ColumnDef<User>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-           
               <DropdownMenuItem>
                 <Skull className="h-4 w-4 mr-2" />
                 Profesora de prohibición

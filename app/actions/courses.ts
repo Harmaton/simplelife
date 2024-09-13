@@ -142,7 +142,6 @@ export const getProgress = async (
 export async function createCourse(values: any, userId: string) { 
 
   try {
-
     const teacher = await db.user.findUnique({where: {
       clerkId: userId
     }})

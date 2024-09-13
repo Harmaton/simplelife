@@ -36,7 +36,7 @@ const CreatePage = () => {
     resolver: zodResolver(createCourseformSchema),
     defaultValues: {
       title: "",
-      productCode: 0, // Default value for productCode
+      productCode: 0, 
     },
   });
 
