@@ -61,17 +61,17 @@ const ApplicationPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: teacherId }), 
+        body: JSON.stringify({ id: teacherId }),
       });
       const data = await response.json();
       if (data.success) {
-        toast.success('Estado del profesor actualizado.');
-        refetch();
-        setSelectedTeacher(null);
+        toast.success('Invitación enviada');
+        refetch(); 
       } else {
-        toast.error('Error al actualizar el estado del profesor.');
+        toast.error(data.error || 'Error al actualizar el estado del profesor.');
       }
     } catch (error) {
+      console.error('error client->', error);
       toast.error('Error al actualizar el estado del profesor.');
     } finally {
       setIsActionLoading(false);

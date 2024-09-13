@@ -68,7 +68,7 @@ export default function Signup() {
       const token = credential?.accessToken;
       const user = result.user;
       if (user && user.email) {
-        const response = await fetch('/api/signup', {
+        const response = await fetch('/api/user/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

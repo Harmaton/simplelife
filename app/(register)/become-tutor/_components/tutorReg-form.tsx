@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { CircleArrowRight } from 'lucide-react'
 import { Select } from '@headlessui/react'
-import { checkRegistration, submitTutorRegistration } from '@/app/actions/user'
+import { checkIsTeacher, checkRegistration, submitTutorRegistration } from '@/app/actions/user'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/providers/AuthProvider'
@@ -23,6 +23,7 @@ export default function TutorRegForm({userId}: {userId: string; }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(true) 
   const [registered, setRegistered] = useState(false)
+  const [isTeacher, setisTeacher] = useState(false)
 
   const router = useRouter()
   const userfib = useAuth()
@@ -35,7 +36,16 @@ export default function TutorRegForm({userId}: {userId: string; }) {
         setRegistered(isRegistered);
       }
     };
+
+    const checkTeacherStatus = async () => {
+      if(email){
+        const isteacher = await checkIsTeacher(email)
+        setisTeacher(isteacher)
+
+      }
+    }
     checkRegistrationStatus();
+    checkTeacherStatus()
   }, [email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +54,6 @@ export default function TutorRegForm({userId}: {userId: string; }) {
     const whatsappFull = `${countryCode}${whatsappNumber}`
     try {
       if(!email){
-        console.log('no email captured')
         throw new Error('No email captured')
       }
       const result = await submitTutorRegistration({ name, profession, description, whatsappFull, linkedin, userId,email })
@@ -77,7 +86,7 @@ export default function TutorRegForm({userId}: {userId: string; }) {
         <DialogHeader>
           <DialogTitle>Registro de SimpleLife Tutor</DialogTitle>
         </DialogHeader>
-        {!registered ? (
+        {(!registered || !isTeacher) ? (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className='h-8'></div>
             <Input
