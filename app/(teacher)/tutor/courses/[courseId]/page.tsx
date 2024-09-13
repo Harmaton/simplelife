@@ -1,4 +1,3 @@
-
 import { redirect } from "next/navigation";
 import {
   TimerIcon,
@@ -35,13 +34,15 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
     return <Loadingpage />;
   }
 
-  const teacher = await db.user.findUnique({where : {
-    clerkId: userId
-  }})
+  const teacher = await db.user.findUnique({
+    where: {
+      clerkId: userId,
+    },
+  });
 
- if(!teacher){
-  return  <Loadingpage />;
- }
+  if (!teacher) {
+    return <Loadingpage />;
+  }
 
   const course = await db.course.findUnique({
     where: {
@@ -66,7 +67,7 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
   if (!course) {
     return redirect("/");
   }
-  
+
   let subcategories: any[] = [];
   if (course.categoryId) {
     subcategories = await db.subCategory.findMany({
@@ -112,8 +113,10 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
             isPublished={course.isPublished}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-          <div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+          {/* Left Column */}
+          <div className="flex flex-col gap-y-6">
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
               <h2 className="text-xl">Personaliza tu curso</h2>
@@ -129,7 +132,6 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
                 value: category.id,
               }))}
             />
-
             {course.categoryId ? (
               <SubCategoryForm
                 initialData={course}
@@ -149,59 +151,48 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
                 </div>
               </div>
             )}
-
             <WhatsappForm initialData={course} courseId={course.id} />
-            <EvaluationsForm courseId={course.id} initialData={course} />
+           
           </div>
 
-          <div className="">
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={ListChecks} />
-                <h2 className="text-xl">Capítulos del curso</h2>
-              </div>
-              <ChaptersForm initialData={course} courseId={course.id} />
+          {/* Right Column */}
+          <div className="flex flex-col gap-y-6">
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={ListChecks} />
+              <h2 className="text-xl">Capítulos del curso</h2>
             </div>
+            <ChaptersForm initialData={course} courseId={course.id} />
 
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={CircleDollarSign} />
-                <h2 className="text-xl">Vende tu curso</h2>
-              </div>
-              <LinkForm initialData={course} courseId={course.id} />
-              <div>{course.paymentLink}</div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={CircleDollarSign} />
+              <h2 className="text-xl">Vende tu curso</h2>
             </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={CheckSquareIcon} />
-                <h2 className="text-xl">Requisitos previos del curso</h2>
-              </div>
-              <PrerequisitesForm initialData={course} courseId={course.id} />
-            </div>
+            <LinkForm initialData={course} courseId={course.id} />
+            <div>{course.paymentLink}</div>
 
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={Clock10Icon} />
-                <h2 className="text-xl">Fecha de inicio del curso</h2>
-              </div>
-              <StartDateForm initialData={course} courseId={course.id} />
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={CheckSquareIcon} />
+              <h2 className="text-xl">Requisitos previos del curso</h2>
             </div>
+            <PrerequisitesForm initialData={course} courseId={course.id} />
 
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={TimerIcon} />
-                <h2 className="text-xl">Último día del curso</h2>
-              </div>
-              <EndDateForm initialData={course} courseId={course.id} />
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Clock10Icon} />
+              <h2 className="text-xl">Fecha de inicio del curso</h2>
             </div>
+            <StartDateForm initialData={course} courseId={course.id} />
 
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={File} />
-                <h2 className="text-xl">Recursos y archivos adjuntos</h2>
-              </div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={TimerIcon} />
+              <h2 className="text-xl">Último día del curso</h2>
             </div>
+            <EndDateForm initialData={course} courseId={course.id} />
+
+            <EvaluationsForm courseId={course.id} initialData={course} />
+
           </div>
         </div>
+      </div>
     </div>
   );
 };
