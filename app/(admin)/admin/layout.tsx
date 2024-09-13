@@ -15,7 +15,9 @@ import Link from "next/link";
 import { useAuth } from "@/providers/AuthProvider";
 import {
   BarChart,
+  Book,
   BookmarkIcon,
+  CreditCard,
   Home,
   LineChart,
   LogOut,
@@ -29,6 +31,7 @@ import Avatar from "@/components/icon-avatar";
 import Loadingpage from "@/components/loading-page";
 import { toast } from "sonner";
 import { checkIsAdmin } from "@/app/actions/user";
+import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
@@ -70,10 +73,17 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
   const links = [
     {
+      label: "Admino Analitica",
+      href: "/admin/analytics",
+      icon: (
+        <BarChart className="text-green-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
       label: "Maestros",
       href: "/admin",
       icon: (
-        <PenBox className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <PenBox className="text-blue-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
@@ -84,10 +94,17 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     },
     {
-      label: "Admino Analitica",
-      href: "/admin/analytics",
+      label: "Administrar estudiantes",
+      href: "/admin/students",
       icon: (
-        <BarChart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <DocumentArrowUpIcon className="text-red-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Pagos Hotmart",
+      href: "/admin/hotmart",
+      icon: (
+        <CreditCard className="text-orange-500 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
@@ -95,13 +112,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       href: "/admin/categories",
       icon: (
         <LineChart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Estudiante",
-      href: "/admin/students",
-      icon: (
-        <UserCircle className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
@@ -115,15 +125,15 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       label: "Administrar libros",
       href: "/admin/addbook",
       icon: (
-        <BookmarkIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <Book className="text-yellow-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
   ];
 
   const handleSignOut = async () => {
     await signOut(auth);
-    toast.success('Sesión cerrada');
-    window.location.href = '/'; 
+    toast.success("Sesión cerrada");
+    window.location.href = "/";
   };
 
   return (
@@ -133,7 +143,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="md:hidden">
           <MobileSidebar>
             <SidebarBody className="justify-between gap-10">
-              <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              <div className="flex flex-col flex-1  overflow-y-auto overflow-x-hidden">
                 <Logo />
                 <div className="mt-8 flex flex-col gap-2">
                   {links.map((link, idx) => (
@@ -152,7 +162,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="justify-between gap-10">
-              <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              <div className="flex flex-col flex-1 overflow-y-auto scrollbar-none overflow-x-hidden">
                 {open ? <Logo /> : <LogoIcon />}
                 <div className="mt-8 flex flex-col gap-2">
                   {links.map((link, idx) => (
@@ -174,17 +184,28 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
-        <div className="flex flex-row space-x-4 justify-end ">
+        <div className="flex flex-row space-x-4 justify-end">
+          <Link href={"/dashboard"}>
+            <Button className="flex items-center border text-white">
+              🎓 Modo estudiante
+            </Button>
+          </Link>
+          <Link href={"/tutor/profile"}>
+            <Button className="flex items-center bg-blue-500 text-white">
+              👨‍🏫 Modo profesor
+            </Button>
+          </Link>
+
           <Button
             onClick={handleSignOut}
             variant={"outline"}
             className="flex items-center"
           >
-            <LogOut className="m-auto" />            
+            <LogOut className="m-auto h-4 w-4" />
           </Button>
           <Link href={"/"}>
             <Button className="flex items-center bg-violet-800 text-white">
-              <Home className="m-auto" />
+              <Home className="m-auto h-4 w-4" />
             </Button>
           </Link>
         </div>

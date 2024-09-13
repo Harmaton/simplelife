@@ -73,39 +73,39 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       label: "Gestionar Perfil",
       href: "/tutor/profile",
       icon: (
-        <UserCog className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <UserCog className="text-blue-500 dark:text-blue-400 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Gestionar Cursos",
       href: "/tutor/courses",
       icon: (
-        <BookOpen className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <BookOpen className="text-green-500 dark:text-green-400 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Programar Clases",
       href: "/tutor/calendar",
       icon: (
-        <Calendar className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <Calendar className="text-purple-500 dark:text-purple-400 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Sesiones de Mentoría",
       href: "/tutor/mentor",
       icon: (
-        <Users className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <Users className="text-teal-500 dark:text-teal-400 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Meditación",
       href: "/tutor/meditation",
       icon: (
-        <Locate className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <Locate className="text-yellow-500 dark:text-yellow-400 h-5 w-5 flex-shrink-0" />
       ),
     }
   ];
-
+  
   const handleSignOut = async () => {
     await signOut(auth);
     toast.success('Sesión cerrada');
@@ -114,12 +114,12 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarProvider>
-      <div className="h-full scrollbar-thin scrollbar-rounded-full">
+      <div className="h-full ">
         {/* Mobile Sidebar */}
         <div className="md:hidden">
           <MobileSidebar>
             <SidebarBody className="justify-between gap-10">
-              <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              <div className="flex flex-col flex-1 overflow-y-auto  overflow-x-hidden">
                 <Logo />
                 <div className="mt-8 flex flex-col gap-2">
                   {links.map((link, idx) => (
@@ -138,7 +138,7 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="justify-between gap-10">
-              <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              <div className="flex flex-col flex-1 overflow-y-auto scrollbar-none overflow-x-hidden">
                 {open ? <Logo /> : <LogoIcon />}
                 <div className="mt-8 flex flex-col gap-2">
                   {links.map((link, idx) => (
@@ -166,11 +166,11 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
             variant={"outline"}
             className="flex items-center"
           >
-            <LogOut className="m-auto" />            
+            <LogOut className="m-auto  h-4 w-4" />            
           </Button>
           <Link href={"/"}>
             <Button className="flex items-center bg-violet-800 text-white">
-              <Home className="m-auto" />
+              <Home className="m-auto  h-4 w-4" />
             </Button>
           </Link>
         </div>
