@@ -11,13 +11,14 @@ import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
 import { addCtegoriesAction, removeCategory } from "@/app/actions/categories";
-import { SplineIcon, Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import Link from "next/link";
 import { Category } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 const categorySchema = z.object({
-  name: z.string().min(3),
-  pcode: z.number()
+  name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
+  pcode: z.number().min(1, "El código de producto debe ser mayor que 0"),
 });
 
 type Inputs = z.infer<typeof categorySchema>;
@@ -33,13 +34,25 @@ export function AddCategoryForm({ categories }: CategoryProp) {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
-      pcode: 1234
+      pcode: 0,
     },
+    mode: "onChange",
   });
 
+  const { isValid } = form.formState;
+  const router = useRouter();
+
   async function handleSubmit(values: z.infer<typeof categorySchema>) {
-    await addCtegoriesAction(values.name, values.pcode);
-    toast.success("Delicioso");
+    startTransition(async () => {
+      try {
+        await addCtegoriesAction(values.name, values.pcode);
+        toast.success("Certificación añadida con éxito");
+        form.reset();
+        router.refresh();
+      } catch (error) {
+        toast.error("Error al añadir la certificación");
+      }
+    });
   }
 
   return (
@@ -50,7 +63,7 @@ export function AddCategoryForm({ categories }: CategoryProp) {
           className="grid w-full max-w-4xl gap-2 items-center mb-2 "
         >
           <FormItem>
-            <FormLabel>Nombre del Certificacion</FormLabel>
+            <FormLabel>Nombre de la Certificación</FormLabel>
             <FormControl>
               <Input
                 placeholder="Categoría de entrada"
@@ -70,41 +83,59 @@ export function AddCategoryForm({ categories }: CategoryProp) {
             </FormControl>
           </FormItem>
 
-          <Button className="w-fit" type="submit" disabled={isPending}>
-            {isPending && (
-              <SplineIcon
+          <Button
+            className="hover:bg-blue-500 transition-colors duration-200"
+            type="submit"
+            disabled={isPending || !isValid}
+          >
+            {isPending ? (
+              <Loader2
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-            )}
-            Añadir Certificacion
+            ) : null}
+            Añadir Certificación
           </Button>
         </form>
       </Form>
 
       <div className="">
         <h1 className="text-center font-bold mb-2 mt-4">Certificaciones</h1>
-        {categories ? (
+        {categories && categories.length > 0 ? (
           categories.map((category, index) => (
             <Link
               key={index}
               href={`/admin/categories/${category.id}`}
-              className="p-4 mb-2 border flex justify-between items-center rounded-md hover:opacity-50 hover:text-blue-500 cursor-pointer hover:border-separate shadow-lg"
+              className="p-4 mb-2 border flex justify-between items-center rounded-md hover:opacity-50 hover:text-blue-500 cursor-pointer hover:border-separate shadow-lg transition-all duration-200"
             >
               <span className="mr-2">{category.name}</span>
               <Button
                 variant="outline"
-                onClick={async () => {
-                  await removeCategory(category.name);
-                  toast.success("Remota");
+                onClick={async (e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  startTransition(async () => {
+                    try {
+                      await removeCategory(category.name);
+                      toast.success("Certificación eliminada");
+                      router.refresh(); // Ensure the page refreshes after removal
+                    } catch (error) {
+                      toast.error("Error al eliminar la certificación");
+                    }
+                  });
                 }}
+                disabled={isPending}
               >
-                <Trash className="m-auto h-4 w-4 text-red-500" />
+                {isPending ? (
+                  <Loader2 className="m-auto h-4 w-4 animate-spin" />
+                ) : (
+                  <Trash className="m-auto h-4 w-4 text-red-500" />
+                )}
               </Button>
             </Link>
           ))
         ) : (
-          <div> Sin Certificaciones </div>
+          <div className="text-center text-gray-500">Sin Certificaciones</div>
         )}
       </div>
     </div>

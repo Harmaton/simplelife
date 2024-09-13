@@ -1,15 +1,8 @@
 "use server";
 
-import { auth } from "@/firebase";
 import { db } from "@/lib/db";
 
 export async function addCtegoriesAction(name: string, pcode: number) {
-  const user = auth.currentUser;
-  const userId = user?.uid;
-
-  if (!userId) {
-    throw new Error("User not found.");
-  }
 
   const samecategory = await db.category.findFirst({
     where: { name: name },
