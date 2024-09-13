@@ -19,17 +19,18 @@ export default async function page({
   }
 
   return (
-    <div className="p-4 justify-center space-y-5">
+    <div className="p-8  justify-center space-y-2">
       <h1 className="text-center my-4 text-2xl font-bold">
         <span className="text-blue-500">{categoryItem.name} </span> en
         Certificación
       </h1>
       <p className="text-center mb-4 text-sm ">Administrar Certificación</p>
       <BreadcrumbWithCustomSeparator categoryName={categoryItem.name} />
-      <ImageForm initialData={categoryItem} categoryId={categoryItem.id} />
-      <h1 className="text-2xl font-semibold">
+      <ImageForm  initialData={categoryItem} categoryId={categoryItem.id} />
+
+      <h1 className="text-2xl text-center font-semibold">
         Crear o eliminar Certificación en{" "}
-        <span className="font-bold text-blue-500">{categoryItem.name}</span>
+        <span className="font-bold text-center text-blue-500">{categoryItem.name}</span>
       </h1>
 
       <AddSubCategoryForm

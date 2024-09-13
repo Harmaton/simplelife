@@ -12,11 +12,11 @@ import { Input } from "@/components/ui/input";
 
 import {
   addsubCtegoriesAction,
-  removesubCategory,
 } from "@/app/actions/categories";
 import { SplineIcon, Trash } from "lucide-react";
 import { useOptimistic } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Keep this import here
 
 const categorySchema = z.object({
   name: z.string().min(3),
@@ -35,6 +35,8 @@ export function AddSubCategoryForm({
   names: SubCategoryProp[];
   categoryname: string;
 }) {
+  const router = useRouter(); // Moved inside the component
+
   const [isPending, startTransition] = React.useTransition();
 
   const form = useForm<Inputs>({
@@ -45,58 +47,89 @@ export function AddSubCategoryForm({
   });
 
   const [optimisticsubCategories, updateOptimisticsubCategories] =
-    useOptimistic<
-      SubCategoryProp[],
-      { name: string; action: "add" | "remove" }
-    >(names, (state, { name, action }) => {
-      if (action === "add") {
-        return [...state, { name }];
-      } else if (action === "remove") {
-        return state.filter((category) => category.name !== name);
+    useOptimistic<SubCategoryProp[], { name: string; action: "add" | "remove" }>(
+      names,
+      (state, { name, action }) => {
+        if (action === "add") {
+          return [...state, { name }];
+        } else if (action === "remove") {
+          return state.filter((category) => category.name !== name);
+        }
+        return state;
       }
-      return state;
-    });
+    );
 
   return (
-    <div className="p-4 m-2 border rounded-md">
-      <Form {...form}>
-        <form
-          className="grid w-full max-w-4xl gap-2 items-center mb-2"
-          onSubmit={form.handleSubmit(async (data) => {
-            const newname = data.name;
-            if (newname) {
-              updateOptimisticsubCategories({ name: newname, action: "add" });
+    <div className="flex justify-center items-center ">
+      <div className="w-full max-w-lg p-6 border rounded-md shadow-lg bg-white">
+        <Form {...form}>
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={form.handleSubmit(async (data) => {
+              const newname = data.name;
+              if (newname && typeof newname === "string") {
+                try {
+                  updateOptimisticsubCategories({
+                    name: newname,
+                    action: "add",
+                  });
 
-              console.log(newname);
-              const result = await addsubCtegoriesAction(newname, categoryname);
-              console.log(result);
-            } else {
-              console.error("Name is not a string:", newname);
-              toast.error("No se pudo administrar");
-            }
-          })}
-        >
-          <FormItem>
-            <FormLabel>Nombre de la Subcategoría</FormLabel>
-            <FormControl>
-              <Input
-                placeholder="Ingrese el nombre de la subcategoría"
-                {...form.register("name")}
-              />
-            </FormControl>
-          </FormItem>
+                  const result = await addsubCtegoriesAction(
+                    newname,
+                    categoryname
+                  );
 
-          <Button className="w-fit" disabled={!form.watch("name")}>
-            {isPending && (
-              <SplineIcon
-                className="mr-2 h-4 w-4 animate-spin"
-                aria-hidden="true"
-              />
-            )}
-            Añadir Subcategoría
-          </Button>
-        </form>
-      </Form>
+                  if (result.success) {
+                    router.refresh();
+                    toast.success(result.message);
+                  } else {
+                    toast.error(result.message)
+                    throw new Error(result.message);
+                  }
+                } catch (error) {
+                  toast.error(error)
+                  console.error("Error al añadir la subcategoría:", error);
+                  toast.error(
+                    error instanceof Error
+                      ? error.message
+                      : "Error al añadir la subcategoría"
+                  );
+                  // Revert the optimistic update
+                  updateOptimisticsubCategories({
+                    name: newname,
+                    action: "remove",
+                  });
+                }
+              } else {
+                toast.error("El nombre de la subcategoría no es válido");
+              }
+            })}
+          >
+            <FormItem>
+              <FormLabel>Nombre de la Subcategoría</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Ingrese el nombre de la subcategoría"
+                  {...form.register("name")}
+                />
+              </FormControl>
+            </FormItem>
+
+            <Button
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+              disabled={!form.watch("name")}
+            >
+              {isPending && (
+                <SplineIcon
+                  className="mr-2 h-4 w-4 animate-spin"
+                  aria-hidden="true"
+                />
+              )}
+              Añadir Subcategoría
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }

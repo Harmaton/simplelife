@@ -101,6 +101,9 @@ export function AddCategoryForm({ categories }: CategoryProp) {
 
       <div className="">
         <h1 className="text-center font-bold mb-2 mt-4">Certificaciones</h1>
+        <p className="font-mono text-center font-sm">
+          Administra las categorías existentes, haz clic para editar
+        </p>
         {categories && categories.length > 0 ? (
           categories.map((category, index) => (
             <Link

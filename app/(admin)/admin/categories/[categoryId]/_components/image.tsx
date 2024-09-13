@@ -71,14 +71,15 @@ export const ImageForm = ({
             <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">
-            <Image
-              alt="Upload"
-              fill
-              className="object-cover rounded-md"
-              src={initialData.imageUrl}
-            />
-          </div>
+          <div className="relative h-40 mt-2"> 
+          <Image
+            alt="Upload"
+            fill
+            className="object-cover rounded-md"
+            src={initialData.imageUrl}
+          />
+        </div>
+        
         )
       )}
       {isEditing && (

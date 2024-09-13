@@ -83,31 +83,48 @@ export async function addsubCtegoriesAction(
     try {
       decodedCategoryName = decodeURIComponent(categoryname);
     } catch (e) {
-      // If decoding fails, assume it's not URI-encoded and use the original value
       console.log("Category name is not URI-encoded.");
     }
-
-    //CREATE A SUB CATEGORY FOR THIS CATEGORY
-    console.log("sub-name->", name);
-    console.log("category->", decodedCategoryName);
 
     const category = await db.category.findUnique({
       where: {
         name: decodedCategoryName,
       },
     });
-    if (category) {
-      const subcategory = await db.subCategory.create({
-        data: {
-          name: name,
-          categoryId: category.id,
-          createdAt: new Date(),
-        },
-      });
-      return subcategory;
+
+    if (!category) {
+      return {
+        success: false,
+        message: `La categoría "${decodedCategoryName}" no existe.`,
+      };
     }
+
+    const subcategory = await db.subCategory.create({
+      data: {
+        name: name,
+        categoryId: category.id,
+        createdAt: new Date(),
+      },
+    });
+
+    return {
+      success: true,
+      name: subcategory.name,
+      message: `Subcategoría "${subcategory.name}" añadida con éxito.`,
+    };
+
   } catch (error) {
-    console.log(error);
+    console.error("Error al añadir la subcategoría:", error);
+    
+    let errorMessage = "Error desconocido al añadir la subcategoría.";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+
+    return {
+      success: false,
+      message: errorMessage,
+    };
   }
 }
 
