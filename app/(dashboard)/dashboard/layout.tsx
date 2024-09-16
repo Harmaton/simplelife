@@ -155,7 +155,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
-          <TeacherMode userId={user?.uid} />
+          {/* <TeacherMode userId={user?.uid} /> */}
           <Button
             onClick={handleSignOut}
             variant={"outline"}

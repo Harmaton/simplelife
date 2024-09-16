@@ -309,3 +309,34 @@ export async function checkRegistration(email: string) {
     return false
   }
 }
+
+export async function GetAllTutors(){
+  try {
+
+    const tutors = await db.user.findMany({where: {
+      isTeacher: true
+    }})
+
+    return tutors
+
+  } catch (error){
+    console.log(error)
+    return []
+  }
+}
+
+export async function getOneUser(userid: string){
+try {
+
+  const userdb = await db.user.findUnique({where: {
+    clerkId: userid
+  }})
+
+  return userdb
+
+  
+} catch (error) {
+  console.log(error)
+  return null
+}
+}

@@ -164,7 +164,6 @@ export async function createCourse(values: any, userId: string) {
 
 export async function getAllTeacherCourses(userid: string){
   try {
-
     const user = await db.user.findUnique({where: {
       clerkId: userid
     }})
@@ -178,6 +177,26 @@ export async function getAllTeacherCourses(userid: string){
     
   } catch (error) {
     console.log(error)
+    return []
   }
 }
 
+export async function getTeacherCourses(teacherid: string) {
+
+  try {
+    const courses = await db.course.findMany({
+      where: {
+          teacherId: teacherid
+      },
+      orderBy: {
+          createdAt: "desc",
+      },
+  });
+
+  return courses
+    
+  } catch (error) {
+    return []
+  }
+  
+}
