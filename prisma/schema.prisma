@@ -31,14 +31,12 @@ model Appointment {
 }
 
 model Attachment {
-  id        String   @id
+  id        String   @id @default(uuid())
   name      String
   url       String
   courseId  String
   createdAt DateTime @default(now())
-  updatedAt DateTime
-
-  @@index([courseId])
+  updatedAt DateTime @updatedAt
 }
 
 model Attendee {

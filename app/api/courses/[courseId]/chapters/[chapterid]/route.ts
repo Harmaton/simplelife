@@ -1,32 +1,26 @@
+
+
 import { NextResponse } from "next/server";
+
 import { db } from "@/lib/db";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string; userId: string } }
+  { params }: { params: { courseId: string } }
 ) {
   try {
-    const user = await db.user.findUnique({
-      where: {
-        clerkId: params.userId,
-      },
-    });
-    if (!user) {
-      return NextResponse.json({ message: "No user" }, { status: 401 });
-    }
 
     const course = await db.course.findUnique({
       where: {
-        id: params.courseId,
-        teacherId: user.id,
+        id: params.courseId
       },
       include: {
-        Chapter: true,
-      },
+        Chapter: true
+      }
     });
 
     if (!course) {
-      return new NextResponse("Course Not found", { status: 404 });
+      return new NextResponse("Not found", { status: 404 });
     }
 
     const deletedCourse = await db.course.delete({
@@ -44,13 +38,12 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string } } 
+  { params }: { params: { courseId: string } }
 ) {
   try {
-    const { courseId } = params; 
-
-
+    const { courseId } = params;
     const values = await req.json();
+
 
     const course = await db.course.update({
       where: {
