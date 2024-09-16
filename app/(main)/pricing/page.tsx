@@ -5,7 +5,6 @@ import Navbar from '@/components/landing-page/navbar'
 import PackComponent from './_components/pack-component'
 import Top from '@/components/top-page'
 
-
 const pricingData = {
   packs: [
     {

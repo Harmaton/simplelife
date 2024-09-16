@@ -96,7 +96,7 @@ const Hero: React.FC = () => {
   }
 
   function exploreTeachersRoue() {
-    router.push("/teachers");
+    router.push("/tutors");
   }
 
   return (
@@ -181,7 +181,7 @@ const Hero: React.FC = () => {
               )}
               {!isTeacher && (
                 <Button
-                  className="text-center py-2 rounded-lg bg-transparent border border-violet-300  border-blue-500"
+                  className="text-center py-2 rounded-lg bg-transparent border border-blue-500"
                   variant={"ghost"}
                   onClick={exploreTeachersRoue}
                 >

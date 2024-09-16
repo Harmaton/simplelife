@@ -96,9 +96,9 @@ export function NavigationMenuDemo() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/become-tutor" legacyBehavior passHref>
+          <Link href="/tutors" legacyBehavior passHref>
             <NavigationMenuLink className={`${navigationMenuTriggerStyle()} border bg-white border-violet-500 rounded-md`}>
-            Conviértete en tutora
+           Maestros
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

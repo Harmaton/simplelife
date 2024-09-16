@@ -6,6 +6,7 @@ import { GetAllCategories, GetCategorySubCategories } from "../actions/courses";
 import { Categories } from "./categories";
 import Top from "@/components/top-page";
 import Ad from "@/components/landing-page/ad";
+
 interface SearchPageProps {
   searchParams: {
     name: string;
