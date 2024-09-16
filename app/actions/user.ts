@@ -340,3 +340,16 @@ try {
   return null
 }
 }
+
+export async function getTeacher(id: string){
+  try {
+    
+    const teacher = await db.user.findUnique({where: {
+      id: id
+    }})
+    return teacher
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}

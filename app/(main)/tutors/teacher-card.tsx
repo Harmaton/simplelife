@@ -10,7 +10,7 @@ interface Teacher {
 
 function TeacherCard({teacher}: Teacher){
   return (
-    <a href={`/teacher/${teacher.id}`} className="block no-underline">
+    <a href={`/tutors/${teacher.id}`} className="block no-underline">
       <div className="relative bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
         {/*  corner borders */}
         <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-blue-500"></div>
