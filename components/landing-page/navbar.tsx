@@ -16,12 +16,13 @@ import { motion } from "framer-motion";
 import { NavigationMenuDemo } from "../navbar-shadcn";
 import { Logo } from "../logo";
 import Image from "next/image";
+import { Dialog } from "../ui/dialog";
 
 export default function Navbar() {
   const { user } = useAuth();
 
   return (
-    <header className="absolute top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 md:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky" style={{ position: 'sticky', top: '-100px', transform: 'translateY(0)', zIndex: 50 }}>
+    <header className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 md:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky" style={{ position: 'sticky', top: '-100px', transform: 'translateY(0)', zIndex: 50 }}>
         <div className="absolute inset-0 bg-white/70 backdrop-blur-lg z-[-1]"></div>
       <Link
         href="/"
@@ -54,6 +55,7 @@ export default function Navbar() {
           >
             <SheetHeader className="mb-4">
               <Logo /> 
+              <SheetTitle></SheetTitle>
               <SheetDescription></SheetDescription>
             </SheetHeader>
             <nav className="grid gap-6 mb-4 ">
@@ -108,11 +110,11 @@ export default function Navbar() {
               </Link>
 
               <Link
-                href="/become-tutor"
+                href="/tutors"
                 className="text-lg font-medium border p-2 border-violet-500 tex-center transition-colors hover:text-primary"
                 prefetch={false}
               >
-               Conviértete en tutor
+               Maestros
               </Link>
              
             </nav>
@@ -121,7 +123,8 @@ export default function Navbar() {
                 <>
                   <Button className="rounded-full flex items-center justify-center p-2">
                   {user?.photoURL ? (
-                  <Image src={user.photoURL} alt="User Avatar" className="w-8 h-8 rounded-full" />
+            
+                  <Image src={user.photoURL} alt="User Avatar" className="w-8 h-8 rounded-full" width={50} height={50} />
                 ) : (
                   <span className="text-xl">{user?.email?.charAt(0).toUpperCase()}</span>
                 )}
