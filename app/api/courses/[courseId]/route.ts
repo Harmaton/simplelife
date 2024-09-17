@@ -14,7 +14,6 @@ export async function DELETE(
     if (!user) {
       return NextResponse.json({ message: "No user" }, { status: 401 });
     }
-
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,

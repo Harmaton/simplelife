@@ -115,8 +115,6 @@ model Category {
   Courses       Course[]
   purchases     CategoryPurchase[]
   packs         Pack[]
-
-  
 }
 
 model Chapter {

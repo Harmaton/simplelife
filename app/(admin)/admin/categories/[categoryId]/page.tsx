@@ -6,6 +6,7 @@ import { BreadcrumbWithCustomSeparator } from "./_components/breadC";
 import { ImageForm } from "./_components/image";
 import Subcategories from "./_components/sub-categories";
 import { AddSubCategoryForm } from "../_components/add-subcategory-form";
+import ImageFormDropdown from "./image";
 
 export default async function page({
   params,
@@ -26,20 +27,18 @@ export default async function page({
       </h1>
       <p className="text-center mb-4 text-sm ">Administrar Certificación</p>
       <BreadcrumbWithCustomSeparator categoryName={categoryItem.name} />
-      <ImageForm  initialData={categoryItem} categoryId={categoryItem.id} />
+      <ImageFormDropdown initialData={categoryItem} categoryId={categoryItem.id} />
 
       <h1 className="text-2xl text-center font-semibold">
         Crear o eliminar Certificación en{" "}
-        <span className="font-bold text-center text-blue-500">{categoryItem.name}</span>
+        <span className="font-bold text-center text-blue-500">
+          {categoryItem.name}
+        </span>
       </h1>
 
       <AddSubCategoryForm
-        names={subcategories}
         categoryname={categoryItem.name}
-      />
-      <Subcategories
         subcategories={subcategories}
-        categoryName={categoryItem.name}
       />
     </div>
   );

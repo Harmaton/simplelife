@@ -73,13 +73,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
   const links = [
     {
-      label: "Admino Analitica",
-      href: "/admin/analytics",
-      icon: (
-        <BarChart className="text-green-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
       label: "Maestros",
       href: "/admin",
       icon: (
@@ -101,6 +94,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     },
     {
+      label: "Admino Analitica",
+      href: "/admin/analytics",
+      icon: (
+        <BarChart className="text-green-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
       label: "Pagos Hotmart",
       href: "/admin/hotmart",
       icon: (
@@ -108,7 +108,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     },
     {
-      label: "Categorías",
+      label: "Administrar certificaciones",
       href: "/admin/categories",
       icon: (
         <LineChart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />

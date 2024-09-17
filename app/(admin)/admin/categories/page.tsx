@@ -10,7 +10,7 @@ export default async function Page() {
         <h1 className="text-center my-4 text-3xl font-bold">
           Administrar Certificaciones
         </h1>
-        <p className="text-center mb-8 text-lg text-gray-600 font-mono">
+        <p className="text-center mb-2 text-lg text-gray-600 font-mono">
           Crear, actualizar y eliminar Certificaciones y Diplomas.
         </p>
         <AddCategoryForm categories={categories} />

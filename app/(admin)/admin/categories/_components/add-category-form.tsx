@@ -1,15 +1,13 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
 import { addCtegoriesAction, removeCategory } from "@/app/actions/categories";
 import { Loader2, Trash } from "lucide-react";
 import Link from "next/link";
@@ -29,6 +27,7 @@ type CategoryProp = {
 
 export function AddCategoryForm({ categories }: CategoryProp) {
   const [isPending, startTransition] = React.useTransition();
+  const [deletingCategory, setDeletingCategory] = React.useState<string | null>(null);
 
   const form = useForm<Inputs>({
     resolver: zodResolver(categorySchema),
@@ -55,12 +54,26 @@ export function AddCategoryForm({ categories }: CategoryProp) {
     });
   }
 
+  const handleDelete = async (categoryName: string) => {
+    setDeletingCategory(categoryName);
+    try {
+      await removeCategory(categoryName);
+      toast.success("Certificación eliminada con éxito");
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast.error("Error al eliminar la certificación");
+    } finally {
+      setDeletingCategory(null);
+    }
+  };
+
   return (
-    <div className="p-2 m-2">
+    <div className="p-4 flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
-          className="grid w-full max-w-4xl gap-2 items-center mb-2 "
+          className="w-full md:w-1/2 space-y-4"
         >
           <FormItem>
             <FormLabel>Nombre de la Certificación</FormLabel>
@@ -84,7 +97,7 @@ export function AddCategoryForm({ categories }: CategoryProp) {
           </FormItem>
 
           <Button
-            className="hover:bg-blue-500 transition-colors duration-200"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
             type="submit"
             disabled={isPending || !isValid}
           >
@@ -99,45 +112,45 @@ export function AddCategoryForm({ categories }: CategoryProp) {
         </form>
       </Form>
 
-      <div className="">
-        <h1 className="text-center font-bold mb-2 mt-4">Certificaciones</h1>
-        <p className="font-mono text-center font-sm">
+      <div className="w-full md:w-1/2">
+        <h1 className="text-2xl font-bold mb-4">Certificaciones</h1>
+        <p className="text-sm text-gray-600 mb-4">
           Administra las categorías existentes, haz clic para editar
         </p>
         {categories && categories.length > 0 ? (
-          categories.map((category, index) => (
-            <Link
-              key={index}
-              href={`/admin/categories/${category.id}`}
-              className="p-4 mb-2 border flex justify-between items-center rounded-md hover:opacity-50 hover:text-blue-500 cursor-pointer hover:border-separate shadow-lg transition-all duration-200"
-            >
-              <span className="mr-2">{category.name}</span>
-              <Button
-                variant="outline"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  startTransition(async () => {
-                    try {
-                      await removeCategory(category.name);
-                      router.refresh();
-                    } catch (error) {
-                      console.log(error)
-                    }
-                  });
-                }}
-                disabled={isPending}
+          <div className="space-y-3">
+            {categories.map((category, index) => (
+              <div
+                key={index}
+                className="p-4 border rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex justify-between items-center"
               >
-                {isPending ? (
-                  <Loader2 className="m-auto h-4 w-4 animate-spin" />
-                ) : (
-                  <Trash className="m-auto h-4 w-4 text-red-500" />
-                )}
-              </Button>
-            </Link>
-          ))
+                <Link
+                  href={`/admin/categories/${category.id}`}
+                  className="flex-grow hover:text-blue-600 transition-colors duration-200"
+                >
+                  <span>{category.name}</span>
+                </Link>
+                <Button
+                  variant="outline"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleDelete(category.name);
+                  }}
+                  disabled={deletingCategory === category.name}
+                  className="ml-4"
+                >
+                  {deletingCategory === category.name ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Trash className="h-4 w-4 text-red-500" />
+                  )}
+                </Button>
+              </div>
+            ))}
+          </div>
         ) : (
-          <div className="text-center text-gray-500">Sin Certificaciones</div>
+          <div className="text-center text-gray-500 py-8">Sin Certificaciones</div>
         )}
       </div>
     </div>

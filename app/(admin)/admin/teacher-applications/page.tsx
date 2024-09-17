@@ -1,13 +1,26 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from "react";
-import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from "react-query";
+import { useState } from "react";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, PenBoxIcon, Plus, SkullIcon } from "lucide-react";
-import { DisApproveTeacher, getAllRegistredTeachers } from "@/app/actions/user"; 
-import { User } from '@prisma/client';
+import {
+  ArrowLeft,
+  ArrowRight,
+  PenBoxIcon,
+  Plus,
+  SkullIcon,
+} from "lucide-react";
+import { DisApproveTeacher, getAllRegistredTeachers } from "@/app/actions/user";
+import { User } from "@prisma/client";
 import Link from "next/link";
 import { toast } from "sonner";
+import ReactTimeago from "react-timeago";
+import { FaLinkedin, FaWhatsapp } from "react-icons/fa";
 
 const queryClient = new QueryClient();
 
@@ -17,20 +30,28 @@ const ApplicationPage = () => {
   const [isActionLoading, setIsActionLoading] = useState(false);
   const teachersPerPage = 4;
 
-  const { data: teachers = [], isLoading, isError, refetch } = useQuery<User[]>('teachers', async () => {
+  const {
+    data: teachers = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery<User[]>("teachers", async () => {
     try {
       const teachers = await getAllRegistredTeachers();
       return teachers;
     } catch (error) {
-      console.error('Failed to fetch teachers');
-      toast.error('Error al cargar los profesores');
+      console.error("Failed to fetch teachers");
+      toast.error("Error al cargar los profesores");
       return [];
     }
   });
 
   const indexOfLastTeacher = currentPage * teachersPerPage;
   const indexOfFirstTeacher = indexOfLastTeacher - teachersPerPage;
-  const currentTeachers = teachers.slice(indexOfFirstTeacher, indexOfLastTeacher);
+  const currentTeachers = teachers.slice(
+    indexOfFirstTeacher,
+    indexOfLastTeacher
+  );
   const totalPages = Math.ceil(teachers.length / teachersPerPage) || 1;
 
   const handlePageChange = (pageNumber: number) => {
@@ -56,23 +77,25 @@ const ApplicationPage = () => {
   const handleApprove = async (teacherId: string) => {
     setIsActionLoading(true);
     try {
-      const response = await fetch('/api/user/approved', {
-        method: 'POST',
+      const response = await fetch("/api/user/approved", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: teacherId }),
       });
       const data = await response.json();
       if (data.success) {
-        toast.success('Invitación enviada');
-        refetch(); 
+        toast.success("Invitación enviada");
+        window.location.href = '/admin';
       } else {
-        toast.error(data.error || 'Error al actualizar el estado del profesor.');
+        toast.error(
+          data.error || "Error al actualizar el estado del profesor."
+        );
       }
     } catch (error) {
-      console.error('error client->', error);
-      toast.error('Error al actualizar el estado del profesor.');
+      console.error("error client->", error);
+      toast.error("Error al actualizar el estado del profesor.");
     } finally {
       setIsActionLoading(false);
     }
@@ -82,11 +105,11 @@ const ApplicationPage = () => {
     setIsActionLoading(true);
     try {
       await DisApproveTeacher(teacherId);
-      toast.success('Estado del profesor actualizado.');
+      toast.success("Estado del profesor actualizado.");
       refetch();
       setSelectedTeacher(null);
     } catch (error) {
-      toast.error('Error al actualizar el estado del profesor.');
+      toast.error("Error al actualizar el estado del profesor.");
     } finally {
       setIsActionLoading(false);
     }
@@ -102,47 +125,76 @@ const ApplicationPage = () => {
 
   return (
     <div className="border p-6 rounded-lg m-4">
-      <h1 className="text-xl font-bold">Gestionar Validaciones para Profesores</h1>
-      <p className="text-sm text-gray-600">Aquí puedes aprobar o rechazar las solicitudes de profesores.</p>
+      <h1 className="text-xl font-bold">
+        Gestionar Validaciones para Profesores
+      </h1>
+      <p className="text-sm text-gray-600">
+        Aquí puedes aprobar o rechazar las solicitudes de profesores.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-8">
         <div className="overflow-y-auto max-h-screen">
           {currentTeachers.length > 0 ? (
             <>
               <h2 className="text-xl font-bold mb-3">Profesores Registrados</h2>
-              <p className="text-sm text-gray-600 mb-4">Haz clic en un profesor para ver más detalles.</p>
+              <p className="text-sm text-gray-600 mb-4">
+                Haz clic en un profesor para ver más detalles.
+              </p>
               {currentTeachers.map((teacher: User) => (
                 <div
                   key={teacher.id}
                   className="flex items-center p-4 border-b hover:bg-gray-100 cursor-pointer"
                   onClick={() => handleTeacherClick(teacher)}
                 >
-                  <div className="flex-grow">
+                  <div className="flex-grow border p-4 ">
                     <h3 className="font-semibold">{teacher.nickname}</h3>
-                    <p className="text-sm text-gray-600 truncate">{teacher.email}</p>
+                    <p className="text-sm text-gray-600 mb-3 truncate">
+                      {teacher.email}
+                    </p>
+                    <ReactTimeago
+                      date={new Date(teacher.updatedAt)}
+                      locale="es"
+                      timeStyle="twitter"
+                    />
                   </div>
                 </div>
               ))}
               <div className="flex justify-end mt-4">
-                <Button onClick={handlePreviousPage} disabled={currentPage === 1} className="mx-1">
+                <Button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className="mx-1"
+                >
                   <ArrowLeft />
                 </Button>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <Button
-                    key={page}
-                    onClick={() => handlePageChange(page)}
-                    className={`mx-1 ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                  >
-                    {page}
-                  </Button>
-                ))}
-                <Button onClick={handleNextPage} disabled={currentPage === totalPages} className="mx-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (page) => (
+                    <Button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`mx-1 ${
+                        currentPage === page
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-200"
+                      }`}
+                    >
+                      {page}
+                    </Button>
+                  )
+                )}
+                <Button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className="mx-1"
+                >
                   <ArrowRight />
                 </Button>
               </div>
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              <p className="p-4 text-center m-auto text-gray-500">No se encontraron solicitudes de profesores.</p>
+              <p className="p-4 text-center m-auto text-gray-500">
+                No se encontraron solicitudes de profesores.
+              </p>
             </div>
           )}
         </div>
@@ -150,43 +202,69 @@ const ApplicationPage = () => {
           {selectedTeacher ? (
             <div className="border p-4 rounded-lg space-y-2">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold">{selectedTeacher.nickname}</h2>
+                <h2 className="text-xl font-bold">
+                  {selectedTeacher.nickname}
+                </h2>
                 <p className="flex items-center">
                   {selectedTeacher.isTeacher ? (
-                    <span className="text-green-500">Aprobado <PenBoxIcon className="h-4 w-4 border rounded-full m-auto ml-4" /></span>
+                    <span className="text-green-500">
+                      Aprobado{" "}
+                      <PenBoxIcon className="h-4 w-4 border rounded-full m-auto ml-4" />
+                    </span>
                   ) : (
-                    <span className="text-red-500">No Aprobado <SkullIcon className="h-4 w-4 border rounded-full m-auto ml-4" /></span>
+                    <span className="text-red-500">
+                      No Aprobado{" "}
+                      <SkullIcon className="h-4 w-4 border rounded-full m-auto ml-4" />
+                    </span>
                   )}
                 </p>
               </div>
               <div className="y-2">
-                <h1 className="text-sm font-bold text-gray-600">Correo electrónico:</h1>
+                <h1 className="text-sm font-bold text-gray-600">
+                  Correo electrónico:
+                </h1>
                 <p className="text-sm text-gray-600">{selectedTeacher.email}</p>
               </div>
               <div className="y-2">
                 <h1 className="text-sm font-bold text-gray-600">Profesión:</h1>
-                <p className="text-sm text-gray-600">{selectedTeacher.profession || 'N/A'}</p>
+                <p className="text-sm text-gray-600">
+                  {selectedTeacher.profession || "N/A"}
+                </p>
               </div>
               <div className="y-2">
-                <h1 className="text-sm font-bold text-gray-600">Descripción:</h1>
-                <p className="text-sm text-gray-600">{selectedTeacher.description || 'N/A'}</p>
+                <h1 className="text-sm font-bold text-gray-600">
+                  Descripción:
+                </h1>
+                <p className="text-sm text-gray-600">
+                  {selectedTeacher.description || "N/A"}
+                </p>
               </div>
-              <div className="y-2 flex items-center space-x-4 mb-4">
-                <h3 className="mb-2 mt-2 font-sm">Enlaces</h3>
-                <Link href={`https://wa.me/${selectedTeacher.whatsapp}`} target="_blank" rel="noopener noreferrer">
-                  <Button className="bg-green-500 text-white rounded-full p-2">
-                    <span className="material-icons">whatsapp</span>
-                  </Button>
-                </Link>
-                {selectedTeacher.linkedIn ? (
-                  <Link href={selectedTeacher.linkedIn} target="_blank" rel="noopener noreferrer">
-                    <Button className="bg-blue-500 text-white rounded-full p-2">
-                      <span className="material-icons">LinkedIn</span>
-                    </Button>
+              <div className="space-y-2 flex flex-col mb-4">
+                <h3 className="mb-2 mt-2 font-bold text-gray-600">
+                  Hacer un seguimiento
+                </h3>
+
+                <div className="flex space-x-4">
+                  <Link
+                    href={`https://wa.me/${selectedTeacher.whatsapp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center bg-green-500 text-white rounded-full h-12 w-12 p-4 hover:bg-green-600 transition-colors duration-300"
+                  >
+                    <FaWhatsapp size={24} />
                   </Link>
-                ) : (
-                  <span className="text-gray-500">LinkedIn no disponible</span>
-                )}
+
+                  {selectedTeacher.linkedIn ? (
+                    <Link
+                      href={`https://linkedin.com/in/${selectedTeacher.linkedIn}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center bg-blue-500 text-white rounded-md h-12 w-12 p-2 shadow-lg hover:bg-blue-600 transition-colors duration-200"
+                    >
+                      <FaLinkedin size={24} />
+                    </Link>
+                  ) : null}
+                </div>
               </div>
               <div className="flex justify-end space-x-4">
                 <Button
@@ -194,7 +272,7 @@ const ApplicationPage = () => {
                   onClick={() => handleApprove(selectedTeacher.id)}
                   disabled={isActionLoading}
                 >
-                  {isActionLoading ? 'Actualizando...' : 'Aprobar'}
+                  {isActionLoading ? "Actualizando..." : "Aprobar"}
                   <Plus className="h-4 w-4 border rounded-full m-auto ml-4" />
                 </Button>
                 <Button
@@ -202,23 +280,21 @@ const ApplicationPage = () => {
                   onClick={() => handleReject(selectedTeacher.id)}
                   disabled={isActionLoading}
                 >
-                  {isActionLoading ? 'Actualizando...' : 'Rechazar'}
+                  {isActionLoading ? "Actualizando..." : "Rechazar"}
                   <SkullIcon className="h-4 w-4 border rounded-full m-auto ml-4" />
                 </Button>
               </div>
             </div>
           ) : (
-            <p className="text-center text-gray-500">No se ha seleccionado ningún profesor.</p>
+            <p className="text-center text-gray-500">
+              No se ha seleccionado ningún profesor.
+            </p>
           )}
         </div>
       </div>
     </div>
   );
-
 };
-
-
-
 
 const Page = () => (
   <QueryClientProvider client={queryClient}>
