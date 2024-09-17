@@ -21,8 +21,14 @@ const categorySchema = z.object({
 
 type Inputs = z.infer<typeof categorySchema>;
 
+type SimplifiedCategory = {
+  id: string;
+  name: string;
+  productCode: number;
+};
+
 type CategoryProp = {
-  categories: Category[];
+  categories: SimplifiedCategory[];
 };
 
 export function AddCategoryForm({ categories }: CategoryProp) {

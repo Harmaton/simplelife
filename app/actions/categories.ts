@@ -28,6 +28,8 @@ export async function addCtegoriesAction(name: string, pcode: number) {
   };
 }
 
+
+
 export async function removeCategory(name: string) {
   try {
     await db.category.delete({
@@ -48,13 +50,37 @@ export async function removeCategory(name: string) {
   }
 }
 
+// In app/actions/categories.ts
 export async function GetCategoryNames() {
+  const categories = await db.category.findMany({
+    select: {
+      id: true,
+      name: true,
+      productCode: true,
+    },
+  });
+  return categories;
+}
+
+// export async function GetCategoryNames() {
+//   try {
+//     const categories = await db.category.findMany({});
+//     return categories;
+//   } catch (error) {
+//     console.log(error);
+//     return [];
+//   }
+// }
+
+// In app/actions/categories.ts
+export async function removeCategoryById(categoryId: string) {
   try {
-    const categories = await db.category.findMany({});
-    return categories;
+    await db.category.delete({
+      where: { id: categoryId },
+    });
   } catch (error) {
-    console.log(error);
-    return [];
+    console.error("Error deleting category:", error);
+    throw error;
   }
 }
 
