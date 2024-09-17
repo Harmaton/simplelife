@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -27,7 +27,7 @@ type CategoryProp = {
 
 export function AddCategoryForm({ categories }: CategoryProp) {
   const [isPending, startTransition] = React.useTransition();
-  const [deletingCategory, setDeletingCategory] = React.useState<string | null>(null);
+  const [deletingCategory, setDeletingCategory] = useState<string | null>(null);
 
   const form = useForm<Inputs>({
     resolver: zodResolver(categorySchema),

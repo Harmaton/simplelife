@@ -200,3 +200,35 @@ export async function getTeacherCourses(teacherid: string) {
   }
   
 }
+
+export async function GetsubCategoryDetails(subcategoryId: string) {
+  try {
+    console.log(subcategoryId);
+    const details = await db.subCategory.findUnique({
+      where: {
+        id: subcategoryId,
+      },
+    });
+    console.log(details);
+    return details;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function GetCoursesInCategory(subcategoryId: string) {
+  try {
+    console.log(subcategoryId);
+    const courses = await db.course.findMany({
+      where: {
+        subcategoryId: subcategoryId,
+      },
+    });
+    console.log(courses);
+    return courses;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}

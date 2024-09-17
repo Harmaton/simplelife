@@ -1,7 +1,6 @@
 'use server'
 
 import { db } from "@/lib/db";
-
 import { PurchaseData } from "@/types"; 
 
 export async function updateSaleAndAccess(data: PurchaseData) {

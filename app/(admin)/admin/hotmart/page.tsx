@@ -7,34 +7,34 @@ export default function Page() {
     const cards = [
         {
           icon: <Clipboard size={24} />,
-          title: "Total Orders",
-          value: "10.580",
+          title: "Pedidos totales",
+          value: "0",
           change: 20,
-          lastMonthTotal: "9.450",
+          lastMonthTotal: "0",
           isIncrease: true
         },
         {
           icon: <Globe size={24} />,
-          title: "Views Product",
-          value: "2.234",
+          title: "Vistas del producto",
+          value: "0",
           change: 20,
-          lastMonthTotal: "2.450",
+          lastMonthTotal: "0",
           isIncrease: false
         },
         {
           icon: <Truck size={24} />,
-          title: "Total Delivery",
-          value: "11.250",
+          title: "Entrega total",
+          value: "0",
           change: 20,
-          lastMonthTotal: "12.450",
+          lastMonthTotal: "0",
           isIncrease: false
         },
         {
           icon: <Users size={24} />,
-          title: "Total Customers",
-          value: "24.805",
+          title: "Total de clientes",
+          value: "0",
           change: 20,
-          lastMonthTotal: "9.450",
+          lastMonthTotal: "0",
           isIncrease: true
         }
       ];
