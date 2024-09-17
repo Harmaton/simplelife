@@ -23,7 +23,6 @@ export const POST = async (req: Request) => {
 
     // Parse the raw body of the request
     const rawBody = await req.json();
-
     // Extract relevant data from the webhook payload
     const {
       id,
@@ -42,15 +41,6 @@ export const POST = async (req: Request) => {
       case "PURCHASE_CHARGEBACK":
         // Here you can add logic to handle cancellations, refunds, or chargebacks
         console.log(`Purchase cancelled or refunded: ${event}`);
-        break;
-      case "PURCHASE_BILLET_PRINTED":
-        console.log("Billet printed");
-        break;
-      case "PURCHASE_PROTEST":
-        console.log("Purchase under protest");
-        break;
-      case "PURCHASE_EXPIRED":
-        console.log("Purchase expired");
         break;
       case "PURCHASE_DELAYED":
         console.log("Purchase delayed");

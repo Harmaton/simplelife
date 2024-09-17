@@ -1,9 +1,8 @@
 'use server'
 
-import { auth } from "@/firebase";
 import { db } from "@/lib/db";
 
-import { PurchaseData } from "@/types"; // Importing the PurchaseData type
+import { PurchaseData } from "@/types"; 
 
 export async function updateSaleAndAccess(data: PurchaseData) {
     
