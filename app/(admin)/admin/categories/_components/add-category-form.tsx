@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 const categorySchema = z.object({
   name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
-  pcode: z.number().min(1, "El código de producto debe ser mayor que 0"),
+  productCode: z.number().min(1, "El código de producto debe ser mayor que 0"),
 });
 
 type Inputs = z.infer<typeof categorySchema>;
@@ -39,7 +39,7 @@ export function AddCategoryForm({ categories }: CategoryProp) {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
-      pcode: 0,
+      productCode: 0,
     },
     mode: "onChange",
   });
@@ -50,11 +50,23 @@ export function AddCategoryForm({ categories }: CategoryProp) {
   async function handleSubmit(values: z.infer<typeof categorySchema>) {
     startTransition(async () => {
       try {
-        await addCtegoriesAction(values.name, values.pcode);
+        const response = await fetch("/api/categories", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create category");
+        }
+
         toast.success("Certificación añadida con éxito");
         form.reset();
         router.refresh();
       } catch (error) {
+        console.error("Error adding category:", error);
         toast.error("Error al añadir la certificación");
       }
     });
@@ -63,11 +75,21 @@ export function AddCategoryForm({ categories }: CategoryProp) {
   const handleDelete = async (categoryName: string) => {
     setDeletingCategory(categoryName);
     try {
-      await removeCategory(categoryName);
+      const response = await fetch(
+        `/api/categories?name=${encodeURIComponent(categoryName)}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete category");
+      }
+
       toast.success("Certificación eliminada con éxito");
       router.refresh();
     } catch (error) {
-      console.log(error);
+      console.error("Error deleting category:", error);
       toast.error("Error al eliminar la certificación");
     } finally {
       setDeletingCategory(null);
@@ -97,7 +119,7 @@ export function AddCategoryForm({ categories }: CategoryProp) {
               <Input
                 type="number"
                 placeholder="Código de producto"
-                {...form.register("pcode", { valueAsNumber: true })}
+                {...form.register("productCode", { valueAsNumber: true })}
               />
             </FormControl>
           </FormItem>
@@ -156,7 +178,9 @@ export function AddCategoryForm({ categories }: CategoryProp) {
             ))}
           </div>
         ) : (
-          <div className="text-center text-gray-500 py-8">Sin Certificaciones</div>
+          <div className="text-center text-gray-500 py-8">
+            Sin Certificaciones
+          </div>
         )}
       </div>
     </div>
