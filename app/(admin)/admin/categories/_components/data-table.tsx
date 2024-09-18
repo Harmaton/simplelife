@@ -12,8 +12,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import Link from "next/link"
-import { PlusCircle } from "lucide-react"
 
 import {
   Table,
