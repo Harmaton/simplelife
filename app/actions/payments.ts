@@ -40,7 +40,7 @@ export async function updateSaleAndAccess(data: PurchaseData) {
     });
 
     const category = await db.category.findUnique({
-        where: { productCode: productUcode },
+        where: { name: productName },
         include: { Courses: true }
     });
 

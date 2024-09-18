@@ -93,7 +93,7 @@ const CreatePage = () => {
                 />
 
                 <div className="flex items-center gap-x-2 md:col-span-1">
-                  <Link href="/dashboard/profile">
+                  <Link href="/admin/allcategories">
                     <Button type="button" variant="ghost">
                       Cancel
                     </Button>
