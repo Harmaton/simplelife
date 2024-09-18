@@ -1,13 +1,30 @@
+'use client'
+
+import React, { useState, useEffect } from "react";
 import { GetCategoryNames } from "@/app/actions/categories";
-import React from "react";
 import { AddCategoryForm } from "./_components/add-category-form";
 import Categories from "./_components/categories";
 import CreatePage from "./_components/new-addcategory";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
+import { Category } from "@prisma/client";
 
-export default async function Page() {
-  const categories = await GetCategoryNames();
+const CategoriesPage = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const fetchedCategories = await GetCategoryNames();
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
@@ -24,4 +41,6 @@ export default async function Page() {
       </div>
     </div>
   );
-}
+};
+
+export default CategoriesPage;
