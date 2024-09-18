@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Shell } from "@/components/shells/shell";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const formSchema = z.object({
   name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
@@ -53,6 +53,7 @@ const CreatePage = () => {
     <Shell>
       <Card className="max-w-xl ">
         <CardContent className="space-y-4">
+          <CardHeader className="mb-4">Create a New Category</CardHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -67,7 +68,7 @@ const CreatePage = () => {
                       <FormControl>
                         <Input
                           disabled={isSubmitting}
-                          placeholder="Brief Artist Description"
+                          placeholder="Add a unique Category Name that does not exist"
                           {...field}
                         />
                       </FormControl>
@@ -83,7 +84,7 @@ const CreatePage = () => {
                       <FormControl>
                         <Input
                           disabled={isSubmitting}
-                          placeholder="Your Artist Name"
+                          placeholder="Add a unique Category Hotmart Code that does not exist here"
                           {...field}
                         />
                       </FormControl>
@@ -93,13 +94,13 @@ const CreatePage = () => {
                 />
 
                 <div className="flex items-center gap-x-2 md:col-span-1">
-                  <Link href="/admin/allcategories">
+                  <Link href="/admin">
                     <Button type="button" variant="ghost">
                       Cancel
                     </Button>
                   </Link>
                   <Button type="submit" disabled={!isValid || isSubmitting}>
-                    Continue
+                    Continuar
                   </Button>
                 </div>
               </div>

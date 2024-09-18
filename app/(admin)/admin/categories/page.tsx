@@ -3,6 +3,8 @@ import React from "react";
 import { AddCategoryForm } from "./_components/add-category-form";
 import Categories from "./_components/categories";
 import CreatePage from "./_components/new-addcategory";
+import { DataTable } from "./_components/data-table";
+import { columns } from "./_components/columns";
 
 export default async function Page() {
   const categories = await GetCategoryNames();
@@ -15,9 +17,9 @@ export default async function Page() {
         <p className="text-center mb-2 text-lg text-gray-600 font-mono">
           Crear, actualizar y eliminar Certificaciones y Diplomas.
         </p>
-        <div className="p-4 flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
-        <CreatePage  />
-        <Categories categories={categories} />
+        <div className="p-4 flex flex-col md:flex-row space-y-4 md:space-y-2">
+          <CreatePage />
+          <DataTable columns={columns} data={categories} />
         </div>
       </div>
     </div>
