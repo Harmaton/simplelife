@@ -16,12 +16,9 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Editor } from "@/components/editor";
-import { Preview } from "@/components/preview";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface ChapterAccessFormProps {
@@ -93,40 +90,40 @@ export const ChapterAccessForm = ({
         </p>
       )}
       {isEditing && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
-          >
-            <FormField
-              control={form.control}
-              name="isFree"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormDescription>
-                    Marque esta casilla si desea que este capítulo sea gratuito para obtener una vista previa.
-                    </FormDescription>
-                  </div>
-                </FormItem>
-              )}
-            />
-            <div className="flex items-center gap-x-2">
-              <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-              >
-                Ahorrar
-              </Button>
-            </div>
-          </form>
-        </Form>
+       <Form {...form}>
+       <form
+         onSubmit={form.handleSubmit(onSubmit)}
+         className="space-y-4 mt-4"
+       >
+         <FormField
+           control={form.control}
+           name="isFree"
+           render={({ field }) => (
+             <FormItem className="flex flex-row items-center justify-between space-x-3 rounded-md border p-4">
+               <div className="space-y-0.5">
+                 <FormDescription>
+                   Marque esta casilla si desea que este capítulo sea gratuito para obtener una vista previa.
+                 </FormDescription>
+               </div>
+               <FormControl>
+                 <Checkbox
+                   checked={field.value}
+                   onCheckedChange={field.onChange}
+                 />
+               </FormControl>
+             </FormItem>
+           )}
+         />
+         <div className="flex justify-end">
+           <Button
+             disabled={!isValid || isSubmitting}
+             type="submit"
+           >
+             Ahorrar
+           </Button>
+         </div>
+       </form>
+     </Form>
       )}
     </div>
   )

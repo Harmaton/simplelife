@@ -64,7 +64,7 @@ export const SubCategoryForm = ({
   };
 
   const selectedOption = options.find(
-    (option) => option.value === initialData.categoryId
+    (option) => option.value === initialData.subcategoryId
   );
 
   return (

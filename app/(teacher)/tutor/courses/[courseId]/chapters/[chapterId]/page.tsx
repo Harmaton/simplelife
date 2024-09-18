@@ -1,4 +1,3 @@
-
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
@@ -13,35 +12,29 @@ import { EvaluationsForm } from "./_components/evaluation";
 import { ChapterYoutubeForm } from "./_components/youtube-link";
 
 const ChapterIdPage = async ({
-  params
+  params,
 }: {
-  params: { courseId: string; chapterId: string }
+  params: { courseId: string; chapterId: string };
 }) => {
-
   const chapter = await db.chapter.findUnique({
     where: {
       id: params.chapterId,
-      courseId: params.courseId
-    }
+      courseId: params.courseId,
+    },
   });
 
   const chapterone = await db.chapter.findUnique({
     where: {
       id: params.chapterId,
-      courseId: params.courseId
+      courseId: params.courseId,
     },
-  
   });
 
   if (!chapter) {
-    return redirect("/")
+    return redirect("/");
   }
 
-  const requiredFields = [
-    chapter.title,
-    chapter.description,
-    chapter.videoUrl,
-  ];
+  const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
 
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
@@ -51,7 +44,7 @@ const ChapterIdPage = async ({
   const isComplete = requiredFields.every(Boolean);
 
   return (
-    <>
+    <div className="p-8 border">
       {!chapter.isPublished && (
         <Banner
           variant="warning"
@@ -70,19 +63,27 @@ const ChapterIdPage = async ({
             </Link>
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col gap-y-2">
-                <h1 className="text-2xl font-medium">
-                Creación de capítulos
-                </h1>
+                <h1 className="text-2xl font-medium">Creación de capítulos</h1>
                 <span className="text-sm text-slate-700">
-                 Completa todos los campos {completionText}
+                  Completa todos los campos {completionText}
                 </span>
+
               </div>
-              <ChapterActions
-                disabled={false}
-                courseId={params.courseId}
-                chapterId={params.chapterId}
-                isPublished={chapter.isPublished}
-              />
+              {isComplete ? (
+            <ChapterActions
+            disabled={false}
+            courseId={params.courseId}
+            chapterId={params.chapterId}
+            isPublished={chapter.isPublished}
+          />
+          ) : (
+            <div>
+              <span>⚠️</span>
+              <p className="font-mono text-sm underline text-red-500 ">Complete los campos obligatorios  </p>
+            </div>
+          )}
+        </div>
+             
             </div>
           </div>
         </div>
@@ -91,9 +92,7 @@ const ChapterIdPage = async ({
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LayoutDashboard} />
-                <h2 className="text-xl">
-                Personaliza tu capítulo
-                </h2>
+                <h2 className="text-xl">Personaliza tu capítulo</h2>
               </div>
               <ChapterTitleForm
                 initialData={chapter}
@@ -109,9 +108,7 @@ const ChapterIdPage = async ({
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={Eye} />
-                <h2 className="text-xl">
-                Configuración de acceso
-                </h2>
+                <h2 className="text-xl">Configuración de acceso</h2>
               </div>
               <ChapterAccessForm
                 initialData={chapter}
@@ -123,9 +120,7 @@ const ChapterIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={Video} />
-              <h2 className="text-xl">
-              Añadir un vídeo
-              </h2>
+              <h2 className="text-xl">Añadir un vídeo</h2>
             </div>
 
             <ChapterYoutubeForm
@@ -134,12 +129,15 @@ const ChapterIdPage = async ({
               courseId={params.courseId}
             />
             {/* <AttachmentForm initialData={chapterone} courseId={params.courseId} chapterId={params.chapterId}   /> */}
-            <EvaluationsForm initialData={chapter} courseId={params.courseId} chapterId={params.chapterId} />
+            <EvaluationsForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
           </div>
         </div>
       </div>
-    </>
-   );
-}
- 
+  );
+};
+
 export default ChapterIdPage;

@@ -83,7 +83,7 @@ export const ChaptersForm = ({
   }
 
   const onEdit = (id: string) => {
-    router.push(`/dashboard/teacher/courses/${courseId}/chapters/${id}`);
+    router.push(`/tutor/courses/${courseId}/chapters/${id}`);
   }
 
   return (

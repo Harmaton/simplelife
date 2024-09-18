@@ -89,10 +89,10 @@ export const EndDateForm = ({
       </div>
       {!isEditing && (
         <p className={cn(
-          "text-sm mt-2",
+          "text-sm mt-2 text-blue-500",
           !initialData.endDate && "text-slate-500 italic"
         )}>
-         
+         {initialData.endDate ? initialData.endDate.toDateString() : "No hay fecha de inicio establecida"}
         </p>
       )}
       {isEditing && (

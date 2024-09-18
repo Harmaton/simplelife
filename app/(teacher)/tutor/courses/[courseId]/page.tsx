@@ -25,7 +25,7 @@ import { EvaluationsForm } from "./_components/evaluation";
 import { WhatsappForm } from "./_components/whatsapp";
 import { SubCategoryForm } from "./_components/sub-category";
 
-const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
+const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   // const userId = searchParams.userId;
 
   // if (!userId) {
@@ -78,10 +78,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
     course.title,
     course.description,
     course.imageUrl,
-    course.price,
+    course.prerequisites,
     course.categoryId,
     course.subcategoryId,
     course.Chapter.some((chapter) => chapter.isPublished),
+    course.startDate,
+    course.endDate,
   ];
 
   const totalFields = requiredFields.length;
@@ -104,11 +106,18 @@ const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
               Completa todos los campos {completionText}
             </span>
           </div>
-          <Actions
-            disabled={false}
-            courseId={params.courseId}
-            isPublished={course.isPublished}
-          />
+          {isComplete ? (
+            <Actions
+              disabled={false}
+              courseId={params.courseId}
+              isPublished={course.isPublished}
+            />
+          ) : (
+            <div>
+              <span>⚠️</span>
+              <p className="font-mono text-sm underline text-red-500 ">Complete los campos obligatorios  </p>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
@@ -148,8 +157,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
                 </div>
               </div>
             )}
-            <WhatsappForm initialData={course} courseId={course.id} />
-           
           </div>
 
           {/* Right Column */}
@@ -159,14 +166,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
               <h2 className="text-xl">Capítulos del curso</h2>
             </div>
             <ChaptersForm initialData={course} courseId={course.id} />
-
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={CircleDollarSign} />
-              <h2 className="text-xl">Vende tu curso</h2>
-            </div>
-            <LinkForm initialData={course} courseId={course.id} />
-            <div>{course.paymentLink}</div>
-
             <div className="flex items-center gap-x-2">
               <IconBadge icon={CheckSquareIcon} />
               <h2 className="text-xl">Requisitos previos del curso</h2>
@@ -186,7 +185,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
             <EndDateForm initialData={course} courseId={course.id} />
 
             <EvaluationsForm courseId={course.id} initialData={course} />
-
           </div>
         </div>
       </div>

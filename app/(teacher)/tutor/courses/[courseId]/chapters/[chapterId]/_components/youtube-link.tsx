@@ -111,7 +111,7 @@ export const ChapterYoutubeForm = ({
                 </FormItem>
               )}
             />
-            <div className="flex items-center gap-x-2">
+            <div className="flex justify-end">
               <Button
                 disabled={!isValid || isSubmitting}
                 type="submit"

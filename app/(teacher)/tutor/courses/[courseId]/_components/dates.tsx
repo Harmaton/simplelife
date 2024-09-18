@@ -23,25 +23,28 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 
 interface DescriptionFormProps {
   initialData: Course;
   courseId: string;
-};
+}
 
 const formSchema = z.object({
-    startDate: z.date({
-        required_error: "necesitas agregar una fecha"
-    })
+  startDate: z.date({
+    required_error: "necesitas agregar una fecha",
+  }),
 });
-
 
 export const StartDateForm = ({
   initialData,
-  courseId
+  courseId,
 }: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -52,11 +55,12 @@ export const StartDateForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-        startDate: initialData?.startDate instanceof Date
-      ? initialData.startDate
-      : initialData?.startDate
-      ? new Date(initialData.startDate)
-      : undefined,
+      startDate:
+        initialData?.startDate instanceof Date
+          ? initialData.startDate
+          : initialData?.startDate
+          ? new Date(initialData.startDate)
+          : undefined,
     },
   });
 
@@ -71,12 +75,12 @@ export const StartDateForm = ({
     } catch {
       toast.error("Algo salió mal");
     }
-  }
+  };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-      Elija la fecha de inicio
+        Elija la fecha de inicio
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancelar</>
@@ -89,13 +93,15 @@ export const StartDateForm = ({
         </Button>
       </div>
       {!isEditing && (
-        <p className={cn(
-          "text-sm mt-2",
-          !initialData.startDate && "text-slate-500 italic"
-        )}>
-         
-        </p>
-      )}
+  <p
+    className={cn(
+      "text-sm mt-2 text-violet-500",
+      !initialData.startDate && "text-slate-500 italic"
+    )}
+  >
+    {initialData.startDate ? initialData.startDate.toDateString() : "No hay fecha de inicio establecida"}
+  </p>
+)}
       {isEditing && (
         <Form {...form}>
           <form
@@ -108,49 +114,47 @@ export const StartDateForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Fecha de inicio del curso</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Elija una fecha</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) =>
-                      date < new Date() || date < new Date("1900-01-01")
-                    }
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormDescription>
-              Este es el día previsto para el inicio oficial de la transmisión
-              </FormDescription>
-              <FormMessage />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[240px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Elija una fecha</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date < new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    Este es el día previsto para el inicio oficial de la
+                    transmisión
+                  </FormDescription>
+                  <FormMessage />
                 </FormItem>
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-              >
+              <Button disabled={!isValid || isSubmitting} type="submit">
                 Ahorrar
               </Button>
             </div>
@@ -158,5 +162,5 @@ export const StartDateForm = ({
         </Form>
       )}
     </div>
-  )
-}
+  );
+};

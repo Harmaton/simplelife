@@ -105,7 +105,7 @@ export const EvaluationsForm = ({
               )}
             />
 
-            <Button disabled={!isValid || isSubmitting} type="submit">
+            <Button className="flex justify-end" disabled={!isValid || isSubmitting} type="submit">
               Crear
             </Button>
 
