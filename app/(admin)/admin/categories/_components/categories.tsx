@@ -27,7 +27,7 @@ const Categories = ({ categories }: { categories: Category[] }) => {
       }
 
       toast.success("Certificación eliminada con éxito");
-      router.refresh();
+      location.reload()
     } catch (error) {
       console.error("Error deleting category:", error);
       toast.error("Error al eliminar la certificación");

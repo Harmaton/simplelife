@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2, Trash } from "lucide-react";
+import { Category } from "@prisma/client";
 
 export const categorySchema = z.object({
   name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
@@ -17,8 +18,12 @@ export const categorySchema = z.object({
 
 type Inputs = z.infer<typeof categorySchema>;
 
-export function AddCategoryForm() {
+export function AddCategoryForm({categories}: {categories: Category[]}) {
+
   const [isPending, startTransition] = React.useTransition();
+
+  const [optimisticCategory, setoptimisticCategory] = useOptimistic(categories, (state, category) => category )
+  
   const form = useForm<Inputs>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
@@ -55,6 +60,7 @@ export function AddCategoryForm() {
   }
 
   return (
+    <div>
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
@@ -93,5 +99,6 @@ export function AddCategoryForm() {
         </Button>
       </form>
     </Form>
+    </div>
   );
 }
