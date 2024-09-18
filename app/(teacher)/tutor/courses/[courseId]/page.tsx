@@ -27,7 +27,7 @@ import { WhatsappForm } from "./_components/whatsapp";
 import { SubCategoryForm } from "./_components/sub-category";
 import Loadingpage from "@/components/loading-page";
 
-const CourseIdPage = async ({ params, searchParams }: { params: { courseId: string }, searchParams: { userId: string } }) => {
+const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
   const userId = searchParams.userId;
 
   if (!userId) {

@@ -51,7 +51,7 @@ const CreatePage = () => {
 
       console.log(response);
       if (response) {
-        router.push(`/tutor/courses/${response.id}?userId=${user.uid}`);
+        router.push(`/tutor/courses/${response.id}`);
         toast.success("Curso Creado");
       }
     } catch {
