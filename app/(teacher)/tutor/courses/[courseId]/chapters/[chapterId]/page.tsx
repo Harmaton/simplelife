@@ -5,14 +5,12 @@ import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
-
 import { ChapterTitleForm } from "./_components/chapter-title-form";
 import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 import { ChapterAccessForm } from "./_components/chapter-access-form";
 import { ChapterActions } from "./_components/chapter-actions";
 import { EvaluationsForm } from "./_components/evaluation";
 import { ChapterYoutubeForm } from "./_components/youtube-link";
-import { auth } from "@/firebase";
 
 const ChapterIdPage = async ({
   params
@@ -64,7 +62,7 @@ const ChapterIdPage = async ({
         <div className="flex items-center justify-between">
           <div className="w-full">
             <Link
-              href={`/dashboard/teacher/courses/${params.courseId}`}
+              href={`/tutor/courses/${params.courseId}`}
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
