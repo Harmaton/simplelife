@@ -109,7 +109,7 @@ model CalendarEvent {
 model Category {
   id            String             @id @default(uuid())
   name          String             @unique
-  productCode   String               @unique
+  productCode   String ?              
   imageUrl      String?            @db.Text()
   SubCategories SubCategory[]
   Courses       Course[]

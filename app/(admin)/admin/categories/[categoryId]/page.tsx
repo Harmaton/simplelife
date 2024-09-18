@@ -1,4 +1,8 @@
-import { GetCategoryItem, GetSubCategories } from "@/app/actions/categories";
+import {
+  GetCategoryItem,
+  GetSubCategories,
+  removeCategory,
+} from "@/app/actions/categories";
 
 import React from "react";
 import { redirect } from "next/navigation";
@@ -7,6 +11,9 @@ import { ImageForm } from "./_components/image";
 import Subcategories from "./_components/sub-categories";
 import { AddSubCategoryForm } from "../_components/add-subcategory-form";
 import ImageFormDropdown from "./image";
+import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
+import DeleteCategory from "../_components/delete-category";
 
 export default async function page({
   params,
@@ -27,7 +34,13 @@ export default async function page({
       </h1>
       <p className="text-center mb-4 text-sm ">Administrar Certificación</p>
       <BreadcrumbWithCustomSeparator categoryName={categoryItem.name} />
-      <ImageFormDropdown initialData={categoryItem} categoryId={categoryItem.id} />
+      <div className="flex ">
+        <ImageFormDropdown
+          initialData={categoryItem}
+          categoryId={categoryItem.id}
+        />
+        <DeleteCategory categoryId={params.categoryId} />
+      </div>  
 
       <h1 className="text-2xl text-center font-semibold">
         Crear o eliminar Certificación en{" "}

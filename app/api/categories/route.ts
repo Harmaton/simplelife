@@ -3,14 +3,13 @@ import { db } from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
-    const { name, productCode } = await req.json();
+    const { name } = await req.json();
 
-    console.log('CREATE PRODUCTS',name, productCode)
+    // console.log('CREATE PRODUCTS',name, productCode)
 
     const newCategory = await db.category.create({
       data: {
         name,
-        productCode
       },
     });
 
@@ -24,9 +23,9 @@ export async function POST(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const name = searchParams.get('name');
+    const name = searchParams.get("name");
 
-    console.log('DELETE', name)
+    console.log("DELETE", name);
 
     if (!name) {
       return new NextResponse("Category name is required", { status: 400 });

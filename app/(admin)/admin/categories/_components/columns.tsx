@@ -39,20 +39,20 @@ export const columns: ColumnDef<Category>[] = [
     },
   },
 
-  {
-    accessorKey: "productCode",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Code
-          <UserCog2Icon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "productCode",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Code
+  //         <UserCog2Icon className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
+  // },
 
   {
     id: "actions",

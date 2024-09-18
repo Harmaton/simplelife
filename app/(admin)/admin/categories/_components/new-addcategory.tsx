@@ -22,7 +22,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const formSchema = z.object({
   name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
-  productCode: z.string().min(3, "El código de producto debe ser mayor que 0"),
 });
 
 const CreatePage = () => {
@@ -32,8 +31,7 @@ const CreatePage = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      productCode: "",
-    },
+    }
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -69,22 +67,6 @@ const CreatePage = () => {
                         <Input
                           disabled={isSubmitting}
                           placeholder="Add a unique Category Name that does not exist"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="productCode"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          disabled={isSubmitting}
-                          placeholder="Add a unique Category Hotmart Code that does not exist here"
                           {...field}
                         />
                       </FormControl>

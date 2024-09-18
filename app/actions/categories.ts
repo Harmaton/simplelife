@@ -3,11 +3,11 @@
 
 import { db } from "@/lib/db";
 
-export async function removeCategory(name: string) {
+export async function removeCategory(id: string) {
   try {
     await db.category.delete({
       where: {
-        name: name,
+        id: id,
       },
     });
     return {
