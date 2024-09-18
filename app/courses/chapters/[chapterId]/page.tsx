@@ -1,7 +1,16 @@
 import React from 'react'
 
-export default function Page() {
+const ChapterIdPage = async ({
+  params,
+}: {
+  params: { courseId: string; chapterId: string };
+}) => {
   return (
-    <div>98 %</div>
+    <div>
+      {params.chapterId}
+      {params.courseId}
+    </div>
   )
 }
+
+export default ChapterIdPage

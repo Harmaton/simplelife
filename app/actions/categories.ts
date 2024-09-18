@@ -1,11 +1,22 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
+import { categorySchema } from "../(admin)/admin/categories/_components/add-category-form";
 
-export async function addCtegoriesAction(name: string, pcode: number) {
+export async function addCtegoriesAction(formData: FormData) {
+
+  const validatedFields = categorySchema.safeParse({
+   name: formData.get('name'),
+  productCode:formData.get('productCode')
+  })
+
+  if(!validatedFields.success){
+    return {message: "Input not valid",success: false}
+  }
 
   const samecategory = await db.category.findFirst({
-    where: { name: name },
+    where: { name: validatedFields.data?.name},
   });
 
   if (samecategory) {
@@ -17,8 +28,8 @@ export async function addCtegoriesAction(name: string, pcode: number) {
 
   await db.category.create({
     data: {
-      name: name,
-      productCode: pcode
+      name: validatedFields.data.name,
+      productCode: validatedFields.data.productCode
     },
   });
 
@@ -51,26 +62,22 @@ export async function removeCategory(name: string) {
 }
 
 // In app/actions/categories.ts
-export async function GetCategoryNames() {
-  const categories = await db.category.findMany({
-    select: {
-      id: true,
-      name: true,
-      productCode: true,
-    },
-  });
-  return categories;
-}
-
 // export async function GetCategoryNames() {
-//   try {
-//     const categories = await db.category.findMany({});
-//     return categories;
-//   } catch (error) {
-//     console.log(error);
-//     return [];
-//   }
+//   const categories = await db.category.findMany({});
+//   return categories;
+
 // }
+
+export async function GetCategoryNames() {
+  try {
+    const categories = await db.category.findMany({});
+    revalidatePath('/admin/categories')
+    return categories;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
 
 // In app/actions/categories.ts
 export async function removeCategoryById(categoryId: string) {
