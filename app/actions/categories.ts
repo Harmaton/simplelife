@@ -71,7 +71,6 @@ export async function removeCategory(name: string) {
 export async function GetCategoryNames() {
   try {
     const categories = await db.category.findMany({});
-    revalidatePath('/admin/categories')
     return categories;
   } catch (error) {
     console.log(error);
