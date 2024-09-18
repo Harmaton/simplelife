@@ -34,20 +34,19 @@ const CourseIdPage = async ({ params, searchParams }: { params: { courseId: stri
     return <Loadingpage />;
   }
 
-  const teacher = await db.user.findUnique({
-    where: {
-      clerkId: userId,
-    },
-  });
+  // const teacher = await db.user.findUnique({
+  //   where: {
+  //     clerkId: userId,
+  //   },
+  // });
 
-  if (!teacher) {
-    return <Loadingpage />;
-  }
+  // if (!teacher) {
+  //   return <Loadingpage />;
+  // }
 
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
-      teacherId: teacher.id,
     },
     include: {
       Chapter: {

@@ -45,7 +45,7 @@ export async function updateSaleAndAccess(data: PurchaseData) {
     });
 
     const course = await db.course.findMany({
-        where: { productcode: productUcode, 
+        where: { title: productName, 
             
          } 
     });
@@ -87,7 +87,7 @@ export async function updateSaleAndAccess(data: PurchaseData) {
     } else if (course) {
         // If it's a single course, update the course
       const purchasedcourse =  await db.course.update({
-            where: { productcode: productUcode }, 
+            where: { title: productName }, 
             data: { isBought: true }
         });
         

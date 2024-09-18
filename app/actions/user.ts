@@ -110,11 +110,11 @@ export async function deleteTeacherProfile() {
   }
 }
 
-export async function getTeacherDeatails(userid: string) {
+export async function getTeacherDeatails(email: string) {
   try {
     const teacherDetails = await db.user.findUnique({
       where: {
-        clerkId: userid,
+        email: email,
         isTeacher: true
       }
     })
@@ -329,7 +329,7 @@ export async function getOneUser(userid: string){
 try {
 
   const userdb = await db.user.findUnique({where: {
-    clerkId: userid
+    email: userid
   }})
 
   return userdb

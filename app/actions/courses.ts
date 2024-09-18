@@ -60,7 +60,7 @@ export type CourseWithProgressWithCategory = Course & {
   progress: number | null;
 };
 
-export async function getDashboardCourses(userId: string){
+export async function getDashboardCourses(userId: string) {
   try {
     const purchasedCourses = await db.coursePurchase.findMany({
       where: {
@@ -73,13 +73,15 @@ export async function getDashboardCourses(userId: string){
             Chapter: {
               where: {
                 isPublished: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
-    const courses = purchasedCourses.map((purchase) => purchase.course) as unknown as CourseWithProgressWithCategory[]; 
+    const courses = purchasedCourses.map(
+      (purchase) => purchase.course
+    ) as unknown as CourseWithProgressWithCategory[];
 
     for (let course of courses) {
       const progress = await getProgress(userId, course.id);
@@ -87,25 +89,29 @@ export async function getDashboardCourses(userId: string){
       course["progress"] = progress;
     }
 
-    const completedCourses = courses.filter((course) => course.progress === 100);
-    const coursesInProgress = courses.filter((course) => (course.progress ?? 0) < 100);
+    const completedCourses = courses.filter(
+      (course) => course.progress === 100
+    );
+    const coursesInProgress = courses.filter(
+      (course) => (course.progress ?? 0) < 100
+    );
 
     return {
       completedCourses,
       coursesInProgress,
-    }
+    };
   } catch (error) {
     console.log("[GET_DASHBOARD_COURSES]", error);
     return {
       completedCourses: [],
       coursesInProgress: [],
-    }
+    };
   }
 }
 
 export const getProgress = async (
   userId: string,
-  courseId: string,
+  courseId: string
 ): Promise<number> => {
   try {
     const publishedChapters = await db.chapter.findMany({
@@ -115,7 +121,7 @@ export const getProgress = async (
       },
       select: {
         id: true,
-      }
+      },
     });
 
     const publishedChapterIds = publishedChapters.map((chapter) => chapter.id);
@@ -127,78 +133,84 @@ export const getProgress = async (
           in: publishedChapterIds,
         },
         isCompleted: true,
-      }
+      },
     });
 
-    const progressPercentage = (validCompletedChapters / publishedChapterIds.length) * 100;
+    const progressPercentage =
+      (validCompletedChapters / publishedChapterIds.length) * 100;
 
     return progressPercentage;
   } catch (error) {
     console.log("[GET_PROGRESS]", error);
     return 0;
   }
-}
+};
 
-export async function createCourse(values: any, userId: string) { 
-
+export async function createCourse(values: any, email: string) {
   try {
-    const teacher = await db.user.findUnique({where: {
-      clerkId: userId
-    }})
+    const teacher = await db.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
 
-    if(teacher){
+    console.log(teacher, "teacher");
+
+    if (teacher) {
       const newCourse = await db.course.create({
         data: {
           ...values,
-          teacherId: teacher.id, 
+          teacherId: teacher.id,
           updatedAt: new Date(),
         },
       });
-  
+
+      console.log(newCourse, "course");
+
       return newCourse;
-    }    
+    }
   } catch (error) {
     console.error("[CREATE_COURSE]", error);
   }
 }
 
-export async function getAllTeacherCourses(userid: string){
+export async function getAllTeacherCourses(userid: string) {
   try {
-    const user = await db.user.findUnique({where: {
-      clerkId: userid
-    }})
+    const user = await db.user.findUnique({
+      where: {
+        clerkId: userid,
+      },
+    });
 
-    if(user){
-    const courses = await db.course.findMany({where: {
-      teacherId: user.id
-    }})
-    return courses
-  }
-    
+    if (user) {
+      const courses = await db.course.findMany({
+        where: {
+          teacherId: user.id,
+        },
+      });
+      return courses;
+    }
   } catch (error) {
-    console.log(error)
-    return []
+    console.log(error);
+    return [];
   }
 }
 
 export async function getTeacherCourses(teacherid: string) {
-
   try {
     const courses = await db.course.findMany({
       where: {
-          teacherId: teacherid
+        teacherId: teacherid,
       },
       orderBy: {
-          createdAt: "desc",
+        createdAt: "desc",
       },
-  });
+    });
 
-  return courses
-    
+    return courses;
   } catch (error) {
-    return []
+    return [];
   }
-  
 }
 
 export async function GetsubCategoryDetails(subcategoryId: string) {

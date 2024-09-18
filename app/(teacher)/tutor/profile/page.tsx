@@ -19,21 +19,19 @@ function ProfilePage() {
   const { user } = useAuth(); // Use useAuth to get the current user
 
   const { data: teacherdata, isLoading } = useQuery<User | null>(
-    ['teacherDetails', user?.uid],
+    ['teacherDetails', user?.email],
     async () => {
-      const userid = user?.uid; 
+      const userid = user?.email; 
       if (!userid) {
         return null;
       }
+
       const teacher = await getTeacherDeatails(userid);
       if (!teacher) {
         redirect("/become-tutor");
         return null;
       }
       return teacher;
-    },
-    {
-      enabled: !!user?.uid, // Only run the query if user.uid is available
     }
   );
 
@@ -51,7 +49,7 @@ function ProfilePage() {
           <DeleteProfileDialog />
         </>
       ) : (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center ">
           <div className="text-center">
             <h2 className="text-lg font-bold">No tienes un perfil de profesor.</h2>
             <p className="mt-2">Por favor, regístrate como profesor para continuar.</p>

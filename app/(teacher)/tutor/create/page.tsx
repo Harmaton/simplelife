@@ -26,12 +26,6 @@ const createCourseformSchema = z.object({
   title: z.string().min(1, {
     message: "Se requiere título",
   }),
-  productcode: z
-    .string()
-    .regex(/^\d{5}$/, {
-      message: "El código de producto debe tener exactamente 5 dígitos",
-    })
-    .transform((val) => parseInt(val, 10)), // Transform string to number
 });
 
 const CreatePage = () => {
@@ -40,7 +34,6 @@ const CreatePage = () => {
     resolver: zodResolver(createCourseformSchema),
     defaultValues: {
       title: "",
-      productcode: 0, // Initialize as an empty string
     },
   });
 
@@ -50,11 +43,13 @@ const CreatePage = () => {
 
   const onSubmit = async (values: z.infer<typeof createCourseformSchema>) => {
     try {
-      if (!user) {
+      if (!user || !user.email) {
         toast.error("Please Log in to continue");
         return null;
       }
-      const response = await createCourse(values, user.uid);
+      const response = await createCourse(values, user.email);
+
+      console.log(response);
       if (response) {
         router.push(`/tutor/courses/${response.id}?userId=${user.uid}`);
         toast.success("Curso Creado");
@@ -97,27 +92,7 @@ const CreatePage = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="productcode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Código del producto</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text" // Treat as text for proper validation
-                      disabled={isSubmitting}
-                      placeholder="p.ej. 12345"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Introduce un código de producto único de 5 dígitos.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <div className="flex items-center gap-x-2">
               <Link href="/tutor/courses">
                 <Button type="button" variant="ghost" disabled={isSubmitting}>

@@ -17,22 +17,22 @@ const CoursesPage = () => {
   const { user } = useAuth();
 
   const { data: coursedata, isLoading } = useQuery<Course[]>(
-    ["courses", user?.uid],
+    ["courses", user?.email],
     async () => {
-      if (!user?.uid) {
+      if (!user?.email) {
         return [];
       }
 
-      const userdb = await getOneUser(user.uid);
+      const userdb = await getOneUser(user.email);
       if (!userdb) {
         return [];
       }
 
       const courses = await getTeacherCourses(userdb.id);
-      return courses || []; // Ensuring the return type is always an array
+      return courses || []; 
     },
     {
-      enabled: !!user?.uid, // Ensure the query only runs when user.uid is available
+      enabled: !!user?.email, // Ensure the query only runs when user.uid is available
     }
   );
 
@@ -50,7 +50,7 @@ const CoursesPage = () => {
           Administra y controla fácilmente tus cursos a continuación
         </p>
       </div>
-      {coursedata && coursedata.length > 0 ? (
+      {coursedata ? (
         <DataTable columns={columns} data={coursedata} />
       ) : (
         <div className="flex flex-col items-center justify-center h-full border rounded-md mt-4 p-4">
