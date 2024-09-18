@@ -109,3 +109,14 @@ export interface FooterItem {
       };
     };
   }
+
+
+  // app/schemas/category.ts
+import { z } from "zod";
+
+export const categorySchema = z.object({
+  name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
+  productCode: z.coerce.number().min(1, "El código de producto debe ser mayor que 0"),
+});
+
+export type CategoryInput = z.infer<typeof categorySchema>;

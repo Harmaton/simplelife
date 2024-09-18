@@ -10,8 +10,6 @@ import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2, Trash } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { addCtegoriesAction } from "@/app/actions/categories";
 import { useFormStatus } from "react-dom";
 import { Category } from "@prisma/client";
 
@@ -23,42 +21,40 @@ export const categorySchema = z.object({
 type Inputs = z.infer<typeof categorySchema>;
 
 export function AddCategoryForm() {
-  // const [isPending, startTransition] = React.useTransition();
-  // {categories}: {categories: Category[]}
+  const [isPending, startTransition] = React.useTransition();
   const form = useForm<Inputs>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
       productCode: 0,
-    },
-    mode: "onChange",
+    }
   });
 
   const { isValid } = form.formState;
-  // async function handleSubmit(values: z.infer<typeof categorySchema>) {
-  //   startTransition(async () => {
-  //     try {
-  //       const response = await fetch("/api/categories", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(values),
-  //       });
+  async function handleSubmit(values: z.infer<typeof categorySchema>) {
+    startTransition(async () => {
+      try {
+        const response = await fetch("/api/categories", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
 
-  //       if (!response.ok) {
-  //         throw new Error("Failed to create category");
-  //       }
+        if (!response.ok) {
+          throw new Error("Failed to create category");
+        }
 
-  //       toast.success("Certificación añadida con éxito");
-  //       form.reset();
-  //       router.refresh();
-  //     } catch (error) {
-  //       console.error("Error adding category:", error);
-  //       toast.error("Error al añadir la certificación");
-  //     }
-  //   });
-  // }
+        toast.success("Certificación añadida con éxito");
+        form.reset();
+        
+      } catch (error) {
+        console.error("Error adding category:", error);
+        toast.error("Error al añadir la certificación");
+      }
+    });
+  }
 
   // const [optimisticCategories, addOptimisticCategories] = useOptimistic<
   //   Category[],
@@ -76,9 +72,9 @@ export function AddCategoryForm() {
   return (
     <Form {...form}>
       <form
-        // onSubmit={form.handleSubmit(handleSubmit)}
+        onSubmit={form.handleSubmit(handleSubmit)}
         className="w-full md:w-1/2 space-y-4"
-        action={addCtegoriesAction}
+        // action={addCtegoriesAction}
       >
         <FormItem>
           <FormLabel>Nombre de la Certificación</FormLabel>
@@ -103,9 +99,9 @@ export function AddCategoryForm() {
         <Button
           className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
           type="submit"
-          disabled={pending || !isValid}
+          disabled={isPending || !isValid}
         >
-          {pending ? (
+          {isPending ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : null}
           Añadir Certificación

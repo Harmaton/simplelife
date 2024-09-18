@@ -1,44 +1,61 @@
+// app/actions/categories.ts
 "use server";
 
 import { db } from "@/lib/db";
+import { categorySchema } from "@/types";
 import { revalidatePath } from "next/cache";
-import { categorySchema } from "../(admin)/admin/categories/_components/add-category-form";
 
-export async function addCtegoriesAction(formData: FormData) {
+export async function addCategoriesAction(formData: FormData) {
+  const rawData = {
+    name: formData.get('name'),
+    productCode: formData.get('productCode')
+  };
 
-  const validatedFields = categorySchema.safeParse({
-   name: formData.get('name'),
-  productCode:formData.get('productCode')
-  })
+  const validationResult = categorySchema.safeParse(rawData);
 
-  if(!validatedFields.success){
-    return {message: "Input not valid",success: false}
-  }
-
-  const samecategory = await db.category.findFirst({
-    where: { name: validatedFields.data?.name},
-  });
-
-  if (samecategory) {
+  if (!validationResult.success) {
     return {
-      message: "La categoría existe!",
+      message: "Input not valid",
       success: false,
+      errors: validationResult.error.flatten().fieldErrors
     };
   }
 
-  await db.category.create({
-    data: {
-      name: validatedFields.data.name,
-      productCode: validatedFields.data.productCode
-    },
-  });
+  const { name, productCode } = validationResult.data;
 
-  return {
-    message: "Categoría creada con éxito",
-    success: true,
-  };
+  try {
+    const sameCategory = await db.category.findFirst({
+      where: { name },
+    });
+
+    if (sameCategory) {
+      return {
+        message: "La categoría ya existe!",
+        success: false,
+      };
+    }
+
+    await db.category.create({
+      data: {
+        name,
+        productCode,
+      },
+    });
+
+    revalidatePath('/admin/categories'); // Adjust this path as needed
+
+    return {
+      message: "Categoría creada con éxito",
+      success: true,
+    };
+  } catch (error) {
+    console.error("Error creating category:", error);
+    return {
+      message: "Error al crear la categoría",
+      success: false,
+    };
+  }
 }
-
 
 
 export async function removeCategory(name: string) {
