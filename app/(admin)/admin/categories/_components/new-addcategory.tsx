@@ -1,104 +1,114 @@
 "use client";
 
-import React, { useOptimistic, useState } from "react";
+import * as z from "zod";
+import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Loader2, Trash } from "lucide-react";
-import { Category } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { toast } from "sonner";
 
-export const categorySchema = z.object({
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormMessage,
+  FormItem,
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Shell } from "@/components/shells/shell";
+import { Card, CardContent } from "@/components/ui/card";
+
+const formSchema = z.object({
   name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
-  productCode: z.number().min(1, "El código de producto debe ser mayor que 0"),
+  productCode: z.string().min(3, "El código de producto debe ser mayor que 0"),
 });
 
-type Inputs = z.infer<typeof categorySchema>;
+const CreatePage = () => {
+  const router = useRouter();
 
-export function AddCategoryForm({categories}: {categories: Category[]}) {
-
-  const [isPending, startTransition] = React.useTransition();
-
-  const [optimisticCategory, setoptimisticCategory] = useOptimistic(categories, (state, category) => category )
-  
-  const form = useForm<Inputs>({
-    resolver: zodResolver(categorySchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      productCode: 0,
-    }
+      productCode: "",
+    },
   });
 
-  const { isValid } = form.formState;
-  async function handleSubmit(values: z.infer<typeof categorySchema>) {
-    startTransition(async () => {
-      try {
-        const response = await fetch("/api/categories", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
+  const { isSubmitting, isValid } = form.formState;
 
-        if (!response.ok) {
-          throw new Error("Failed to create category");
-        }
-
-        toast.success("Certificación añadida con éxito");
-        form.reset();
-        location.reload();
-        
-      } catch (error) {
-        console.error("Error adding category:", error);
-        toast.error("Error al añadir la certificación");
-      }
-    });
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post("/api/categories", values);
+      router.push(`/admin/categories/${response.data.id}`);
+      toast.success("Succefully Created");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error");
+    }
+  };
 
   return (
-    <div>
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="w-full md:w-1/2 space-y-4"
-        // action={addCtegoriesAction}
-      >
-        <FormItem>
-          <FormLabel>Nombre de la Certificación</FormLabel>
-          <FormControl>
-            <Input
-              placeholder="Categoría de entrada"
-              {...form.register("name")}
-            />
-          </FormControl>
-        </FormItem>
+    <Shell>
+      <Card className="max-w-xl ">
+        <CardContent className="space-y-4">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 space-y-4"
+            >
+              <div className="md:col-span-2 space-y-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          disabled={isSubmitting}
+                          placeholder="Brief Artist Description"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="productCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          disabled={isSubmitting}
+                          placeholder="Your Artist Name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-        <FormItem>
-          <FormLabel>Código de Producto</FormLabel>
-          <FormControl>
-            <Input
-              type="number"
-              placeholder="Código de producto"
-              {...form.register("productCode", { valueAsNumber: true })}
-            />
-          </FormControl>
-        </FormItem>
-        <Button
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
-          type="submit"
-          disabled={isPending || !isValid}
-        >
-          {isPending ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-          ) : null}
-          Añadir Certificación
-        </Button>
-      </form>
-    </Form>
-    </div>
+                <div className="flex items-center gap-x-2 md:col-span-1">
+                  <Link href="/dashboard/profile">
+                    <Button type="button" variant="ghost">
+                      Cancel
+                    </Button>
+                  </Link>
+                  <Button type="submit" disabled={!isValid || isSubmitting}>
+                    Continue
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </Shell>
   );
-}
+};
+
+export default CreatePage;

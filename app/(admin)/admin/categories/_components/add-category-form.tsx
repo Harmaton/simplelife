@@ -12,7 +12,7 @@ import { Loader2, Trash } from "lucide-react";
 
 export const categorySchema = z.object({
   name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
-  productCode: z.number().min(1, "El código de producto debe ser mayor que 0"),
+  productCode: z.string().min(3, "El código de producto debe ser mayor que 0"),
 });
 
 type Inputs = z.infer<typeof categorySchema>;
@@ -23,7 +23,7 @@ export function AddCategoryForm() {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
-      productCode: 0,
+      productCode: '',
     }
   });
 

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Category } from "@prisma/client";
+import axios from "axios";
 import { Loader2, Trash } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,19 +16,14 @@ const Categories = ({ categories }: { categories: Category[] }) => {
   const handleDelete = async (categoryName: string) => {
     setDeletingCategory(categoryName);
     try {
-      const response = await fetch(
-        `/api/categories?name=${encodeURIComponent(categoryName)}`,
-        {
-          method: "DELETE",
-        }
-      );
 
-      if (!response.ok) {
+      const response = await axios.delete(`/api/categories`)
+      if (!response) {
         throw new Error("Failed to delete category");
       }
 
       toast.success("Certificación eliminada con éxito");
-      location.reload()
+      // location.reload()
     } catch (error) {
       console.error("Error deleting category:", error);
       toast.error("Error al eliminar la certificación");

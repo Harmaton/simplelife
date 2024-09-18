@@ -2,61 +2,6 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { categorySchema } from "@/types";
-import { revalidatePath } from "next/cache";
-
-export async function addCategoriesAction(formData: FormData) {
-  const rawData = {
-    name: formData.get('name'),
-    productCode: formData.get('productCode')
-  };
-
-  const validationResult = categorySchema.safeParse(rawData);
-
-  if (!validationResult.success) {
-    return {
-      message: "Input not valid",
-      success: false,
-      errors: validationResult.error.flatten().fieldErrors
-    };
-  }
-
-  const { name, productCode } = validationResult.data;
-
-  try {
-    const sameCategory = await db.category.findFirst({
-      where: { name },
-    });
-
-    if (sameCategory) {
-      return {
-        message: "La categoría ya existe!",
-        success: false,
-      };
-    }
-
-    await db.category.create({
-      data: {
-        name,
-        productCode,
-      },
-    });
-
-    revalidatePath('/admin/categories'); // Adjust this path as needed
-
-    return {
-      message: "Categoría creada con éxito",
-      success: true,
-    };
-  } catch (error) {
-    console.error("Error creating category:", error);
-    return {
-      message: "Error al crear la categoría",
-      success: false,
-    };
-  }
-}
-
 
 export async function removeCategory(name: string) {
   try {

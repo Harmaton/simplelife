@@ -2,6 +2,7 @@ import { GetCategoryNames } from "@/app/actions/categories";
 import React from "react";
 import { AddCategoryForm } from "./_components/add-category-form";
 import Categories from "./_components/categories";
+import CreatePage from "./_components/new-addcategory";
 
 export default async function Page() {
   const categories = await GetCategoryNames();
@@ -15,7 +16,7 @@ export default async function Page() {
           Crear, actualizar y eliminar Certificaciones y Diplomas.
         </p>
         <div className="p-4 flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
-        <AddCategoryForm  />
+        <CreatePage  />
         <Categories categories={categories} />
         </div>
       </div>
