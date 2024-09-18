@@ -1,10 +1,20 @@
-import React from 'react'
+'use client'
+
+import React, { useState, useEffect } from 'react'
 import { getAllTeachers } from '@/app/actions/user'
 import { DataTable } from './teachers/data-table'
 import { columns } from './teachers/columns'
 
-export default async function Page() {
-  const teachers =  await getAllTeachers()
+export default function Page() {
+  const [teachers, setTeachers] = useState<User[]>([])
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      const fetchedTeachers = await getAllTeachers()
+      setTeachers(fetchedTeachers)
+    }
+    fetchTeachers()
+  }, [])
+
   return (
     <div className='p-8 '>
        <div className='mb-4'>
