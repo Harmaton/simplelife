@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { getAllTeachers } from '@/app/actions/user'
 import { DataTable } from './teachers/data-table'
 import { columns } from './teachers/columns'
-import User from '@prisma/client'
+import { User } from '@prisma/client'
 
 export default function Page() {
   const [teachers, setTeachers] = useState<User[]>([])

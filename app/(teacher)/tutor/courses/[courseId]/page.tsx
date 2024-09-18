@@ -8,7 +8,6 @@ import {
   CheckSquareIcon,
   CircleDollarSign,
 } from "lucide-react";
-
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
@@ -25,14 +24,13 @@ import { LinkForm } from "./_components/link";
 import { EvaluationsForm } from "./_components/evaluation";
 import { WhatsappForm } from "./_components/whatsapp";
 import { SubCategoryForm } from "./_components/sub-category";
-import Loadingpage from "@/components/loading-page";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
-  const userId = searchParams.userId;
+  // const userId = searchParams.userId;
 
-  if (!userId) {
-    return <Loadingpage />;
-  }
+  // if (!userId) {
+  //   return <Loadingpage />;
+  // }
 
   // const teacher = await db.user.findUnique({
   //   where: {
