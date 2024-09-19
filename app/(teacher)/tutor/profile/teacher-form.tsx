@@ -110,7 +110,7 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
               name="profession"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>País</FormLabel>
+                  <FormLabel>Profession</FormLabel>
                   <FormControl>
                     <Input
                       className="placeholder-gray-500 text-black"
