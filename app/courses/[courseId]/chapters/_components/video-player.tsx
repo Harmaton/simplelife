@@ -1,7 +1,6 @@
 "use client";
 
 import axios from "axios";
-import MuxPlayer from "@mux/mux-player-react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -71,7 +70,7 @@ export const VideoPlayer = ({
           </p>
         </div>
       )}
-      {!isLocked && (
+      {/* {!isLocked && (
         <MuxPlayer
           title={title}
           className={cn(
@@ -82,7 +81,7 @@ export const VideoPlayer = ({
           autoPlay
           playbackId={playbackId}
         />
-      )}
+      )} */}
     </div>
   )
 }

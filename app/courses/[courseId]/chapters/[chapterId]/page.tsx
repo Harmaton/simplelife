@@ -16,10 +16,9 @@ import {
 
 import { QueueListIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
-
-import { YouTubePlayer } from "@/app/courses/chapters/_components/youtube-player";
-import { CommentTextarea } from "@/app/courses/chapters/_components/comment";
 import { getChapter, getCourseById } from "@/app/actions/chapter";
+import { CommentTextarea } from "../_components/comment";
+import { YouTubePlayer } from "../_components/youtube-player";
 
 const ChapterIdPage = async ({
   params,
@@ -274,7 +273,7 @@ const ChapterIdPage = async ({
                         </svg>
 
                         {/* <RatingInputButton courseId={params.courseId} /> */}
-                        
+
                       </div>
                     </div>
                   </div>
