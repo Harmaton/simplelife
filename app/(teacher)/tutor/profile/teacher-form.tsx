@@ -56,12 +56,9 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
     try {
       setLoading(true);
       if (user) {
-        const dbuser = await getUserByUID(user.uid);
-        if(dbuser){
-          await updateUser(dbuser.id, values);
-          toast.success("Actualizada");
-        }
         
+          await updateUser(teacherToEdit.email, values);
+          toast.success("Actualizada")
       }
       router.refresh();
       toast.success("Actualizada");
@@ -113,7 +110,7 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
               name="profession"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Profession</FormLabel>
+                  <FormLabel>País</FormLabel>
                   <FormControl>
                     <Input
                       className="placeholder-gray-500 text-black"

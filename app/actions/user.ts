@@ -317,7 +317,7 @@ export async function updateUser(uid: string, values: any) {
   try {
     const user = await db.user.update({
       where: {
-        id: uid,
+        email: uid,
       },
       data: {
         ...values,
