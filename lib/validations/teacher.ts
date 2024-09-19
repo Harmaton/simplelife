@@ -9,8 +9,8 @@ export const teacherSchema = z.object({
     whatsapp: z.string(),
     facebook: z.string(),
     mail: z.string(),
-    instagram: z.string()
-    
+    instagram: z.string(),
+    profession: z.string()
   });
 
 export type TeacherSchema = z.infer<typeof teacherSchema>;

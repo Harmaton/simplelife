@@ -166,6 +166,19 @@ export async function getAllUsers() {
   }
 }
 
+export async function getUserByUID(id: string){
+try{
+
+  const user = await db.user.findUnique({where: {
+    clerkId: id
+  }})
+
+  return user;
+} catch(error){
+  console.log(error)
+}
+}
+
 export async function getAllRegistredTeachers() {
   try {
     const teachers = await db.user.findMany({
@@ -304,7 +317,7 @@ export async function updateUser(uid: string, values: any) {
   try {
     const user = await db.user.update({
       where: {
-        clerkId: uid,
+        id: uid,
       },
       data: {
         ...values,

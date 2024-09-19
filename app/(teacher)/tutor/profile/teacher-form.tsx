@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import { teacherSchema, TeacherSchema } from "@/lib/validations/teacher";
 import { useAuth } from "@/providers/AuthProvider";
-import { updateUser } from "@/app/actions/user";
+import { getUserByUID, updateUser } from "@/app/actions/user";
 
 interface EditTeacherProps {
   teacherToEdit: User;
@@ -29,7 +29,7 @@ interface EditTeacherProps {
 export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
   const router = useRouter();
   const { user } = useAuth();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<TeacherSchema>({
     resolver: zodResolver(teacherSchema),
@@ -43,6 +43,7 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
       facebook: teacherToEdit.facebook || "",
       mail: teacherToEdit.mail || "",
       instagram: teacherToEdit.instagram || "",
+      profession:  teacherToEdit.profession || ""
     },
   });
 
@@ -54,15 +55,19 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
 
     try {
       setLoading(true);
-      if (user.uid) {
-        await updateUser(user.uid, values);
-        toast.success("Actualizada");
+      if (user) {
+        const dbuser = await getUserByUID(user.uid);
+        if(dbuser){
+          await updateUser(dbuser.id, values);
+          toast.success("Actualizada");
+        }
+        
       }
       router.refresh();
       toast.success("Actualizada");
     } catch {
       toast.error("Algo salió mal");
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -74,9 +79,11 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
   return (
     <>
       <div className="space-y-1 mb-2 mt-2">
-        <h1 className="font-bold text-center text-2xl">Información del perfil</h1>
+        <h1 className="font-bold text-center text-2xl">
+          Información del perfil
+        </h1>
         <p className="font-mono text-center">
-        Edite toda la información de su perfil a continuación para destacar{" "}
+          Edite toda la información de su perfil a continuación para destacar{" "}
         </p>
       </div>
       <div className="flex justify-center items-center mt-2">
@@ -97,6 +104,23 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
                   <FormDescription>
                     Este es su nombre para mostrar públicamente.
                   </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="profession"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Profession</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="placeholder-gray-500 text-black"
+                      placeholder="..."
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
