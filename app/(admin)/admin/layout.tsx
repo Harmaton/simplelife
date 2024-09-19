@@ -16,7 +16,6 @@ import { useAuth } from "@/providers/AuthProvider";
 import {
   BarChart,
   Book,
-  BookmarkIcon,
   CreditCard,
   Home,
   LineChart,
@@ -24,14 +23,13 @@ import {
   PenBox,
   PlusIcon,
   TicketSlash,
-  UserCircle,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
-import Loadingpage from "@/components/loading-page";
 import { toast } from "sonner";
 import { checkIsAdmin } from "@/app/actions/user";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
+import LoadingPage from "@/components/loading-page";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
@@ -50,24 +48,27 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (!user?.email) {
     return (
-      <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
+      <div className="flex flex-col items-center justify-center border p-4 rounded-lg">
         <div className="text-2xl mb-4">🔒</div>
         <Link href="/login">
           <Button>Iniciar Sesión como Admin</Button>
         </Link>
+        <LoadingPage />
       </div>
     );
   }
 
   if (!isAdmin) {
     return (
-      <div className="flex flex-col items-center justify-center h-full border p-4 rounded-lg">
+      <div className="flex flex-col items-center justify-center border p-4 rounded-lg">
         <div className="text-2xl mb-4">🚫</div>
         <p className="text-lg">No tienes permisos de administrador.</p>
         <Link href="/">
           <Button>Volver a la plataforma</Button>
         </Link>
+        <LoadingPage />
       </div>
+      
     );
   }
 

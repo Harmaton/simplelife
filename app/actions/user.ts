@@ -3,6 +3,7 @@
 import { EmailTemplate } from "@/components/email-template";
 import { auth } from "@/firebase";
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -94,19 +95,24 @@ export const fetchStudent = async (userId: string) => {
   }
 }
 
-export async function deleteTeacherProfile() {
+export async function deleteTeacherProfile(id: string) {
   try {
-    const user = auth.currentUser;
-    if (user) {
-      await db.user.delete({
+
+   const user =   await db.user.update({
         where: {
-          clerkId: user.uid,
+          id: id,
         },
+        data: {
+          isTeacher: false,
+          isRegistered: false,
+          isadmin: false
+        }
       });
-    }
    
+   return {mesage: `${user.nickname} ha sido cancelado`}
   } catch (error) {
     console.log(error);
+    return {message: 'No se pudo eliminar'}
   }
 }
 

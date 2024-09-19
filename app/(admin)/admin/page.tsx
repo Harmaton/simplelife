@@ -20,7 +20,7 @@ export default function Page() {
     <div className="p-8 ">
       <div className="mb-4">
         <h1 className="text-xl font-bold">Todos los Profesores Registrados</h1>
-        <p className="text-gray-600">
+        <p className="text-gray-600 font-mono">
           Aquí puedes encontrar todos los profesores que han sido añadidos al
           sistema.
         </p>

@@ -1,19 +1,12 @@
 "use client"
 
-import { Course, User } from "@prisma/client"
+import {  User } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil, Skull, UserCog2Icon } from "lucide-react"
-import Link from "next/link";
-
+import { ArrowUpDown, UserCog2Icon } from "lucide-react"
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import DeleteDialog from "./delete-dialog";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -62,21 +55,9 @@ export const columns: ColumnDef<User>[] = [
       const { id } = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-4 w-8 p-0">
-              <span className="sr-only">Menú abierto</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Skull className="h-4 w-4 mr-2" />
-                Profesora de prohibición
-              </DropdownMenuItem>
-        
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className=" p-2 flex justify-end">
+        <DeleteDialog id={id} />
+        </div>
       )
     }
   }

@@ -16,6 +16,8 @@ const ChapterIdPage = async ({
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
+
+  // fetch the user and compare to the userid in the course from this courseid
   const chapter = await db.chapter.findUnique({
     where: {
       id: params.chapterId,
@@ -67,76 +69,76 @@ const ChapterIdPage = async ({
                 <span className="text-sm text-slate-700">
                   Completa todos los campos {completionText}
                 </span>
-
               </div>
               {isComplete ? (
-            <ChapterActions
-            disabled={false}
-            courseId={params.courseId}
-            chapterId={params.chapterId}
-            isPublished={chapter.isPublished}
-          />
-          ) : (
-            <div>
-              <span>⚠️</span>
-              <p className="font-mono text-sm underline text-red-500 ">Complete los campos obligatorios  </p>
+                <ChapterActions
+                  disabled={false}
+                  courseId={params.courseId}
+                  chapterId={params.chapterId}
+                  isPublished={chapter.isPublished}
+                />
+              ) : (
+                <div>
+                  <span>⚠️</span>
+                  <p className="font-mono text-sm underline text-red-500 ">
+                    Complete los campos obligatorios{" "}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-             
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-          <div className="space-y-4">
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={LayoutDashboard} />
-                <h2 className="text-xl">Personaliza tu capítulo</h2>
-              </div>
-              <ChapterTitleForm
-                initialData={chapter}
-                courseId={params.courseId}
-                chapterId={params.chapterId}
-              />
-              <ChapterDescriptionForm
-                initialData={chapter}
-                courseId={params.courseId}
-                chapterId={params.chapterId}
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={Eye} />
-                <h2 className="text-xl">Configuración de acceso</h2>
-              </div>
-              <ChapterAccessForm
-                initialData={chapter}
-                courseId={params.courseId}
-                chapterId={params.chapterId}
-              />
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={Video} />
-              <h2 className="text-xl">Añadir un vídeo</h2>
-            </div>
-
-            <ChapterYoutubeForm
-              initialData={chapter}
-              chapterId={params.chapterId}
-              courseId={params.courseId}
-            />
-            {/* <AttachmentForm initialData={chapterone} courseId={params.courseId} chapterId={params.chapterId}   /> */}
-            <EvaluationsForm
-              initialData={chapter}
-              courseId={params.courseId}
-              chapterId={params.chapterId}
-            />
           </div>
         </div>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+        <div className="space-y-4">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={LayoutDashboard} />
+              <h2 className="text-xl">Personaliza tu capítulo</h2>
+            </div>
+            <ChapterTitleForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+            <ChapterDescriptionForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Eye} />
+              <h2 className="text-xl">Configuración de acceso</h2>
+            </div>
+            <ChapterAccessForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={Video} />
+            <h2 className="text-xl">Añadir un vídeo</h2>
+          </div>
+
+          <ChapterYoutubeForm
+            initialData={chapter}
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+          />
+          {/* <AttachmentForm initialData={chapterone} courseId={params.courseId} chapterId={params.chapterId}   /> */}
+          <EvaluationsForm
+            initialData={chapter}
+            courseId={params.courseId}
+            chapterId={params.chapterId}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
