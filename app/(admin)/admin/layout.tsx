@@ -88,13 +88,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <PenBox className="text-blue-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
-    // {
-    //   label: "Usuarios",
-    //   href: "/admin/users",
-    //   icon: (
-    //     <UserCheck2Icon className="text-black dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
     {
       label: "Solicitudes",
       href: "/admin/teacher-applications",
