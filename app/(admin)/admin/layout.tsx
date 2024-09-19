@@ -23,6 +23,7 @@ import {
   PenBox,
   PlusIcon,
   TicketSlash,
+  UserCheck2Icon,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import Avatar from "@/components/icon-avatar";
@@ -74,12 +75,26 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
   const links = [
     {
-      label: "Maestros",
+      label: "Usuarios",
       href: "/admin",
+      icon: (
+        <UserCheck2Icon className="text-black dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Maestros",
+      href: "/admin/teachers",
       icon: (
         <PenBox className="text-blue-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
+    // {
+    //   label: "Usuarios",
+    //   href: "/admin/users",
+    //   icon: (
+    //     <UserCheck2Icon className="text-black dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
     {
       label: "Solicitudes",
       href: "/admin/teacher-applications",
@@ -87,13 +102,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <PlusIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
-    {
-      label: "Administrar estudiantes",
-      href: "/admin/students",
-      icon: (
-        <DocumentArrowUpIcon className="text-red-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    // {
+    //   label: "Administrar estudiantes",
+    //   href: "/admin/students",
+    //   icon: (
+    //     <DocumentArrowUpIcon className="text-red-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
     {
       label: "Admino Analitica",
       href: "/admin/analytics",

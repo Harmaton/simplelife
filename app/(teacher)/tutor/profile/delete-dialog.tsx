@@ -21,7 +21,7 @@ import { deleteTeacherProfile } from "@/app/actions/user";
 export default function DeleteProfileDialog() {
     const router = useRouter()
   const handleDeleteProfile = async () => {
-    await deleteTeacherProfile();
+    // await deleteTeacherProfile();
     router.push('/')
   };
 
