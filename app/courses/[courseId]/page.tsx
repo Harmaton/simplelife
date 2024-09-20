@@ -2,12 +2,11 @@ import React from "react";
 import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Users, BarChart } from "lucide-react";
+import { Clock, Users, BarChart, Folder, FolderTree } from "lucide-react";
 import Navbar from "@/components/landing-page/navbar";
 import { redirect } from "next/navigation";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
@@ -28,17 +27,19 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
         },
       },
       User: true,
+      category: true,
+      subcategory: true,
     },
   });
 
-  const userid = course?.teacherId
+  const userid = course?.teacherId;
 
-  if(!userid){
-    redirect('/login')
+  if (!userid) {
+    redirect('/login');
   }
 
   if (!course || course.Chapter.length === 0) {
-    return <div>Course not found or no chapters available.</div>;
+    return <div>Curso no encontrado o no hay capítulos disponibles.</div>;
   }
 
   return (
@@ -49,7 +50,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           <CardHeader>
             <CardTitle className="text-2xl font-bold">{course.title}</CardTitle>
             <p className="text-sm text-gray-500">
-              Created by: {course.User?.nickname || "Unknown"}
+              Creado por: {course.User?.nickname || "Desconocido"}
             </p>
           </CardHeader>
           <CardContent>
@@ -72,15 +73,27 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               </div>
               <div className="flex items-center">
                 <Users className="mr-2 h-4 w-4" />
-                <span>{course.averageRating || 0} rating</span>
+                <span>{course.averageRating || 0} calificación</span>
               </div>
               <div className="flex items-center">
                 <BarChart className="mr-2 h-4 w-4" />
-                <span>{course.Chapter.length} chapters</span>
+                <span>{course.Chapter.length} capítulos</span>
+              </div>
+            </div>
+            <div className="mt-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center">
+                  <Folder className="mr-2 h-4 w-4" />
+                  <span>Categoría: Certificación</span>
+                </div>
+                <div className="flex items-center">
+                  <FolderTree className="mr-2 h-4 w-4" />
+                  <span>Subcategoría: Diploma</span>
+                </div>
               </div>
             </div>
             <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-2">Chapters:</h3>
+              <h3 className="text-lg font-semibold mb-2">Capítulos:</h3>
               <ul className="space-y-2">
                 {course.Chapter.map((chapter) => (
                   <li
@@ -89,14 +102,14 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                   >
                     <span>{chapter.title}</span>
                     <Button variant="outline" size="sm">
-                      {chapter.isFree ? "Start" : "Preview"}
+                      {chapter.isFree ? "Comenzar" : "Vista previa"}
                     </Button>
                   </li>
                 ))}
               </ul>
             </div>
             <div className="mt-6">
-              <Button className="w-full">Enroll in Course</Button>
+              <Button className="w-full">Consultar precios</Button>
             </div>
           </CardContent>
         </Card>
