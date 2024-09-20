@@ -17,6 +17,7 @@ export default function TutorRegForm({userId}: {userId: string; }) {
   const [name, setName] = useState('')
   const [profession, setProfession] = useState('')
   const [description, setDescription] = useState('')
+  const [country , setCountry] = useState('')
   const [linkedin, setLinkedIn] = useState('')
   const [countryCode, setCountryCode] = useState('')
   const [whatsappNumber, setWhatsappNumber] = useState('')
@@ -70,7 +71,7 @@ export default function TutorRegForm({userId}: {userId: string; }) {
     }
   }
 
-  const isFormValid = name && profession && description && countryCode && whatsappNumber && linkedin
+  const isFormValid = name && profession && description && countryCode && whatsappNumber && linkedin && country
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -100,6 +101,13 @@ export default function TutorRegForm({userId}: {userId: string; }) {
               placeholder="LinkedIn o sitio web de currículum"
               value={linkedin}
               onChange={(e) => setLinkedIn(e.target.value)}
+              required
+            />
+             <span className="text-red-500">*</span>
+            <Input
+              placeholder="Pais"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
               required
             />
             <span className="text-red-500">*</span>
