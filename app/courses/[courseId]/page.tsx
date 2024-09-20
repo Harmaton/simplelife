@@ -4,8 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, BarChart } from "lucide-react";
 import Navbar from "@/components/landing-page/navbar";
+import { redirect } from "next/navigation";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
+
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
@@ -28,6 +30,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       User: true,
     },
   });
+
+  const userid = course?.teacherId
+
+  if(!userid){
+    redirect('/login')
+  }
 
   if (!course || course.Chapter.length === 0) {
     return <div>Course not found or no chapters available.</div>;
