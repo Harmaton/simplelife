@@ -37,8 +37,12 @@ export async function PATCH(
   { params }: { params: { courseId: string; chapterId: string } }
 ) {
   try {
+
+    // console.log("PATCH request received", params);
     const { courseId, chapterId } = params;
     const values = await req.json();
+
+    
 
     // First, check if the course and chapter exist
     const course = await db.course.findUnique({
