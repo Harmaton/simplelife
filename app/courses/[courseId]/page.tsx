@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, BarChart, Folder, FolderTree } from "lucide-react";
 import Navbar from "@/components/landing-page/navbar";
 import { redirect } from "next/navigation";
+import Image from "next/image";
+import { Footer } from "@/components/landing-page/footer";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
@@ -49,9 +51,22 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">{course.title}</CardTitle>
-            <p className="text-sm text-gray-500">
-              Creado por: {course.User?.nickname || "Desconocido"}
-            </p>
+            <div className="flex items-center mt-2">
+              {course.User?.image && (
+                <div className="mr-2">
+                  <Image
+                    src={course.User.image}
+                    alt={course.User.nickname || "Profesor"}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                </div>
+              )}
+              <p className="text-sm text-gray-500">
+                Creado por: {course.User?.nickname || "Desconocido"}
+              </p>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="aspect-video relative">
@@ -114,6 +129,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           </CardContent>
         </Card>
       </div>
+      <Footer />
     </>
   );
 };
