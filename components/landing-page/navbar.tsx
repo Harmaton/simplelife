@@ -51,7 +51,7 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="w-64 bg-background mt-4 mr-2 p-4"
+            className="w-64 bg-background mt-0 mr-2 p-4"
           >
             <SheetHeader className="mb-4">
               <Logo /> 
