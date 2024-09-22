@@ -32,8 +32,6 @@ const ChapterIdPage = async ({
 
   const requiredFields = [chapter.title, chapter.description, chapter.youtubeLink];
 
-  console.log(chapter.title, chapter.description, chapter.youtubeLink)
-
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
 
