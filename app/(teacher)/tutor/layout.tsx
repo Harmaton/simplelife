@@ -17,6 +17,7 @@ import {
   BookOpen,
   Calendar,
   Home,
+  Layout,
   Locate,
   LogOut,
   UserCog,
@@ -72,6 +73,13 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
     );
   }
   const links = [
+    {
+      label: "Panel",
+      href: "/tutor/dashboard",
+      icon: (
+        <Layout className="text-blue-500 dark:text-blue-400 h-5 w-5 flex-shrink-0" />
+      ),
+    },
     {
       label: "Gestionar Perfil",
       href: "/tutor/profile",
