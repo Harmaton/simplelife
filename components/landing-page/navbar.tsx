@@ -16,14 +16,21 @@ import { motion } from "framer-motion";
 import { NavigationMenuDemo } from "../navbar-shadcn";
 import { Logo } from "../logo";
 import Image from "next/image";
-import { Dialog } from "../ui/dialog";
 
 export default function Navbar() {
   const { user } = useAuth();
 
   return (
-    <header className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 md:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky" style={{ position: 'sticky', top: '-100px', transform: 'translateY(0)', zIndex: 50 }}>
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-lg z-[-1]"></div>
+    <header
+      className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 md:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky"
+      style={{
+        position: "sticky",
+        top: "-100px",
+        transform: "translateY(0)",
+        zIndex: 50,
+      }}
+    >
+      <div className="absolute inset-0 bg-white/70 backdrop-blur-lg z-[-1]"></div>
       <Link
         href="/"
         className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
@@ -54,7 +61,7 @@ export default function Navbar() {
             className="w-64 bg-background mt-0 mr-2 p-4"
           >
             <SheetHeader className="mb-4">
-              <Logo /> 
+              <Logo />
               <SheetTitle></SheetTitle>
               <SheetDescription></SheetDescription>
             </SheetHeader>
@@ -114,23 +121,31 @@ export default function Navbar() {
                 className="text-lg font-medium border p-2 border-violet-500 tex-center transition-colors hover:text-primary"
                 prefetch={false}
               >
-               Maestros
+                Maestros
               </Link>
-             
             </nav>
             <div className="mt-auto flex flex-col gap-4">
               {user ? (
                 <>
                   <Button className="rounded-full flex items-center justify-center p-2">
-                  {user?.photoURL ? (
-            
-                  <Image src={user.photoURL} alt="User Avatar" className="w-8 h-8 rounded-full" width={50} height={50} />
-                ) : (
-                  <span className="text-xl">{user?.email?.charAt(0).toUpperCase()}</span>
-                )}
+                    {user?.photoURL ? (
+                      <Image
+                        src={user.photoURL}
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full"
+                        width={50}
+                        height={50}
+                      />
+                    ) : (
+                      <span className="text-xl">
+                        {user?.email?.charAt(0).toUpperCase()}
+                      </span>
+                    )}
                   </Button>
                   <Link href="/dashboard">
-                    <Button className="bg-background border text-center border-violet-500 m-auto">Panel de control</Button>
+                    <Button className="bg-background border text-center border-violet-500 m-auto">
+                      Panel de control
+                    </Button>
                   </Link>
                 </>
               ) : (
@@ -149,8 +164,8 @@ export default function Navbar() {
 
         <div className="hidden md:flex justify-center mr-8 items-center gap-6">
           <nav className="flex items-center gap-6">
-          <NavigationMenuDemo />
-            </nav>
+            <NavigationMenuDemo />
+          </nav>
         </div>
 
         <div className="hidden md:flex items-center gap-4">
@@ -158,14 +173,24 @@ export default function Navbar() {
             <>
               <div className="rounded-full flex items-center bg-gray-300 m-auto justify-center p-2">
                 {user?.photoURL ? (
-                  <Image src={user.photoURL} alt="User Avatar" width={32} height={32} className="w-8 h-8 rounded-full" />
+                  <Image
+                    src={user.photoURL}
+                    alt="User Avatar"
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 rounded-full"
+                  />
                 ) : (
-                  <span className="text-xl">{user?.email?.charAt(0).toUpperCase()}</span>
+                  <span className="text-xl">
+                    {user?.email?.charAt(0).toUpperCase()}
+                  </span>
                 )}
               </div>
               <Link href={"/dashboard"}>
                 <Button className="bg-violet-500 hover:bg-blue-300 text-white p-2 border border-violet-500 m-auto">
-                  <span className="text-xl mr-2 font-mono">Panel de control</span>
+                  <span className="text-xl mr-2 font-mono">
+                    Panel de control
+                  </span>
                   <ArrowRightCircle className="h-4 w-4 mr-2" />
                 </Button>
               </Link>
@@ -177,7 +202,6 @@ export default function Navbar() {
               </Link>
               <Link href="/sign-up">
                 <Button>Comenzar</Button>
-                
               </Link>
             </>
           )}
