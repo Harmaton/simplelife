@@ -59,7 +59,9 @@ export const EvaluationsForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      const url = `/api/chapters/${chapterId}`;
+      console.log("Submitting to URL:", url);
+      await axios.patch(url, values);
       toast.success("Capitulo actualizado");
       toggleCreating();
 
