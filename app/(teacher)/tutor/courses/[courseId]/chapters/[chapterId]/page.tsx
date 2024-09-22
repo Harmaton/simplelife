@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
+import { ArrowLeft, BookCopy, Eye, LayoutDashboard, Video } from "lucide-react";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
@@ -20,13 +20,6 @@ const ChapterIdPage = async ({
   // fetch the user and compare to the userid in the course from this courseid
   
   const chapter = await db.chapter.findUnique({
-    where: {
-      id: params.chapterId,
-      courseId: params.courseId,
-    },
-  });
-
-  const chapterone = await db.chapter.findUnique({
     where: {
       id: params.chapterId,
       courseId: params.courseId,
@@ -61,7 +54,7 @@ const ChapterIdPage = async ({
           <div className="w-full">
             <Link
               href={`/tutor/courses/${params.courseId}`}
-              className="flex items-center text-sm hover:opacity-75 transition mb-6"
+              className="flex justify-end text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a la configuración del curso
@@ -104,6 +97,10 @@ const ChapterIdPage = async ({
               courseId={params.courseId}
               chapterId={params.chapterId}
             />
+             <div className="flex items-center mt-4 gap-x-2">
+              <IconBadge icon={BookCopy} />
+              <h2 className="text-xl">Personaliza tu capítulo</h2>
+            </div>
             <ChapterDescriptionForm
               initialData={chapter}
               courseId={params.courseId}

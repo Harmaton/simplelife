@@ -13,7 +13,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ interface ChapterTitleFormProps {
   };
   courseId: string;
   chapterId: string;
-};
+}
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -51,18 +51,19 @@ export const ChapterTitleForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
-      toast.success("Chapter updated");
+      toast.success('Título actualizado');
       toggleEdit();
       router.refresh();
-    } catch {
-      toast.error("Something went wrong");
+    } catch (error) {
+      console.error("Error updating chapter title:", error);
+      toast.error("Algo salió mal");
     }
-  }
+  };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-      Título del capítulo
+        Título del capítulo
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancelar</>
@@ -74,11 +75,7 @@ export const ChapterTitleForm = ({
           )}
         </Button>
       </div>
-      {!isEditing && (
-        <p className="text-sm mt-2">
-          {initialData.title}
-        </p>
-      )}
+      {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
       {isEditing && (
         <Form {...form}>
           <form
@@ -102,16 +99,13 @@ export const ChapterTitleForm = ({
               )}
             />
             <div className="flex justify-end">
-              <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-              >
-                Ahorrar
+              <Button disabled={!isValid || isSubmitting} type="submit">
+                Guardar
               </Button>
             </div>
           </form>
         </Form>
       )}
     </div>
-  )
-}
+  );
+};

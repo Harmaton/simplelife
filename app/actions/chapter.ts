@@ -30,8 +30,8 @@ export const getChapter = async ({
   try {
     const purchase = await db.coursePurchase.findMany({
       where: {
-        userId:  userId,
-        courseId: courseId ,
+        userId: userId,
+        courseId: courseId,
       },
     });
 
@@ -46,7 +46,7 @@ export const getChapter = async ({
         whatsapp: true,
         paymentLink: true,
         averageRating: true,
-        googleFormLink: true
+        googleFormLink: true,
       },
     });
 
@@ -123,3 +123,20 @@ export const getChapter = async ({
     };
   }
 };
+
+export async function updateChapterTitle(chapterId: string, title: string) {
+  try {
+    await db.chapter.update({
+      where: {
+        id: chapterId,
+      },
+      data: {
+        title: title,
+      },
+    });
+    return { success: true, message: "Capítulo actualizado" };
+  } catch (error) {
+    console.log(error);
+    return { success: true, message: "Error" };
+  }
+}
