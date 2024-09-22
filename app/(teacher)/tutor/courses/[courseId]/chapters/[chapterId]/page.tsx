@@ -128,11 +128,11 @@ const ChapterIdPage = async ({
             courseId={params.courseId}
           />
           {/* <AttachmentForm initialData={chapterone} courseId={params.courseId} chapterId={params.chapterId}   /> */}
-          <EvaluationsForm
+          {/* <EvaluationsForm
             initialData={chapter}
             courseId={params.courseId}
             chapterId={params.chapterId}
-          />
+          /> */}
         </div>
       </div>
     </div>

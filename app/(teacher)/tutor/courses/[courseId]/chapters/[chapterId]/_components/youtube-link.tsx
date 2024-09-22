@@ -54,7 +54,7 @@ export const ChapterYoutubeForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      await axios.patch(`/api/chapters/${chapterId}`, values);
       toast.success("Vídeo actualizado");
       toggleEdit();
       router.refresh();
