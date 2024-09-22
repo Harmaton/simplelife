@@ -18,7 +18,6 @@ const ChapterIdPage = async ({
 }) => {
 
   // fetch the user and compare to the userid in the course from this courseid
-  
   const chapter = await db.chapter.findUnique({
     where: {
       id: params.chapterId,

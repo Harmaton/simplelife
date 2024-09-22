@@ -21,12 +21,13 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ChapterDescriptionFormProps {
   initialData: Chapter;
   courseId: string;
   chapterId: string;
-};
+}
 
 const formSchema = z.object({
   description: z.string().min(1),
@@ -35,7 +36,7 @@ const formSchema = z.object({
 export const ChapterDescriptionForm = ({
   initialData,
   courseId,
-  chapterId
+  chapterId,
 }: ChapterDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -46,7 +47,7 @@ export const ChapterDescriptionForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData?.description || ""
+      description: initialData?.description || "",
     },
   });
 
@@ -54,19 +55,22 @@ export const ChapterDescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
       toast.success("Capítulo actualizado");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Algo salió mal");
     }
-  }
+  };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-      Descripción del capítulo
+        Descripción del capítulo
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancelar</>
@@ -79,16 +83,14 @@ export const ChapterDescriptionForm = ({
         </Button>
       </div>
       {!isEditing && (
-        <div className={cn(
-          "text-sm mt-2",
-          !initialData.description && "text-slate-500 italic"
-        )}>
-          {!initialData.description && "Sin descripción"}
-          {initialData.description && (
-            <Preview
-              value={initialData.description}
-            />
+        <div
+          className={cn(
+            "text-sm mt-2",
+            !initialData.description && "text-slate-500 italic"
           )}
+        >
+          {!initialData.description && "Sin descripción"}
+          {initialData.description && <p>{initialData.description}</p>}
         </div>
       )}
       {isEditing && (
@@ -103,19 +105,14 @@ export const ChapterDescriptionForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Editor
-                      {...field}
-                    />
+                    <Textarea {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <div className="flex justify-end">
-              <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-              >
+              <Button disabled={!isValid || isSubmitting} type="submit">
                 Ahorrar
               </Button>
             </div>
@@ -123,5 +120,5 @@ export const ChapterDescriptionForm = ({
         </Form>
       )}
     </div>
-  )
-}
+  );
+};
