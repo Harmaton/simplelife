@@ -4,22 +4,9 @@ import { db } from "@/lib/db";
 export async function DELETE({
   params,
 }: {
-  params: { courseId: string; chapterId: string };
+  params: { chapterId: string };
 }) {
   try {
-    const course = await db.course.findUnique({
-      where: {
-        id: params.courseId,
-      },
-      include: {
-        Chapter: true,
-      },
-    });
-
-    if (!course) {
-      return new NextResponse("Not found", { status: 404 });
-    }
-
     const deletedCourse = await db.chapter.delete({
       where: {
         id: params.chapterId,
@@ -36,25 +23,25 @@ export async function DELETE({
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { courseId: string; chapterId: string } }
+  { params }: { params: {chapterId: string } }
 ) {
   try {
     console.log("PATCH request received", params);
-    let { courseId, chapterId } = params;
+    let { chapterId } = params;
 
     // If params are undefined, try to get them from query parameters
-    if (!courseId || !chapterId) {
-      const url = new URL(req.url);
-      courseId = url.searchParams.get('nxtPcourseId') || '';
-      chapterId = url.searchParams.get('nxtPchapterid') || '';
-    }
+    // if (!courseId || !chapterId) {
+    //   const url = new URL(req.url);
+    //   courseId = url.searchParams.get('nxtPcourseId') || '';
+    //   chapterId = url.searchParams.get('nxtPchapterid') || '';
+    // }
 
-    console.log("Using courseId:", courseId, "chapterId:", chapterId);
+    // console.log("Using courseId:", courseId, "chapterId:", chapterId);
 
-    if (!courseId || !chapterId) {
-      console.error("Missing courseId or chapterId");
-      return new NextResponse("Course ID and Chapter ID are required", { status: 400 });
-    }
+    // if (!courseId || !chapterId) {
+    //   console.error("Missing courseId or chapterId");
+    //   return new NextResponse("Course ID and Chapter ID are required", { status: 400 });
+    // }
 
     const values = await req.json();
     console.log("Received values:", values);
@@ -63,12 +50,12 @@ export async function PATCH(
     const chapter = await db.chapter.findUnique({
       where: {
         id: chapterId,
-        courseId: courseId,
+        // courseId: courseId,
       },
     });
 
     if (!chapter) {
-      console.error("Chapter not found", { chapterId, courseId });
+      console.error("Chapter not found", { chapterId });
       return new NextResponse("Chapter not found", { status: 404 });
     }
 

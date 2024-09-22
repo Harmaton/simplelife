@@ -50,7 +50,7 @@ export const ChapterTitleForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const url = `/api/courses/${courseId}/chapters/${chapterId}`;
+      const url = `/api/chapters/${chapterId}`;
       console.log("Submitting to URL:", url);
       await axios.patch(url, values);
       toast.success('Título actualizado');  
