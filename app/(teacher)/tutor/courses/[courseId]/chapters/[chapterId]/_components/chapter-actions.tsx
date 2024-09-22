@@ -30,10 +30,10 @@ export const ChapterActions = ({
       setIsLoading(true);
 
       if (isPublished) {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`);
+        await axios.patch(`/api/chapters/${chapterId}/unpublish`);
         toast.success("Capítulo inédito");
       } else {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`);
+        await axios.patch(`/api/chapters/${chapterId}/publish`);
         toast.success("Capítulo publicado");
       }
 
@@ -49,11 +49,11 @@ export const ChapterActions = ({
     try {
       setIsLoading(true);
 
-      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`);
+      await axios.delete(`/api/chapters/${chapterId}`);
 
       toast.success("Capítulo eliminado");
       router.refresh();
-      router.push(`/dashboard/teacher/courses/${courseId}`);
+      router.push(`/tutor/courses/${courseId}`);
     } catch {
       toast.error("Algo salió mal");
     } finally {

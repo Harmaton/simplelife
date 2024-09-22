@@ -5,14 +5,13 @@ import { db } from "@/lib/db";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string; chapterId: string } }
+  { params }: { params: {  chapterId: string } }
 ) {
   try {
 
     const unpublishedChapter = await db.chapter.update({
       where: {
         id: params.chapterId,
-        courseId: params.courseId,
       },
       data: {
         isPublished: false,
@@ -21,7 +20,6 @@ export async function PATCH(
 
     const publishedChaptersInCourse = await db.chapter.findMany({
       where: {
-        courseId: params.courseId,
         isPublished: true,
       }
     });
@@ -29,7 +27,7 @@ export async function PATCH(
     if (!publishedChaptersInCourse.length) {
       await db.course.update({
         where: {
-          id: params.courseId,
+          id: unpublishedChapter.courseId,
         },
         data: {
           isPublished: false,
