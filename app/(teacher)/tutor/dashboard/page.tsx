@@ -43,15 +43,15 @@ const Dashboard = () => {
       </div>
 
       {/* Profile Section */}
-      <div className="bg-indigo-900 text-white rounded-lg p-4 mb-6 flex items-center justify-between">
-        <div className="flex items-center">
+      <div className="bg-indigo-900 text-white rounded-lg p-4 mb-6 flex flex-col sm:flex-row items-center sm:justify-between space-y-4 sm:space-y-0">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left">
           {user?.photoURL && (
             <Image
               src={user.photoURL}
               width={48}
               height={48}
               alt={user.displayName || "User"}
-              className="rounded-full mr-4"
+              className="rounded-full mb-2 sm:mb-0 sm:mr-4"
             />
           )}
           <div>
@@ -61,16 +61,16 @@ const Dashboard = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-center">
-          <div className="mr-4">
+        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="text-center sm:text-right">
             <p className="text-sm">Steps 1/4</p>
-            <div className="w-32 bg-gray-700 rounded-full h-2">
+            <div className="w-32 bg-gray-700 rounded-full h-2 mx-auto sm:mx-0">
               <div className="bg-green-500 rounded-full h-2 w-1/4"></div>
             </div>
-            <p className="text-sm text-right">25% completa</p>
+            <p className="text-sm">25% completa</p>
           </div>
           <Link href={"/tutor/profile"}>
-            <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-blue-500">
+            <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-blue-500 w-full sm:w-auto">
               Editar biografía
             </button>
           </Link>
@@ -81,7 +81,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-lg p-4 shadow">
           <h3 className="text-lg font-semibold mb-4 flex justify-between items-center">
-          Actividad reciente
+            Actividad reciente
             <select className="text-sm bg-transparent border-none">
               <option>Todo el tiempo</option>
             </select>
@@ -94,7 +94,7 @@ const Dashboard = () => {
 
         <div className="bg-white rounded-lg p-4 shadow">
           <h3 className="text-lg font-semibold mb-4 flex justify-between items-center">
-          Calificaciones de los cursos
+            Calificaciones de los cursos
             <select className="text-sm bg-transparent border-none">
               <option>Todo el tiempo</option>
             </select>
