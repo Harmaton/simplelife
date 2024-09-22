@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-export async function DELETE({
-  params,
-}: {
-  params: { chapterId: string };
-}) {
+export async function DELETE(  req: NextRequest,
+    { params }: { params: {chapterId: string } }) {
   try {
     const deletedCourse = await db.chapter.delete({
       where: {
@@ -55,7 +52,7 @@ export async function PATCH(
     });
 
     if (!chapter) {
-      console.error("Chapter not found", { chapterId });
+      console.error("Chapter not found", { chapterId});
       return new NextResponse("Chapter not found", { status: 404 });
     }
 
