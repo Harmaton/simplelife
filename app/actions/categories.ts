@@ -106,10 +106,9 @@ export async function addsubCtegoriesAction(
       name: subcategory.name,
       message: `Subcategoría "${subcategory.name}" añadida con éxito.`,
     };
-
   } catch (error) {
     console.error("Error al añadir la subcategoría:", error);
-    
+
     let errorMessage = "Error desconocido al añadir la subcategoría.";
     if (error instanceof Error) {
       errorMessage = error.message;
@@ -217,5 +216,35 @@ export async function GetCategoryNameFromSubCategory(id: string) {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function getCategoryNumberOfCourses(id: string) {
+  try {
+    const coursecount = await db.course.findMany({
+      where: {
+        categoryId: id,
+      },
+    });
+
+    return coursecount.length;
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+}
+
+export async function getSubcategoriesInCategory(id: string) {
+  try {
+    const coursecount = await db.subCategory.findMany({
+      where: {
+        categoryId: id,
+      },
+    });
+
+    return coursecount.length;
+  } catch (error) {
+    console.log(error);
+    return 0;
   }
 }

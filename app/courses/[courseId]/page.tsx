@@ -88,27 +88,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 </p>
               </div>
             </div>
-
-            {/* <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left">
-              {course.User?.image && (
-                <div className="mr-2">
-                  <Image
-                    src={course.User.image}
-                    alt={course.User.nickname || "Profesor"}
-                    width={48}
-                    height={48}
-                    className="rounded-md mb-2 sm:mb-0 sm:mr-4"
-                  />
-                </div>
-              )}
-
-              <p className="text-sm text-gray-500 ">
-                Creado por:{" "}
-                <span className="text-black">
-                  {course.User?.nickname || "Desconocido"}
-                </span>
-              </p>
-            </div> */}
           </CardHeader>
           <CardContent>
             <div className="aspect-video relative">
