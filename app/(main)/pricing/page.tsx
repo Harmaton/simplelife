@@ -371,7 +371,108 @@ const pricingData = {
       ],
       ids: ["22", "pe022", "psychspirit001"],
     },
+    {
+      id: 27,
+      title: "Psicología, Crecimiento Personal y Terapia Holistica",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/Q94026796E",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 28,
+      title: "Psicología, Crecimiento Personal y Desarollo Cognitivo",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/Q94026874J",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 29,
+      title: "Psicología, Espiritualidad y Crecimiento Personal",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/M94011038C",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 30,
+      title: "Psicología, Espiritualidad y Coaching",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/D94011161M",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 31 ,
+      title: "Psicología, Espiritualidad y Terapia Holistica",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/K94011314I",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 32,
+      title: "Psicología, Espiritualidad y Desarollo Cognitivo",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/W94011374M",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 33,
+      title: "Terapia Holística y Desarrollo Cognitivo",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/J94028774X",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
   ],
+
+
+
   certifications: [
     {
       id: 1,
@@ -446,10 +547,12 @@ const pricingData = {
       ids: ["3", "adv003", "cert003"],
     },
   ],
+
+
   fullAccess: [
     {
       id: 1,
-      title: "Coaching y Desarrollo Cognitivo",
+      title: "Membresía Anual",
       price: 1099.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/B86756318T",
