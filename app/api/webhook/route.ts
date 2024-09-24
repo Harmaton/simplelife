@@ -24,11 +24,17 @@ export const POST = async (req: Request) => {
     // Parse the raw body of the request
     const rawBody = await req.json();
     // Extract relevant data from the webhook payload
+    console.log('rawbody',rawBody)
+
     const {
       id,
       event,
       data
     } = rawBody;
+    
+    console.log('id', id)
+    console.log('event', event)
+    console.log('data', data)
 
     // Handle different event types
     switch (event) {
