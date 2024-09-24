@@ -42,6 +42,22 @@ export async function GetAllCategories() {
   }
 }
 
+export async function GetCategoryPurchases(categoryId: string, userId: string) {
+  try {
+    const purchases = await db.categoryPurchase.findMany({where: {
+      categoryId: categoryId,
+      userId: userId
+    }})
+
+    if(purchases.length > 0){
+      return true
+    }
+    return false
+  } catch (error) {
+    console.log(error)
+  }
+  
+}
 
 export async function GetCategorySubCategories(categoryId: string) {
   try {
