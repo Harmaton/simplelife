@@ -32,13 +32,16 @@ export async function GetLatestCourses() {
 
 export async function GetAllCategories() {
   try {
-    const categories = await db.category.findMany({});
+    const categories = await db.category.findMany({
+      take: 6 // Limit to the latest 6 categories
+    });
     return categories;
   } catch (error) {
     console.log(error);
     return [];
   }
 }
+
 
 export async function GetCategorySubCategories(categoryId: string) {
   try {

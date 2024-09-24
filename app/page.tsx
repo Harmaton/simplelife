@@ -12,7 +12,7 @@ import TopCategories from "@/components/landing-page/top-categories";
 import { GetAllCategories } from "./actions/courses";
 
 export default async function Home() {
- const categories = await GetAllCategories()
+  const categories = await GetAllCategories();
   return (
     <>
       <Ad />
