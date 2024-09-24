@@ -7,7 +7,7 @@ import FloatingActionButton from "@/components/landing-page/floating-action-btn"
 import { Footer } from "@/components/landing-page/footer";
 import Hero from "@/components/landing-page/hero";
 import Navbar from "@/components/landing-page/navbar";
-import { CompanyPartners } from "@/components/landing-page/partners";
+import { CompanyPartners } from "@/components/landing-page/companies";
 import TopCategories from "@/components/landing-page/top-categories";
 import { GetAllCategories } from "./actions/courses";
 

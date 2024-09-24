@@ -2,11 +2,11 @@ import React from "react";
 import CategoryCard from "./category";
 import { Category } from "@prisma/client";
 
-interface TopCategoriesProps {
+interface TopTeachersProps {
   categories: Category[];
 }
 
-const TopCategories: React.FC<TopCategoriesProps> = ({ categories }) => {
+const TopTeachers: React.FC<TopTeachersProps> = ({ categories }) => {
   return (
     <section className="py-8 px-4 max-w-10xl mx-auto">
       <div className="flex justify-between  mb-8">
@@ -27,4 +27,4 @@ const TopCategories: React.FC<TopCategoriesProps> = ({ categories }) => {
   );
 };
 
-export default TopCategories;
+export default TopTeachers;
