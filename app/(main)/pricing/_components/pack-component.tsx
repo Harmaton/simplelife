@@ -46,7 +46,7 @@ export default function PackComponent({
           height={200}
           className="mb-4 rounded-md"
         />
-        <div className="absolute top-0 right-0 bg-green-500 text-white px-2 py-1 rounded-tl-lg z-10">
+        <div className="absolute top-0 right-0 bg-indigo-500 text-white px-2 py-1 rounded-tl-lg z-10">
           <span className="text-sm font-bold">10% de descuento</span>
         </div>
         <h2 className="text-xl font-bold mb-2 h-14 flex items-center">

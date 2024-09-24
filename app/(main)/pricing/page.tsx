@@ -458,9 +458,37 @@ const pricingData = {
     {
       id: 33,
       title: "Terapia Holística y Desarrollo Cognitivo",
-      price: 225.0,
+      price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://go.hotmart.com/J94028774X",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 34,
+      title: "Crecimiento Personal, Coaching y  Desarrollo Cognitivo",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/I94027857Q",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
+      id: 35,
+      title: "Pscicologia, Terapia Holistica y  Desarrollo Cognitivo",
+      price: 225.0,
+      imageUrl: "/logo-1.png",
+      link: "https://go.hotmart.com/I94027857Q",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
