@@ -4,7 +4,7 @@ import Image from "next/image";
 export function CompanyPartners() {
   return (
     <div className="w-full bg-white p-4 flex flex-col items-center">
-      <h2 className="text-3xl font-bold mb-4">Empresas Asociadas</h2>
+      <h2 className="text-3xl text-gray-400 mb-4">Empresas Asociadas</h2>
       <div className="w-full overflow-hidden">
         <div className="flex animate-slide">
           {[...Array(4)].map((_, index) => (

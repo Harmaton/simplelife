@@ -1,6 +1,4 @@
-import LatestCourses from "@/components/courses/latest-courses";
 import Ad from "@/components/landing-page/ad";
-import CoursesHeader from "@/components/landing-page/course-header";
 import Features from "@/components/landing-page/features";
 import FeaturesHeader from "@/components/landing-page/features-header";
 import FloatingActionButton from "@/components/landing-page/floating-action-btn";
@@ -21,8 +19,6 @@ export default async function Home() {
         <Hero />
         {/* <TutorsHeader />  TOP CATEGORIES*/}
         {/* Tutors With most reviews, and ratings */}
-        {/* <CoursesHeader />
-      <LatestCourses /> */}
         <TopCategories categories={categories} />
         <FeaturesHeader />
         <Features />
