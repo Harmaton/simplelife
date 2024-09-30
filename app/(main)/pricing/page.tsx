@@ -8,8 +8,22 @@ import Top from "@/components/top-page";
 const pricingData = {
   packs: [
     {
+      id: 36,
+      title: "Pack - Pruebas y Pruebas2",
+      price: 3.90,
+      imageUrl: "/logo-1.png",
+      link: "https://pay.hotmart.com/S95700742Q",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
+    {
       id: 1,
-      title: "Coaching y Desarrollo Cognitivo",
+      title: "Pack - Pack - Coaching y Desarrollo Cognitivo",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/R94010698T",
@@ -23,10 +37,10 @@ const pricingData = {
     },
     {
       id: 2,
-      title: "Coaching y Terapia Holística ",
+      title: "Pack - Coaching y Terapia Holística ",
       price: 188.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/R94010535I",
+      link: "https://pay.hotmart.com/R94010535I",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -37,7 +51,7 @@ const pricingData = {
     },
     {
       id: 3,
-      title: "Coaching, Terapia Holística y Desarrollo Cognitivo",
+      title: "Pack - Coaching, Terapia Holística y Desarrollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/G94028010L",
@@ -51,7 +65,7 @@ const pricingData = {
     },
     {
       id: 4,
-      title: "Crecimiento Personal y Coaching",
+      title: "Pack - Crecimiento Personal y Coaching",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/X94010313Y",
@@ -65,7 +79,7 @@ const pricingData = {
     },
     {
       id: 5,
-      title: "Crecimiento Personal y Desarrollo Cognitivo",
+      title: "Pack - Crecimiento Personal y Desarrollo Cognitivo",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/H94010466G",
@@ -79,7 +93,7 @@ const pricingData = {
     },
     {
       id: 6,
-      title: "Crecimiento Personal y Terapia Holística",
+      title: "Pack - Crecimiento Personal y Terapia Holística",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/V94010390Q",
@@ -93,7 +107,7 @@ const pricingData = {
     },
     {
       id: 7,
-      title: "Crecimiento Personal, Coaching y Terapia Holística",
+      title: "Pack - Crecimiento Personal, Coaching y Terapia Holística",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/X94027767I",
@@ -107,7 +121,7 @@ const pricingData = {
     },
     {
       id: 8,
-      title: "Crecimiento Personal, Terapia Holística y Desarrollo Cognitivo",
+      title: "Pack - Crecimiento Personal, Terapia Holística y Desarrollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/N94027925X",
@@ -121,7 +135,7 @@ const pricingData = {
     },
     {
       id: 9,
-      title: "Espiritualidad y Coaching",
+      title: "Pack - Espiritualidad y Coaching",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/O94009982C",
@@ -135,7 +149,7 @@ const pricingData = {
     },
     {
       id: 10,
-      title: "Espiritualidad y Crecimiento Personal",
+      title: "Pack - Espiritualidad y Crecimiento Personal",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/K94009863I",
@@ -149,7 +163,7 @@ const pricingData = {
     },
     {
       id: 11,
-      title: "Espiritualidad y Desarrollo Cognitivo",
+      title: "Pack - Espiritualidad y Desarrollo Cognitivo",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/I94010172J",
@@ -163,7 +177,7 @@ const pricingData = {
     },
     {
       id: 12,
-      title: "Espiritualidad y Terapia Holística ",
+      title: "Pack - Espiritualidad y Terapia Holística ",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/U94010077V",
@@ -177,7 +191,7 @@ const pricingData = {
     },
     {
       id: 13,
-      title: " Espiritualidad, Coaching y Desarrollo Cognitivo",
+      title: "Pack - Espiritualidad, Coaching y Desarrollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/K94027522H",
@@ -191,7 +205,7 @@ const pricingData = {
     },
     {
       id: 14,
-      title: "Espiritualidad, Coaching y Terapia Holística",
+      title: "Pack - Espiritualidad, Coaching y Terapia Holística",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/H94027462N",
@@ -205,7 +219,7 @@ const pricingData = {
     },
     {
       id: 15,
-      title: "Espiritualidad, Crecimiento Personal y Coaching",
+      title: "Pack - Espiritualidad, Crecimiento Personal y Coaching",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/R94027249S",
@@ -219,7 +233,7 @@ const pricingData = {
     },
     {
       id: 16,
-      title: "Espiritualidad, Crecimiento Personal y Desarrollo Cognitivo",
+      title: "Pack - Espiritualidad, Crecimiento Personal y Desarrollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/C94027387I",
@@ -233,7 +247,7 @@ const pricingData = {
     },
     {
       id: 17,
-      title: "Espiritualidad, Crecimiento Personal y Terapia Holística",
+      title: "Pack - Espiritualidad, Crecimiento Personal y Terapia Holística",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/F94027333Y",
@@ -261,7 +275,7 @@ const pricingData = {
     },
     {
       id: 19,
-      title: "Psicología y Coaching",
+      title: "Pack - Psicología y Coaching",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/Q94009321B",
@@ -275,7 +289,7 @@ const pricingData = {
     },
     {
       id: 20,
-      title: "Psicología y Crecimiento Personal",
+      title: "Pack - Psicología y Crecimiento Personal",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/L94009221V",
@@ -289,7 +303,7 @@ const pricingData = {
     },
     {
       id: 21,
-      title: "Psicología y Desarrollo Cognitivo",
+      title: "Pack - Psicología y Desarrollo Cognitivo",
       price: 118.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/Q94009701S",
@@ -303,7 +317,7 @@ const pricingData = {
     },
     {
       id: 22,
-      title: "Psicología y Espiritualidad",
+      title: "Pack - Psicología y Espiritualidad",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/G94009104J",
@@ -317,7 +331,7 @@ const pricingData = {
     },
     {
       id: 23,
-      title: "Psicología y Terapia Holística ",
+      title: "Pack - Psicología y Terapia Holística ",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/C94009500E",
@@ -331,7 +345,7 @@ const pricingData = {
     },
     {
       id: 24,
-      title: "Psicología, Coaching y Desarrollo Cognitivo",
+      title: "Pack - Psicología, Coaching y Desarrollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/D94027014X",
@@ -345,7 +359,7 @@ const pricingData = {
     },
     {
       id: 25,
-      title: "Psicología, Coaching y Terapia Holística",
+      title: "Pack - Psicología, Coaching y Terapia Holística",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/M94026934B",
@@ -359,7 +373,7 @@ const pricingData = {
     },
     {
       id: 26,
-      title: "Psicología, Crecimiento Personal y Coaching",
+      title: "Pack - Psicología, Crecimiento Personal y Coaching",
       price: 225.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/A94026550R",
@@ -373,10 +387,10 @@ const pricingData = {
     },
     {
       id: 27,
-      title: "Psicología, Crecimiento Personal y Terapia Holistica",
+      title: "Pack - Psicología, Crecimiento Personal y Terapia Holística",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/Q94026796E",
+      link: "https://pay.hotmart.com/Q94026796E",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -387,10 +401,10 @@ const pricingData = {
     },
     {
       id: 28,
-      title: "Psicología, Crecimiento Personal y Desarollo Cognitivo",
+      title: "Pack - Psicología, Crecimiento Personal y Desarollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/Q94026874J",
+      link: "https://pay.hotmart.com/Q94026874J",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -401,10 +415,10 @@ const pricingData = {
     },
     {
       id: 29,
-      title: "Psicología, Espiritualidad y Crecimiento Personal",
+      title: "Pack - Psicología, Espiritualidad y Crecimiento Personal",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/M94011038C",
+      link: "https://pay.hotmart.com/M94011038C",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -415,10 +429,10 @@ const pricingData = {
     },
     {
       id: 30,
-      title: "Psicología, Espiritualidad y Coaching",
+      title: "Pack - Psicología, Espiritualidad y Coaching",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/D94011161M",
+      link: "https://pay.hotmart.com/D94011161M",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -428,11 +442,11 @@ const pricingData = {
       ids: ["22", "pe022", "psychspirit001"],
     },
     {
-      id: 31 ,
-      title: "Psicología, Espiritualidad y Terapia Holistica",
+      id: 31,
+      title: "Pack - Psicología, Espiritualidad y Terapia Holística",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/K94011314I",
+      link: "https://pay.hotmart.com/K94011314I",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -443,10 +457,10 @@ const pricingData = {
     },
     {
       id: 32,
-      title: "Psicología, Espiritualidad y Desarollo Cognitivo",
+      title: "Pack - Psicología, Espiritualidad y Desarollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/W94011374M",
+      link: "https://pay.hotmart.com/W94011374M",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -457,10 +471,10 @@ const pricingData = {
     },
     {
       id: 33,
-      title: "Terapia Holística y Desarrollo Cognitivo",
+      title: "Pack - Terapia Holística y Desarrollo Cognitivo",
       price: 188.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/J94028774X",
+      link: "https://pay.hotmart.com/J94028774X",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -471,10 +485,10 @@ const pricingData = {
     },
     {
       id: 34,
-      title: "Crecimiento Personal, Coaching y  Desarrollo Cognitivo",
+      title: "Pack - Crecimiento Personal, Coaching y  Desarrollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/I94027857Q",
+      link: "https://pay.hotmart.com/I94027857Q",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -485,10 +499,10 @@ const pricingData = {
     },
     {
       id: 35,
-      title: "Pscicologia, Terapia Holistica y  Desarrollo Cognitivo",
+      title: "Pack - Psicología, Terapia Holística y  Desarrollo Cognitivo",
       price: 225.0,
       imageUrl: "/logo-1.png",
-      link: "https://go.hotmart.com/I94027857Q",
+      link: "https://pay.hotmart.com/U94027105P",
       features: [
         { id: 1, name: "Acceso a 10 cursos" },
         { id: 2, name: "Soporte comunitario básico" },
@@ -499,83 +513,100 @@ const pricingData = {
     },
   ],
 
-
-
   certifications: [
     {
       id: 1,
-      title: "Terapia Holística",
+      title: "Pack - Terapia Holística",
       price: 125.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/C94008841M",
       features: [
-        { id: 1, name: "Certification 1" },
-        { id: 2, name: "Certification 2" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
       ],
       ids: ["1", "beg001", "cert001"],
     },
     {
       id: 2,
-      title: "Crecimiento Personal",
+      title: "Pack - Crecimiento Personal",
       price: 125.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/Y94008157F",
       features: [
-        { id: 1, name: "Certification 3" },
-        { id: 2, name: "Certification 4" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
       ],
       ids: ["2", "int002", "cert002"],
     },
     {
       id: 3,
-      title: "Psicología",
+      title: "Pack -Psicología",
       price: 125.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/C94007377M",
       features: [
-        { id: 1, name: "Certification 5" },
-        { id: 2, name: "Certification 6" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
       ],
       ids: ["3", "adv003", "cert003"],
     },
     {
-      id: 1,
-      title: "Espiritualidad",
+      id: 4,
+      title: "Pack - Espiritualidad",
       price: 125.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/G94008008A",
       features: [
-        { id: 1, name: "Certification 1" },
-        { id: 2, name: "Certification 2" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
       ],
       ids: ["1", "beg001", "cert001"],
     },
     {
-      id: 2,
-      title: "Desarrollo Cognitivo",
+      id: 5,
+      title: "Pack - Desarrollo Cognitivo",
       price: 125.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/X94008903T",
       features: [
-        { id: 1, name: "Certification 3" },
-        { id: 2, name: "Certification 4" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
       ],
       ids: ["2", "int002", "cert002"],
     },
     {
-      id: 3,
-      title: "Coaching",
+      id: 6,
+      title: "Pack - Coaching",
       price: 125.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/A94008694S",
       features: [
-        { id: 1, name: "Certification 5" },
-        { id: 2, name: "Certification 6" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
       ],
       ids: ["3", "adv003", "cert003"],
     },
+     {
+      id: 7,
+      title: "Pack - Pruebas",
+      price: 3.90,
+      imageUrl: "/logo-1.png",
+      link: "https://pay.hotmart.com/B95621277W",
+      features: [
+        { id: 1, name: "Acceso a 10 cursos" },
+        { id: 2, name: "Soporte comunitario básico" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+      ],
+      ids: ["22", "pe022", "psychspirit001"],
+    },
   ],
-
 
   fullAccess: [
     {
@@ -585,10 +616,11 @@ const pricingData = {
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/B86756318T",
       features: [
-        { id: 1, name: "Access to 10 courses" },
-        { id: 2, name: "Basic community support" },
-        { id: 3, name: "Monthly webinars" },
-        { id: 4, name: "Self-paced learning" },
+        { id: 1, name: "Acceso a todos los cursos y packs" },
+        { id: 2, name: "Soporte premium" },
+        { id: 3, name: "Webinars mensuales" },
+        { id: 4, name: "Aprendizaje a tu propio ritmo" },
+        { id: 5, name: "Inclusión en el Programa Avanzado" }        
       ],
       ids: ["1", "cdc001", "coach001"],
     },
@@ -601,10 +633,6 @@ export default function Page() {
     <>
       <Navbar />
       <div className="container mx-auto px-4">
-        {/* <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-600 via-sky-600 to-indigo-600 py-12 mb-8 text-center font-serif text-white">
-        <h1 className="text-4xl font-bold mb-4">Precios</h1>
-        <p className="text-lg">Elige el plan que mejor se adapte a ti</p>
-      </div> */}
         <Top header="Precios" text="Elige el plan que mejor se adapte a ti" />
 
         <Tabs defaultValue="packs" className="mb-10">

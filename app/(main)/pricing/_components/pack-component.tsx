@@ -31,11 +31,6 @@ export default function PackComponent({
     console.log("Added to wishlist:", id);
   };
 
-  // const handleBuyNow = (link: string) => {
-  //   window.location.assign(link);
-  //   console.log("Buying now:", id);
-  // };
-
   return (
     <div className="relative">
       <div className="bg-white rounded-lg shadow-md p-6 flex flex-col">
@@ -62,13 +57,9 @@ export default function PackComponent({
           ))}
         </ul>
         <div className="mt-auto">
-          <div className="flex justify-between mb-4">
-            <Button variant="outline" className="hover:bg-white" onClick={handleAddToWishlist}>
-              <Heart className="mr-2 text-red-500" />
-              Lista de deseos
-            </Button>
+          <div className="flex justify-end mb-4">
             <EmbeddedHotmartCheckout link={link} />
-          </div>          
+          </div>
         </div>
       </div>
     </div>
