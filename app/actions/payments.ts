@@ -9,7 +9,9 @@ export async function updateSaleAndAccess(data: PurchaseData) {
   const productId = data.product.id;
   const productName = data.product.name;
   const buyerEmail = data.buyer.email;
+  const buyerName = data.buyer.name;
   const productUcode = data.product.ucode;
+  const productPrice = data.purchase.original_offer_price.value
 
   if (!buyerEmail) {
     console.log("--->  No buyer Enmail Passes");
@@ -30,10 +32,8 @@ export async function updateSaleAndAccess(data: PurchaseData) {
       productUcode: productUcode,
       productName: productName,
       buyerEmail: buyerEmail,
-      price: data.purchase.original_offer_price.value,
-      checkoutCountry: data.purchase.checkout_country.name,
-      paymentType: data.purchase.payment.type,
-      buyerName: data.buyer.name,
+      price: productPrice,
+      buyerName: buyerName,
     },
   });
 
@@ -69,7 +69,7 @@ export async function updateSaleAndAccess(data: PurchaseData) {
         data: {
           userId: user.id,
           categoryId: category.id,
-          price: data.purchase.original_offer_price.value,
+          price: productPrice,
           isPaid: true,
         },
       });
