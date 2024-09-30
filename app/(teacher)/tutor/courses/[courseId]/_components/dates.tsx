@@ -9,7 +9,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
-
 import {
   Form,
   FormControl,

@@ -5,8 +5,7 @@ import {
   Clock10Icon,
   LayoutDashboard,
   ListChecks,
-  CheckSquareIcon,
-  CircleDollarSign,
+  CheckSquareIcon
 } from "lucide-react";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -20,9 +19,7 @@ import { Actions } from "./_components/actions";
 import { PrerequisitesForm } from "./_components/prerequisites";
 import { StartDateForm } from "./_components/dates";
 import { EndDateForm } from "./_components/last-date";
-import { LinkForm } from "./_components/link";
 import { EvaluationsForm } from "./_components/evaluation";
-import { WhatsappForm } from "./_components/whatsapp";
 import { SubCategoryForm } from "./_components/sub-category";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {

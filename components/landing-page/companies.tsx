@@ -1,42 +1,30 @@
-import React from 'react';
-import Image from "next/image";
+import React from "react";
+import Marquee from "react-fast-marquee";
+import Logo from "./logo";
 
-export function CompanyPartners() {
+
+export default function CompanyPartners() {
+
+  const logos = [
+    "/logos/ttlogo.png",
+    "/logos/coach.png",
+    "/logos/TeilenTeens.png",
+    "/logos/Bruno.png",
+  ];
   return (
-    <div className="w-full bg-white p-4 flex flex-col items-center">
-      <h2 className="text-3xl text-gray-400 mb-4">Empresas Asociadas</h2>
-      <div className="w-full overflow-hidden">
-        <div className="flex animate-slide">
-          {[...Array(4)].map((_, index) => (
-            <div key={index} className="flex whitespace-nowrap">
-              <div className="mx-8">
-                <Image
-                  src="/logos/Bruno.png" 
-                  alt="Logo 1"
-                  width={68}
-                  height={50} 
-                />
-              </div>
-              <div className="mx-8">
-                <Image
-                  src="/logos/coach.png" 
-                  alt="Logo 2"
-                  width={68} 
-                  height={50} 
-                />
-              </div>
-              <div className="mx-8">
-                <Image
-                  src="/logos/ttlogo.png" 
-                  alt="Logo 3"
-                  width={68}
-                  height={48} 
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className="mt-8 p-2">
+      <div className="text-center mb-4">
+        <h1 className="font-bold border rounded-full p-4  text-gray-400 font-serif text-2xl">
+          In partnership with
+        </h1>
       </div>
+      <Marquee pauseOnHover >
+        {logos.map((logo, index) => (
+          <div key={index} className="flex items-center mx-4">
+            <Logo src={logo} />
+          </div>
+        ))}
+      </Marquee>
     </div>
   );
 }
