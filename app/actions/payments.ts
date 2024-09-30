@@ -11,7 +11,7 @@ export async function updateSaleAndAccess(data: PurchaseData) {
   const buyerEmail = data.buyer.email;
   const buyerName = data.buyer.name;
   const productUcode = data.product.ucode;
-  const productPrice = data.purchase.original_offer_price.value
+  const productPrice = data.purchase.original_offer_price.value;
 
   if (!buyerEmail) {
     console.log("--->  No buyer Enmail Passes");
@@ -48,9 +48,12 @@ export async function updateSaleAndAccess(data: PurchaseData) {
 
   console.log("all categories --->", allCategories);
 
-  const matchedCategories = allCategories.filter((cat: { name: string }) =>
-    productName.toLowerCase().split(/\W+/).includes(cat.name.toLowerCase())
-  );
+  const matchedCategories = allCategories.filter((cat: { name: string }) => {
+    const categoryWords = cat.name.toLowerCase().split(/\s+/);
+    return categoryWords.every((word) =>
+      productName.toLowerCase().includes(word)
+    );
+  });
 
   console.log("matched categories ---->", matchedCategories);
 
