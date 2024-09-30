@@ -533,6 +533,9 @@ model Allpurchase {
   productName  String
   buyerEmail   String
   price        Int
+  checkoutCountry String ?
+  paymentType String ?
+  buyerName String ?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

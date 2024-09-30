@@ -31,6 +31,9 @@ export async function updateSaleAndAccess(data: PurchaseData) {
       productName: productName,
       buyerEmail: buyerEmail,
       price: data.purchase.original_offer_price.value,
+      checkoutCountry: data.purchase.checkout_country.name,
+      paymentType: data.purchase.payment.type,
+      buyerName: data.buyer.name,
     },
   });
 
