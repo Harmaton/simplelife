@@ -30,7 +30,7 @@ export async function updateSaleAndAccess(data: PurchaseData) {
       productUcode: productUcode,
       productName: productName,
       buyerEmail: buyerEmail,
-      price: data.commissions[0].value,
+      price: data.purchase.original_offer_price.value,
     },
   });
 
@@ -42,26 +42,36 @@ export async function updateSaleAndAccess(data: PurchaseData) {
 
   // Query all categories to match the product name
   const allCategories = await db.category.findMany({});
+
+  console.log("all categories --->", allCategories);
+
   const matchedCategories = allCategories.filter((cat: { name: string }) =>
-    productName.toLowerCase().includes(cat.name.toLowerCase())
+    productName.toLowerCase().split(/\W+/).includes(cat.name.toLowerCase())
   );
+
+  console.log("matched categories ---->", matchedCategories);
 
   // Update courses if matching categories found
   if (matchedCategories.length > 0) {
     for (const category of matchedCategories) {
-      await db.course.updateMany({
+      const boughtCourse = await db.course.updateMany({
         where: { categoryId: category.id },
         data: { isBought: true },
       });
+
+      console.log("Bought Courses ---->", boughtCourse);
+
       // Create CategoryPurchase records for each matched category
-      await db.categoryPurchase.create({
+      const categorypurchase = await db.categoryPurchase.create({
         data: {
           userId: user.id,
           categoryId: category.id,
-          price: data.commissions[0].value,
+          price: data.purchase.original_offer_price.value,
           isPaid: true,
         },
       });
+
+      console.log("Category Purchase", categorypurchase);
     }
   }
 
