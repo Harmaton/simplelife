@@ -24,28 +24,25 @@ export const POST = async (req: Request) => {
     // Parse the raw body of the request
     const rawBody = await req.json();
     // Extract relevant data from the webhook payload
-    console.log('rawbody',rawBody)
+    console.log("rawbody", rawBody);
 
-    const {
-      id,
-      event,
-      data
-    } = rawBody;
-    
-    console.log('id', id)
-    console.log('event', event)
-    console.log('data', data)
+    const { id, event, data } = rawBody;
+
+    console.log("id", id);
+    console.log("event", event);
+    console.log("data", data);
 
     // Handle different event types
     switch (event) {
       case "PURCHASE_APPROVED":
+        console.log("purchase approved");
       case "PURCHASE_COMPLETE":
         await updateSaleAndAccess(data);
         break;
       case "PURCHASE_CANCELED":
+        console.log("purchase cancelled");
       case "PURCHASE_REFUNDED":
       case "PURCHASE_CHARGEBACK":
-        // Here you can add logic to handle cancellations, refunds, or chargebacks
         console.log(`Purchase cancelled or refunded: ${event}`);
         break;
       case "PURCHASE_DELAYED":
@@ -63,11 +60,14 @@ export const POST = async (req: Request) => {
     });
   } catch (error) {
     console.error("Error processing webhook:", error);
-    return new NextResponse(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return new NextResponse(
+      JSON.stringify({ error: "Internal Server Error" }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 };
