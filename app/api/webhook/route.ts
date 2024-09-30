@@ -36,6 +36,7 @@ export const POST = async (req: Request) => {
     switch (event) {
       case "PURCHASE_APPROVED":
         console.log("purchase approved");
+        
       case "PURCHASE_COMPLETE":
         console.log('purchase Complete')
         await updateSaleAndAccess(data);

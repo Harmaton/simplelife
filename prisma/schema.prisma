@@ -528,8 +528,8 @@ model PackPurchase {
 model Allpurchase {
   id           String   @id @default(uuid())
   userId       String
-  productId    Int
-  productUcode Int
+  productId    Int 
+  productUcode String 
   productName  String
   buyerEmail   String
   price        Int
