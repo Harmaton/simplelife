@@ -48,9 +48,21 @@ export async function updateSaleAndAccess(data: PurchaseData) {
 
   console.log("all categories --->", allCategories);
 
-  const matchedCategories = allCategories.filter((cat: { name: string }) => {
-    const categoryWords = cat.name.toLowerCase().split(/\s+/);
-    return categoryWords.every((word) =>
+  const wordsToIgnore = ['simple life', 'pack'];
+
+  console.log('productName -->', productName)
+  
+  const matchedCategories = allCategories.filter((category) => {
+    // Split category name into words and filter out ignored words
+    const categoryWords = category.name
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(word => !wordsToIgnore.includes(word));
+
+      console.log('Category Words', categoryWords)
+    
+    // Check if any remaining category word is in the product name
+    return categoryWords.some(word => 
       productName.toLowerCase().includes(word)
     );
   });
@@ -60,6 +72,8 @@ export async function updateSaleAndAccess(data: PurchaseData) {
   // Update courses if matching categories found
   if (matchedCategories.length > 0) {
     for (const category of matchedCategories) {
+      console.log('category found --->', category)
+
       const boughtCourse = await db.course.updateMany({
         where: { categoryId: category.id },
         data: { isBought: true },
@@ -70,10 +84,10 @@ export async function updateSaleAndAccess(data: PurchaseData) {
       // Create CategoryPurchase records for each matched category
       const categorypurchase = await db.categoryPurchase.create({
         data: {
-          userId: user.id,
+          userId: user.clerkId,
           categoryId: category.id,
           price: productPrice,
-          isPaid: true,
+          isPaid: true
         },
       });
 

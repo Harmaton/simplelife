@@ -27,14 +27,15 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
   const [subcategories, setSubcategories] = useState<SubCategory[]>([]);
   const [hasCategoryPurchase, setHasCategoryPurchase] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
-
+  const [allsubcategories, setallsubcategories] = useState<SubCategory[]>([]);
+  
   useEffect(() => {
     async function fetchData() {
       if (user) {
         const fetchedCategories = await GetAllCategories();
         const fetchedSubcategories = await GetCategorySubCategories(searchParams.categoryId);
         const categoryPurchaseStatus = await GetCategoryPurchases(searchParams.categoryId, user.uid);
-
+        
         setCategories(fetchedCategories);
         setSubcategories(fetchedSubcategories);
         setHasCategoryPurchase(!!categoryPurchaseStatus);

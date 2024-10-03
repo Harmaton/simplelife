@@ -23,7 +23,7 @@ const pricingData = {
     },
     {
       id: 1,
-      title: "Pack - Pack - Coaching y Desarrollo Cognitivo",
+      title: "Pack - Coaching y Desarrollo Cognitivo",
       price: 188.0,
       imageUrl: "/logo-1.png",
       link: "https://pay.hotmart.com/R94010698T",
