@@ -102,13 +102,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     //     <DocumentArrowUpIcon className="text-red-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     //   ),
     // },
-    {
-      label: "Admino Analitica",
-      href: "/admin/analytics",
-      icon: (
-        <BarChart className="text-green-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    // {
+    //   label: "Admino Analitica",
+    //   href: "/admin/analytics",
+    //   icon: (
+    //     <BarChart className="text-green-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
     {
       label: "Pagos Hotmart",
       href: "/admin/hotmart",

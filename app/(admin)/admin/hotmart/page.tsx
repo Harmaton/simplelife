@@ -2,12 +2,15 @@ import React from "react";
 import { GridCard } from "./_components/grid-card";
 import { Clipboard, Globe, Truck, Users } from "lucide-react";
 import { DataTable } from "./_components/data-table";
-import { getAllPurchases } from "@/app/actions/purchases";
+import { getAllPurchases, getDashboardData } from "@/app/actions/purchases";
 import { columns } from "./_components/columns";
 import { FaMoneyBill } from "react-icons/fa";
 
 export default async function Page() {
   const purchases = await getAllPurchases();
+  const [ dashboardData] = await Promise.all([
+    getDashboardData()
+  ])
   // Calculate total delivery amount (sum of all prices)
   const totalDelivery = purchases.reduce((sum, purchase) => {
     return sum + (purchase.price || 0);
@@ -23,9 +26,9 @@ export default async function Page() {
       icon: <Clipboard size={24} />,
       title: "Pedidos totales",
       value: purchases.length.toString(),
-      change: 20,
+      change: Math.round(dashboardData.orders.change),
       lastMonthTotal: "0",
-      isIncrease: true,
+      isIncrease: dashboardData.orders.change >= 0,
     },
     {
       icon: <Globe size={24} />,
@@ -39,17 +42,17 @@ export default async function Page() {
       icon: <FaMoneyBill size={24} />,
       title: "Entrega total",
       value: `$${totalDelivery.toFixed(2)}`,
-      change: 20,
+      change: Math.round(dashboardData.totalDelivery.change),
       lastMonthTotal: "0",
-      isIncrease: false,
+      isIncrease: dashboardData.totalDelivery.change >= 0,
     },
     {
       icon: <Users size={24} />,
       title: "Total de clientes",
       value: uniqueClients.toString(),
-      change: 20,
-      lastMonthTotal: "0",
-      isIncrease: true,
+      change: Math.round(dashboardData.clients.change),
+      lastMonthTotal: dashboardData.clients.previous.toString(),
+      isIncrease: dashboardData.clients.change >= 0,
     },
   ];
   return (
@@ -57,7 +60,7 @@ export default async function Page() {
       <div className="p-2 flex flex-col space-y-2">
         <h1 className="font-bold text-2xl">Integración con Hotmart</h1>
         <p className="font-sm font-mono">
-          Los datos de Hotmart se actualizan aquí automáticamente cada 5 minutos
+          Datos automáticos y modificados de Simplelife Hotmart
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">

@@ -19,12 +19,12 @@ export const GridCard: React.FC<CardProps> = ({ icon, title, value, change, last
       </div>
       <h3 className="text-gray-500 font-medium mb-2">{title}</h3>
       <p className="text-3xl font-bold mb-2">{value}</p>
-      <div className="flex items-center text-sm">
+      <div className="flex items-center text-sm border rounded-full p-2 text-center">
         <span className={`mr-2 ${isIncrease ? 'text-green-500' : 'text-red-500'}`}>
           {isIncrease ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
           {change}%
         </span>
-        <span className="text-gray-500">last month total {lastMonthTotal}</span>
+        <span className="text-gray-500">Desde el mes pasado</span>
       </div>
     </div>
   );
