@@ -13,7 +13,6 @@ import { useAuth } from '@/providers/AuthProvider';
 import { Category, SubCategory } from '@prisma/client';
 import Loadingpage from '@/components/loading-page';
 
-
 interface SearchPageProps {
   searchParams: {
     name: string;

@@ -1,8 +1,16 @@
-"use client"
+"use client";
 
-import { Course, User } from "@prisma/client"
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil, Skull, UserCog2Icon } from "lucide-react"
+import { Allpurchase, Course, User } from "@prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
+import {
+  ArrowUpDown,
+  MoreHorizontal,
+  Pencil,
+  PersonStanding,
+  Phone,
+  Skull,
+  UserCog2Icon,
+} from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -10,74 +18,67 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { FaMoneyBillWave } from "react-icons/fa";
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<Allpurchase>[] = [
   {
-    accessorKey: "nickname",
+    accessorKey: "productName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Nombre de compra
+          Nombre del paquete
           <UserCog2Icon className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
   {
-    accessorKey: "isTeacher",
+    accessorKey: "buyerEmail",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Buscar Comprar
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Correo electrónico del comprador
+          <Phone className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => {
-      const isTeacher = row.getValue("isTeacher") || false;
-
-      return (
-        <Badge className={cn(
-          "bg-slate-500",
-          isTeacher && "bg-green-700"
-        )}>
-          {isTeacher ? "Activa" : "No activa"}
-        </Badge>
-      )
-    }
   },
   {
-    id: "actions",
-    cell: ({ row }) => {
-      const { id } = row.original;
-
+    accessorKey: "buyerName",
+    header: ({ column }) => {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-4 w-8 p-0">
-              <span className="sr-only">Menú abierto</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <ArrowUpDown className="h-4 w-4 mr-2" />
-               Explora
-              </DropdownMenuItem>
-        
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    }
-  }
-]
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nombre del comprador
+          <PersonStanding className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "price",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Precio pagado
+          <FaMoneyBillWave className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+];
