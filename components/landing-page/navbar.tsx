@@ -22,7 +22,7 @@ export default function Navbar() {
 
   return (
     <header
-      className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 md:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky"
+      className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 lg:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky"
       style={{
         position: "sticky",
         top: "-100px",
@@ -49,7 +49,7 @@ export default function Navbar() {
       <div className="flex items-center gap-6 p-4">
         <Sheet>
           <SheetTrigger asChild>
-            <nav className="flex items-center gap-6 md:hidden ">
+            <nav className="flex items-center gap-6 lg:hidden">
               <Button variant="outline" size="icon">
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Toggle menu</span>
@@ -65,7 +65,7 @@ export default function Navbar() {
               <SheetTitle></SheetTitle>
               <SheetDescription></SheetDescription>
             </SheetHeader>
-            <nav className="grid gap-6 mb-4 ">
+            <nav className="grid gap-6 mb-4">
               <Link
                 href="/search"
                 className="text-lg font-medium transition-colors hover:text-primary"
@@ -115,7 +115,6 @@ export default function Navbar() {
               >
                 Contáctanos
               </Link>
-
               <Link
                 href="/tutors"
                 className="text-lg font-medium border p-2 border-violet-500 tex-center transition-colors hover:text-primary"
@@ -162,13 +161,13 @@ export default function Navbar() {
           </SheetContent>
         </Sheet>
 
-        <div className="hidden md:flex justify-center mr-8 items-center gap-6">
+        <div className="hidden lg:flex justify-center mr-8 items-center gap-6">
           <nav className="flex items-center gap-6">
             <NavigationMenuDemo />
           </nav>
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           {user ? (
             <>
               <div className="rounded-full flex items-center bg-gray-300 m-auto justify-center p-2">

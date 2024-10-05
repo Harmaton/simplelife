@@ -166,17 +166,18 @@ export async function getAllUsers() {
   }
 }
 
-export async function getUserByUID(id: string){
-try{
+export async function getUserByUID(id: string) {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        clerkId: id,
+      },
+    });
 
-  const user = await db.user.findUnique({where: {
-    clerkId: id
-  }})
-
-  return user;
-} catch(error){
-  console.log(error)
-}
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getAllRegistredTeachers() {
@@ -387,5 +388,21 @@ export async function getTeacher(id: string) {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function getUserID(id: string) {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        clerkId: id,
+      },
+    });
+
+    if(user){
+      return user.id
+    }
+  } catch (error) {
+    console.log(error);
   }
 }

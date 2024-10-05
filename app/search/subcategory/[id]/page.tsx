@@ -29,7 +29,7 @@ import Navbar from "@/components/landing-page/navbar";
               subcategoryName={details.name}
             />
           )}
-          <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-2">
+          <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-2 border rounded-full p-2">
             Cursos de {details.name}
           </h2>
           {courses.length > 0 ? (
@@ -41,7 +41,7 @@ import Navbar from "@/components/landing-page/navbar";
           ) : (
             <div className="p-4 text-center text-sm text-gray-600 flex flex-col space-y-4 mt-4">
               <h1>
-                No hay cursos disponibles en esta categoría. Come back later
+                No hay cursos disponibles en esta categoría. Vuelve más tarde
               </h1>
               <Image
                 src={"/no-courses.svg"}

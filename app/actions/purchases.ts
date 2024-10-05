@@ -80,3 +80,21 @@ export async function getDashboardData() {
     },
   };
 }
+
+export async function checkUserPurchase(userid: string, categoryid: string) {
+  try {
+    const purchases = await db.categoryPurchase.findMany({
+      where: {
+        userId: userid,
+        categoryId: categoryid,
+      },
+    });
+    if (purchases.length > 0) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

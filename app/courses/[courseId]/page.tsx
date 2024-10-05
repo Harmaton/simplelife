@@ -9,11 +9,14 @@ import {
   Folder,
   FolderTree,
   ChevronLeft,
+  ArrowUp,
 } from "lucide-react";
 import Navbar from "@/components/landing-page/navbar";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { Footer } from "@/components/landing-page/footer";
+import { BreadcrumbWithCustomSeparatorForCoursePage } from "./_components/crumbs";
+import { GetCategoryPurchases } from "@/app/actions/courses";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
@@ -51,20 +54,34 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     return <div>Curso no encontrado o no hay capítulos disponibles.</div>;
   }
 
+  const categoryId = course.categoryId;
+
+  // const CategoryPurchase = await GetCategoryPurchases(categoryId);
+
   return (
     <div className="p-2">
       <Navbar />
 
+      <div className="lg:pl-12 m-2 space-y-2">
+        {course &&
+          course.category &&
+          course.categoryId &&
+          course.subcategory && (
+            <BreadcrumbWithCustomSeparatorForCoursePage
+              categoryName={course.category?.name}
+              categoryId={course.categoryId}
+              subcategoryName={course.subcategory?.name}
+              courseName={course.title}
+            />
+          )}
+        <h2 className="max-w-7xl pl-4 mx-auto text-center text-xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-2 border rounded-full p-2">
+          {course.title}
+        </h2>
+      </div>
+
       <div className="max-w-5xl mx-auto p-6 ">
         <Card className="bg-gray-100">
           <CardHeader>
-            <div className="flex justify-end">
-              <ChevronLeft className="mb-6 border " />
-            </div>
-            <CardTitle className="text-4xl uppercase mb-4 font-bold">
-              <h1 className="mb-4"> {course.title}</h1>
-            </CardTitle>
-
             <div className="flex items-center">
               {course.User?.image && (
                 <div className="mr-3 flex-shrink-0">
@@ -131,23 +148,31 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               </div>
             </div>
             <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-2">Capítulos:</h3>
-              <ul className="space-y-2">
-                {course.Chapter.map((chapter) => (
+              <h3 className="text-lg font-semibold mb-2">
+                Lecciones en Capítulos:
+              </h3>
+              <ul className="space-y-4">
+                {course.Chapter.map((chapter, index) => (
                   <li
                     key={chapter.id}
-                    className="flex justify-between border p-4 items-center"
+                    className="flex justify-between border rounded-md  p-4 items-center"
                   >
-                    <span>{chapter.title}</span>
-                    <Button variant="outline" size="sm">
-                      {chapter.isFree ? "Comenzar" : "Vista previa"}
+                    <div className="flex items-center">
+                      <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-blue-400 text-white font-mono rounded-full mr-2">
+                        {index + 1}
+                      </span>
+                      <span className="text-lg font-mono font-semibold">
+                        {chapter.title}
+                      </span>
+                    </div>
+                    <Button variant="outline" size="sm" className="flex">
+                      {/* {chapter.isFree ? "Comenzar" : "Vista previa"} */}
+                      Continuar aprendiendo
+                      <ArrowUp className="h-4 w-4 justify-end ml-2" />
                     </Button>
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="mt-6">
-              <Button className="w-full">Consultar precios</Button>
             </div>
           </CardContent>
         </Card>

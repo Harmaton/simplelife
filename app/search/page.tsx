@@ -1,7 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
+import { 
+  QueryClient, 
+  QueryClientProvider,
+  useQuery 
+} from "@tanstack/react-query";
 import Navbar from "@/components/landing-page/navbar";
 import Image from "next/image";
 import SubCategories from "./subcategories";
@@ -16,7 +21,7 @@ import Ad from "@/components/landing-page/ad";
 import { useAuth } from "@/providers/AuthProvider";
 import { Category, SubCategory } from "@prisma/client";
 import Loadingpage from "@/components/loading-page";
-import { redirect } from "next/navigation";
+import { getUserID } from "../actions/user";
 
 interface SearchPageProps {
   searchParams: {
@@ -25,43 +30,52 @@ interface SearchPageProps {
   };
 }
 
-const SearchPage = ({ searchParams }: SearchPageProps) => {
+const queryClient = new QueryClient();
+
+const SearchPageInner = ({ searchParams }: SearchPageProps) => {
   const { user } = useAuth();
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [subcategories, setSubcategories] = useState<SubCategory[]>([]);
-  const [hasCategoryPurchase, setHasCategoryPurchase] =
-    useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
-  const [allsubcategories, setallsubcategories] = useState<SubCategory[]>([]);
 
-  if (!user) {
-    redirect("/login");
-  }
-  useEffect(() => {
-    async function fetchData() {
-      if (user) {
-        const fetchedCategories = await GetAllCategories();
-        const fetchedSubcategories = await GetCategorySubCategories(
-          searchParams.categoryId
-        );
-        const categoryPurchaseStatus = await GetCategoryPurchases(
-          searchParams.categoryId,
-          user.uid
-        );
+  const { data: userId, isLoading: isLoadingUser } = useQuery({
+    queryKey: ['userId', user?.uid],
+    queryFn: async () => {
+      if (!user?.uid) return null;
+      const id = await getUserID(user.uid);
+      return id || null; // Ensure we always return null instead of undefined
+    },
+    enabled: !!user
+  });
 
-        setCategories(fetchedCategories);
-        setSubcategories(fetchedSubcategories);
-        setHasCategoryPurchase(!!categoryPurchaseStatus);
-      } else {
-        setHasCategoryPurchase(false);
-      }
-      setLoading(false);
-    }
+  const { data: categories, isLoading: isLoadingCategories } = useQuery<Category[]>({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const cats = await GetAllCategories();
+      return cats || []; // Ensure we always return an array
+    },
+  });
 
-    fetchData();
-  }, [user, searchParams.categoryId]);
+  const { data: subcategories, isLoading: isLoadingSubcategories } = useQuery<SubCategory[]>({
+    queryKey: ['subcategories', searchParams.categoryId],
+    queryFn: async () => {
+      const subcats = await GetCategorySubCategories(searchParams.categoryId);
+      return subcats || []; // Ensure we always return an array
+    },
+    enabled: !!searchParams.categoryId
+  });
 
-  if (loading) {
+  const { data: categoryPurchaseStatus, isLoading: isLoadingPurchase } = useQuery({
+    queryKey: ['categoryPurchase', searchParams.categoryId, userId],
+    queryFn: async () => {
+      if (!userId || !searchParams.categoryId) return null;
+      const status = await GetCategoryPurchases(searchParams.categoryId, userId);
+      return status || null; // Ensure we always return null instead of undefined
+    },
+    enabled: !!userId && !!searchParams.categoryId
+  });
+
+  const isLoading = isLoadingUser || isLoadingCategories || 
+                    isLoadingSubcategories || isLoadingPurchase;
+
+  if (isLoading) {
     return <Loadingpage />;
   }
 
@@ -74,13 +88,18 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
           header="Certificaciones"
           text="Perfeccione sus habilidades con paquetes profesionales de diplomas y obtenga certificados"
         />
-        <Categories items={categories} />
+        <Categories items={categories || []} />
       </div>
       <div className="p-6 space-y-4 m-4">
-        <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-2 border rounded-full p-2">
-          Diplomados
-        </h2>
-        {hasCategoryPurchase ? (
+        <div>
+          <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-2 border rounded-full p-2">
+            Diplomados
+          </h2>
+          <p className="lg:ml-10 ml-2 text-sm">
+            Los cursos se encuentran dentro de los diplomas a continuación
+          </p>
+        </div>
+        {categoryPurchaseStatus ? (
           subcategories && subcategories.length > 0 ? (
             <SubCategories subcategories={subcategories} />
           ) : (
@@ -100,7 +119,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
             />
             <Link
               href="/pricing"
-              className="text-blue-500 p-2 border hover:underline"
+              className="text-blue-500 border hover:underline"
             >
               Ir a Precios
             </Link>
@@ -108,6 +127,14 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
         )}
       </div>
     </>
+  );
+};
+
+const SearchPage = (props: SearchPageProps) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SearchPageInner {...props} />
+    </QueryClientProvider>
   );
 };
 

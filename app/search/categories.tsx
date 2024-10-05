@@ -16,6 +16,7 @@ import {
 import { GrProjects } from "react-icons/gr";
 import { IconType } from "react-icons";
 import { CategoryItem } from "./category-item";
+import { checkUserPurchase } from "../actions/purchases";
 
 interface CategoriesProps {
   items: Category[] | undefined;
@@ -30,7 +31,8 @@ const iconMap: Record<Category["name"], IconType> = {
   "Pack Psicologia": FcPortraitMode,
 };
 
-export const Categories = ({ items }: CategoriesProps) => {
+export const Categories =({ items}: CategoriesProps) => {
+  
   return (
     <div className="flex flex-col">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 m-auto overflow-x-auto pb-2 mt-2">
@@ -38,9 +40,11 @@ export const Categories = ({ items }: CategoriesProps) => {
           items.map((item) => (
             <CategoryItem
               key={item.id}
+              id={item.id}
               label={item.name}
               icon={iconMap[item.name]}
               value={item.id}
+             
             />
           ))
         ) : (

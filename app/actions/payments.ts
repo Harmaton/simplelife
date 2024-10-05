@@ -84,7 +84,7 @@ export async function updateSaleAndAccess(data: PurchaseData) {
       // Create CategoryPurchase records for each matched category
       const categorypurchase = await db.categoryPurchase.create({
         data: {
-          userId: user.clerkId,
+          userId: user.id,
           categoryId: category.id,
           price: productPrice,
           isPaid: true,

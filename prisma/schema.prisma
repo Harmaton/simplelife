@@ -111,6 +111,7 @@ model Category {
   name          String             @unique
   productCode   String ?             
   imageUrl      String?            @db.Text()
+  isPaid  Boolean @default(false)
   SubCategories SubCategory[]
   Courses       Course[]
   purchases     CategoryPurchase[]
@@ -496,7 +497,7 @@ model SubCategoryPurchase {
 
 model CategoryPurchase {
   id         String @id @default(uuid())
-  userId     String
+  userId     String 
   user       User   @relation(fields: [userId], references: [id])
   categoryId String
 

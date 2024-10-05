@@ -263,3 +263,36 @@ export async function GetCoursesInCategory(subcategoryId: string) {
     return [];
   }
 }
+
+export async function fetchCourse(id: string){
+  try {
+    const course = await db.course.findUnique({
+      where: {
+        id: id,
+        startDate: {
+          not: null,
+        },
+        imageUrl: {
+          not: null,
+        },
+      },
+      include: {
+        Chapter: {
+          where: {
+            isPublished: true,
+          },
+          orderBy: {
+            position: "asc",
+          },
+        },
+        User: true,
+        category: true,
+        subcategory: true,
+      },
+    });
+  return course
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
