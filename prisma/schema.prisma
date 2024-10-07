@@ -545,3 +545,33 @@ model Allpurchase {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+model CancelledPurchase{
+   id           String   @id @default(uuid())
+  userId       String
+  productId    Int 
+  productUcode String 
+  productName  String
+  buyerEmail   String
+  price        Int
+  checkoutCountry String ?
+  paymentType String ?
+  buyerName String ?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ApprovedPurchase {
+    id           String   @id @default(uuid())
+  userId       String
+  productId    Int 
+  productUcode String 
+  productName  String
+  buyerEmail   String
+  price        Int
+  checkoutCountry String ?
+  paymentType String ?
+  buyerName String ?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

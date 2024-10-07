@@ -192,7 +192,7 @@ const CourseIdPage = async ({
                     className="flex justify-between border rounded-md  p-4 items-center"
                   >
                     <span>{chapter.title}</span>
-                    {!categoryPurchase ? (
+                    {categoryPurchase ? (
                       <Link
                         href={`/courses/${course.id}/chapters/${chapter.id}`}
                         passHref
