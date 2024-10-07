@@ -39,9 +39,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [isAdmin, setAdmin] = useState(false);
   const user = useUser();
 
-  if (!user) {
-    return <Loadingpage />;
-  }
   useEffect(() => {
     const checkAdminState = async () => {
       if (user.user?.emailAddresses[0].emailAddress) {
@@ -155,7 +152,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
               <div>
-                <Avatar seed={user.user?.emailAddresses[0].emailAddress || ""} />
+                <Avatar
+                  seed={user.user?.emailAddresses[0].emailAddress || ""}
+                />
               </div>
             </SidebarBody>
           </MobileSidebar>
