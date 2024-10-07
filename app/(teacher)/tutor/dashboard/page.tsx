@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Play, CheckSquare, Trophy, Coins } from "lucide-react";
 import RatingBar from "./ratingbar";
