@@ -8,8 +8,9 @@ import {
   BarChart,
   Folder,
   FolderTree,
-  ChevronLeft,
   ArrowUp,
+  Lock,
+  DessertIcon,
 } from "lucide-react";
 import Navbar from "@/components/landing-page/navbar";
 import { redirect } from "next/navigation";
@@ -17,8 +18,15 @@ import Image from "next/image";
 import { Footer } from "@/components/landing-page/footer";
 import { BreadcrumbWithCustomSeparatorForCoursePage } from "./_components/crumbs";
 import { GetCategoryPurchases } from "@/app/actions/courses";
+import { currentUser } from "@clerk/nextjs/server";
+import { getUserID } from "@/app/actions/user";
+import Link from "next/link";
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
+const CourseIdPage = async ({
+  params,
+}: {
+  params: { courseId: string; uid: string };
+}) => {
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
@@ -44,24 +52,38 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     },
   });
 
-  const userid = course?.teacherId;
+  const user = await currentUser();
 
-  if (!userid) {
-    redirect("/login");
+  if (!user) {
+    redirect("/");
   }
 
-  if (!course || course.Chapter.length === 0) {
+  let dbuser = await db.user.findUnique({
+    where: {
+      clerkId: user.id,
+    },
+  });
+
+  if (!dbuser) {
+    dbuser = await db.user.create({
+      data: {
+        clerkId: user.id,
+        email: user.emailAddresses[0].emailAddress,
+      },
+    });
+  }
+
+  if (!course || !course.categoryId) {
     return <div>Curso no encontrado o no hay capítulos disponibles.</div>;
   }
 
-  const categoryId = course.categoryId;
-
-  // const CategoryPurchase = await GetCategoryPurchases(categoryId);
+  const categoryPurchase = await GetCategoryPurchases(
+    course.categoryId,
+    dbuser.id
+  );
 
   return (
     <div className="p-2">
-      <Navbar />
-
       <div className="lg:pl-12 m-2 space-y-2">
         {course &&
           course.category &&
@@ -78,6 +100,19 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           {course.title}
         </h2>
       </div>
+
+      {!categoryPurchase && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flex items-center space-x-4">
+          <Lock className="h-6 w-6 text-red-700" />
+          <span className="flex-grow text-center font-semibold">
+            {`Necesitas comprar la categoría - ${course.category?.name} - para acceder al curso completo.
+¡Descuento especial válido por las próximas 48 horas!`}
+          </span>
+          <Link href="/pricing" className="text-blue-500 underline mr-4">
+            Ir a precios
+          </Link>
+        </div>
+      )}
 
       <div className="max-w-5xl mx-auto p-6 ">
         <Card className="bg-gray-100">
@@ -116,7 +151,8 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 />
               )}
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex ">
+              <DessertIcon className="mr-2 w-4 h-4" />
               <p className="mb-4">{course.description}</p>
             </div>
             <div className="flex items-center mt-4 space-x-4">
@@ -137,7 +173,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <div className="flex items-center space-x-4">
                 <div className="flex items-center">
                   <Folder className="mr-2 text-black h-4 w-4" />
-                  <span className="mr-2 font-bold">Categoría: </span>
+                  <span className="mr-2 font-bold">Lecciones Categoría: </span>
                   {course.category?.name}
                 </div>
                 <div className="flex items-center">
@@ -148,28 +184,32 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               </div>
             </div>
             <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-2">
-                Lecciones en Capítulos:
-              </h3>
-              <ul className="space-y-4">
-                {course.Chapter.map((chapter, index) => (
+              <h3 className="text-lg font-semibold mb-2">Capítulos:</h3>
+              <ul className="space-y-2">
+                {course.Chapter.map((chapter) => (
                   <li
                     key={chapter.id}
                     className="flex justify-between border rounded-md  p-4 items-center"
                   >
-                    <div className="flex items-center">
-                      <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-blue-400 text-white font-mono rounded-full mr-2">
-                        {index + 1}
-                      </span>
-                      <span className="text-lg font-mono font-semibold">
-                        {chapter.title}
-                      </span>
-                    </div>
-                    <Button variant="outline" size="sm" className="flex">
-                      {/* {chapter.isFree ? "Comenzar" : "Vista previa"} */}
-                      Continuar aprendiendo
-                      <ArrowUp className="h-4 w-4 justify-end ml-2" />
-                    </Button>
+                    <span>{chapter.title}</span>
+                    {!categoryPurchase ? (
+                      <Link
+                        href={`/courses/${course.id}/chapters/${chapter.id}`}
+                        passHref
+                      >
+                        <Button variant="outline" size="sm" className="flex">
+                          Continuar aprendiendo
+                          <ArrowUp className="h-4 w-4 justify-end ml-2" />
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Link href="/pricing" passHref>
+                        <Button variant="outline" size="sm" className="flex">
+                          Vista previa
+                          <ArrowUp className="h-4 w-4 justify-end ml-2" />
+                        </Button>
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

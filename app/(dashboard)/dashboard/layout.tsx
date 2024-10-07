@@ -10,8 +10,6 @@ import {
 import { useState } from "react";
 import { IconBrandTabler } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { signOut } from "firebase/auth";
-import { auth } from "@/firebase";
 import Link from "next/link";
 import {
   BellDot,
@@ -24,18 +22,17 @@ import {
   TicketSlash,
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
-
 import { FaMoneyBill } from "react-icons/fa";
 import Avatar from "@/components/icon-avatar";
-import TeacherMode from "./_components/teacher-mode";
-import { useAuth } from "@/providers/AuthProvider";
 import Loadingpage from "@/components/loading-page";
 import { toast } from "sonner";
+import { SignOutButton, useUser } from "@clerk/nextjs";
+import TeacherMode from "./_components/teacher-mode";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
 
-  const { user } = useAuth();
+  const user = useUser();
 
   if (!user) {
     return <Loadingpage />;
@@ -100,12 +97,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
-  const handleSignOut = async () => {
-    await signOut(auth);
-    toast.success("Sesión cerrada");
-    window.location.href = "/";
-  };
-
   return (
     <SidebarProvider>
       <div className="h-full scrollbar-thin">
@@ -122,7 +113,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
               <div>
-                <Avatar seed={user.email || ""} />
+                <Avatar
+                  seed={user.user?.emailAddresses[0].emailAddress || ""}
+                />
               </div>
             </SidebarBody>
           </MobileSidebar>
@@ -143,9 +136,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               <div>
                 <SidebarLink
                   link={{
-                    label: user.email || "User",
+                    label: user.user?.emailAddresses[0].emailAddress || "User",
                     href: "#",
-                    icon: <Avatar seed={user?.email || ""} />,
+                    icon: (
+                      <Avatar
+                        seed={user.user?.emailAddresses[0].emailAddress || ""}
+                      />
+                    ),
                   }}
                 />
               </div>
@@ -155,20 +152,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
-          {/* <TeacherMode userId={user?.uid} /> */}
-          <Button
-            onClick={handleSignOut}
-            variant={"outline"}
-            className="flex items-center"
-          >
-            <LogOut className="m-auto h-4 w-4" />
-          </Button>
+          {user.user && <TeacherMode userId={user.user.id} />}
           <Link href={"/"}>
             <Button className="flex items-center bg-violet-800 text-white">
               <Home className="m-auto  h-4 w-4" />
             </Button>
           </Link>
-         
         </div>
         {children}
       </main>

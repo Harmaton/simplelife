@@ -5,7 +5,7 @@ import {
   Clock10Icon,
   LayoutDashboard,
   ListChecks,
-  CheckSquareIcon
+  CheckSquareIcon,
 } from "lucide-react";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -21,23 +21,14 @@ import { StartDateForm } from "./_components/dates";
 import { EndDateForm } from "./_components/last-date";
 import { EvaluationsForm } from "./_components/evaluation";
 import { SubCategoryForm } from "./_components/sub-category";
+import { auth } from "@clerk/nextjs/server";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  // const userId = searchParams.userId;
+  const { userId } = auth();
 
-  // if (!userId) {
-  //   return <Loadingpage />;
-  // }
-
-  // const teacher = await db.user.findUnique({
-  //   where: {
-  //     clerkId: userId,
-  //   },
-  // });
-
-  // if (!teacher) {
-  //   return <Loadingpage />;
-  // }
+  if(!userId){
+    redirect('/')
+  }
 
   const course = await db.course.findUnique({
     where: {
@@ -112,7 +103,9 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           ) : (
             <div>
               <span>⚠️</span>
-              <p className="font-mono text-sm underline text-red-500 ">Complete los campos obligatorios  </p>
+              <p className="font-mono text-sm underline text-red-500 ">
+                Complete los campos obligatorios{" "}
+              </p>
             </div>
           )}
         </div>

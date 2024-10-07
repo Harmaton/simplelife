@@ -8,9 +8,33 @@ import StatCard from "./statcard";
 import { useAuth } from "@/providers/AuthProvider";
 import Image from "next/image";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs/server";
+import { db } from "@/lib/db";
+import {
+  calculateProfileCompletion,
+  getTeacherStats,
+} from "@/app/actions/teacher";
 
-const Dashboard = () => {
-  const { user } = useAuth();
+const Dashboard = async () => {
+  const user = await currentUser();
+
+  if (!user) {
+    return null; // or redirect to login
+  }
+
+  const dbUser = await db.user.findUnique({
+    where: { clerkId: user.id },
+  });
+
+  if (!dbUser) {
+    return null; // or handle this case appropriately
+  }
+
+  const { enrolledCourses, activeCourses, completedCourses } =
+    await getTeacherStats(dbUser.id);
+  const { percentage, steps, totalSteps } = await calculateProfileCompletion(
+    dbUser.id
+  );
 
   return (
     <div className="bg-gray-100 p-8">
@@ -18,25 +42,25 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard
           icon={<Play className="text-orange-500" />}
-          value="8"
+          value={enrolledCourses.toString()}
           label="Enrolled courses"
           bgColor="bg-orange-100"
         />
         <StatCard
           icon={<CheckSquare className="text-indigo-500" />}
-          value="3"
+          value={activeCourses.toString()}
           label="Active courses"
           bgColor="bg-indigo-100"
         />
         <StatCard
           icon={<Trophy className="text-green-500" />}
-          value="5"
+          value={completedCourses.toString()}
           label="Completed courses"
           bgColor="bg-green-100"
         />
         <StatCard
           icon={<Coins className="text-yellow-500" />}
-          value="3,850"
+          value={dbUser.points?.toString() || "0"}
           label="Total points"
           bgColor="bg-yellow-100"
         />
@@ -45,29 +69,34 @@ const Dashboard = () => {
       {/* Profile Section */}
       <div className="bg-indigo-900 text-white rounded-lg p-4 mb-6 flex flex-col sm:flex-row items-center sm:justify-between space-y-4 sm:space-y-0">
         <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left">
-          {user?.photoURL && (
+          {user?.imageUrl && (
             <Image
-              src={user.photoURL}
+              src={user.imageUrl}
               width={48}
               height={48}
-              alt={user.displayName || "User"}
+              alt={user.firstName || "User"}
               className="rounded-full mb-2 sm:mb-0 sm:mr-4"
             />
           )}
           <div>
-            <h2 className="text-xl font-bold">{user?.displayName || "User"}</h2>
+            <h2 className="text-xl font-bold">{user?.firstName || "User"}</h2>
             <p className="text-sm opacity-75">
-              {user?.email || "No email provided"}
+              {user?.emailAddresses[0].emailAddress || "No email provided"}
             </p>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
           <div className="text-center sm:text-right">
-            <p className="text-sm">Steps 1/4</p>
+            <p className="text-sm">
+              Pasos {steps}/{totalSteps}
+            </p>
             <div className="w-32 bg-gray-700 rounded-full h-2 mx-auto sm:mx-0">
-              <div className="bg-green-500 rounded-full h-2 w-1/4"></div>
+              <div
+                className="bg-green-500 rounded-full h-2"
+                style={{ width: `${percentage}%` }}
+              ></div>
             </div>
-            <p className="text-sm">25% completa</p>
+            <p className="text-sm">{percentage}% completa</p>
           </div>
           <Link href={"/tutor/profile"}>
             <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-blue-500 w-full sm:w-auto">

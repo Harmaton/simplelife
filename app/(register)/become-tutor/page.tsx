@@ -7,7 +7,7 @@ import Top from '@/components/top-page'
 
 export default function Page() {
   return (
-    <div className='p-2'>
+    <div>
         <Navbar />
         <Top header='Modo Instructor' text='Empiece su viaje para enseñar en Simplelife' />
         <TutorHero />

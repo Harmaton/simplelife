@@ -1,9 +1,6 @@
 "use server";
 
-import { EmailTemplate } from "@/components/email-template";
-import { auth } from "@/firebase";
 import { db } from "@/lib/db";
-import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -252,7 +249,6 @@ export async function submitTutorRegistration({
         isRegistered: true,
       },
     });
-    console.log(user);
     return { success: true, message: "Registro de tutor enviado con éxito" };
   } catch (error) {
     console.error("Error submitting tutor registration:", error);
@@ -398,11 +394,9 @@ export async function getUserID(id: string) {
         clerkId: id,
       },
     });
-
-    if(user){
-      return user.id
-    }
+    return user?.id;
   } catch (error) {
     console.log(error);
+    return null;
   }
 }

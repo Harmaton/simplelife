@@ -14,23 +14,22 @@ import { motion } from "framer-motion";
 
 import { ArrowRight, PenBox } from "lucide-react";
 import { Button } from "../ui/button";
-import { useAuth } from "@/providers/AuthProvider";
 import CarouselHero from "./carousel";
 import {
   checkIsAdmin,
   checkIsStudent,
   checkIsTeacher,
 } from "@/app/actions/user";
+import { useUser } from "@clerk/nextjs";
 
 const Hero: React.FC = () => {
-  const user = useAuth();
+  const user = useUser();
 
   const router = useRouter();
 
   const [isTeacher, setIsTeacher] = useState(false);
-  const [isStudent, setIsStudent] = useState(false);
   const [admin, setAdmin] = useState(false);
-  const email = user.user?.email;
+  const email = user.user?.emailAddresses[0].emailAddress;
 
   useEffect(() => {
     const fetchIsTeacherStatus = async () => {
@@ -40,16 +39,6 @@ const Hero: React.FC = () => {
       }
     };
     fetchIsTeacherStatus();
-
-    const fetchIsStudentStatus = async () => {
-      if (email) {
-        const studentStatus = await checkIsStudent(email);
-        setIsStudent(studentStatus);
-      }
-    };
-
-    fetchIsStudentStatus();
-
     const fetchAdminStatus = async () => {
       if (email) {
         const adminStatus = await checkIsAdmin(email);
@@ -153,15 +142,15 @@ const Hero: React.FC = () => {
               emocional.
             </motion.p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">             
-                <Button
-                  className="border-2 text-center py-2 rounded-lg border-blue-300 hover:border-blue-500"
-                  variant={"ghost"}
-                  onClick={exploreCoursesRoue}
-                >
-                  Nuestras Certificaciones
-                </Button>
-             
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Button
+                className="border-2 rounded-full text-center py-2  border-blue-300 hover:border-blue-500"
+                variant={"ghost"}
+                onClick={exploreCoursesRoue}
+              >
+                Nuestras Certificaciones
+              </Button>
+
               {isTeacher && (
                 <motion.div
                   className="flex"
@@ -170,7 +159,7 @@ const Hero: React.FC = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   <Button
-                    className="border-2 border-violet-300 hover:border-violet-500 text-center p-4 py-2 px-6 rounded-lg flex font-semibold"
+                    className="border-2 border-violet-300 hover:border-violet-500 text-center p-4 py-2 px-6 rounded-full flex font-semibold"
                     onClick={TeacherLogin}
                     variant={"ghost"}
                   >
@@ -181,7 +170,7 @@ const Hero: React.FC = () => {
               )}
               {!isTeacher && (
                 <Button
-                  className="text-center py-2 rounded-lg bg-transparent border border-blue-500"
+                  className="text-center py-2  rounded-full bg-transparent border border-blue-500"
                   variant={"ghost"}
                   onClick={exploreTeachersRoue}
                 >

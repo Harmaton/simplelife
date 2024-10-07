@@ -3,14 +3,12 @@ import { DataTable } from "./_components/data-table"
 import { columns } from "./_components/columns"
 import { db } from "@/lib/db"
 import { redirect } from "next/navigation"
-import { auth } from "@/firebase"
+import { auth } from "@clerk/nextjs/server"
 
 
 const BookPage = async () => {
 
-   const user = auth.currentUser
-
-   const userId = user?.uid
+   const {userId} = auth()
 
     if (!userId) {
       return redirect("/");

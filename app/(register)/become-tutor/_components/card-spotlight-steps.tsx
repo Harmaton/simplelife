@@ -1,14 +1,13 @@
 import { CardSpotlight } from "./card-spotlight";
 
-
 export function CardSpotlightDemo() {
   return (
-    <CardSpotlight className="h-96 w-96">
-      <p className="text-xl font-bold relative z-20 mt-2 text-white">
-      Pasos necesarios
+    <CardSpotlight className="h-90 w-90 mr-2 grayscale border-blue-500 ">
+      <p className="text-xl font-bold relative z-20 mt-2 font-serif  text-black">
+        Pasos necesarios
       </p>
-      <div className="text-neutral-200 mt-4 relative z-20">
-      Sigue estos pasos para convertirte en tutor:
+      <div className="text-black mt-4 font-serif text-sm relative z-20">
+        Sigue estos pasos para convertirte en tutor:
         <ul className="list-none  mt-2">
           <Step title="Llena el formulario de registro" />
           <Step title="Crea un buen perfil" />
@@ -16,8 +15,9 @@ export function CardSpotlightDemo() {
           <Step title="Comienza a impactar en la comunidad" />
         </ul>
       </div>
-      <p className="text-neutral-300 mt-4 relative z-20 text-sm">
-      Asegurarse de que su perfil se refleje correctamente ayuda a que lo aprueben rápidamente. Protegemos su información y datos personales.
+      <p className="text-black mt-4 relative z-20 text-sm font-serif">
+        Asegurarse de que su perfil se refleje correctamente ayuda a que lo
+        aprueben rápidamente. Protegemos su información y datos personales.
       </p>
     </CardSpotlight>
   );
@@ -27,7 +27,7 @@ const Step = ({ title }: { title: string }) => {
   return (
     <li className="flex gap-2 items-start">
       <CheckIcon />
-      <p className="text-white">{title}</p>
+      <p className="text-blacke text-sm">{title}</p>
     </li>
   );
 };

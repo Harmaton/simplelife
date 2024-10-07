@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { ExtendedCourse } from "@/types";
 import { Category, Chapter, Course } from "@prisma/client";
 
 export async function GetLatestCourses() {
@@ -33,7 +34,7 @@ export async function GetLatestCourses() {
 export async function GetAllCategories() {
   try {
     const categories = await db.category.findMany({
-      take: 6 // Limit to the latest 6 categories
+      take: 6, // Limit to the latest 6 categories
     });
     return categories;
   } catch (error) {
@@ -42,21 +43,42 @@ export async function GetAllCategories() {
   }
 }
 
+export async function GetAllSubCategories() {
+  try {
+    const subcategories = await db.subCategory.findMany({
+      include: {
+        Courses: true,
+        category: true
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    return subcategories;
+  } catch (error) {
+    console.error("Error fetching all subcategories:", error);
+    throw error;
+  }
+}
+
 export async function GetCategoryPurchases(categoryId: string, userId: string) {
   try {
-    const purchases = await db.categoryPurchase.findMany({where: {
-      categoryId: categoryId,
-      userId: userId
-    }})
+    const purchases = await db.categoryPurchase.findMany({
+      where: {
+        categoryId: categoryId,
+        userId: userId,
+      },
+    });
 
-    if(purchases.length > 0){
-      return true
+    if (purchases.length > 0) {
+      return true;
     }
-    return false
+    return false;
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    return false
   }
-  
 }
 
 export async function GetCategorySubCategories(categoryId: string) {
@@ -64,6 +86,10 @@ export async function GetCategorySubCategories(categoryId: string) {
     const subcategories = await db.subCategory.findMany({
       where: {
         categoryId,
+      },
+      include: {
+        Courses: true,
+        category: true
       },
     });
     return subcategories;
@@ -173,7 +199,6 @@ export async function createCourse(values: any, email: string) {
       },
     });
 
-    console.log(teacher, "teacher");
 
     if (teacher) {
       const newCourse = await db.course.create({
@@ -234,13 +259,12 @@ export async function getTeacherCourses(teacherid: string) {
 
 export async function GetsubCategoryDetails(subcategoryId: string) {
   try {
-    console.log(subcategoryId);
     const details = await db.subCategory.findUnique({
       where: {
         id: subcategoryId,
       },
     });
-    console.log(details);
+
     return details;
   } catch (error) {
     console.log(error);
@@ -250,13 +274,11 @@ export async function GetsubCategoryDetails(subcategoryId: string) {
 
 export async function GetCoursesInCategory(subcategoryId: string) {
   try {
-    console.log(subcategoryId);
     const courses = await db.course.findMany({
       where: {
         subcategoryId: subcategoryId,
       },
     });
-    console.log(courses);
     return courses;
   } catch (error) {
     console.log(error);
@@ -264,7 +286,7 @@ export async function GetCoursesInCategory(subcategoryId: string) {
   }
 }
 
-export async function fetchCourse(id: string){
+export async function fetchCourse(id: string): Promise<ExtendedCourse | null> {
   try {
     const course = await db.course.findUnique({
       where: {
@@ -290,9 +312,10 @@ export async function fetchCourse(id: string){
         subcategory: true,
       },
     });
-  return course
+
+    return course as ExtendedCourse | null;
   } catch (error) {
-    console.log(error)
-    return null
+    console.log(error);
+    return null;
   }
 }

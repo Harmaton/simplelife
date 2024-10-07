@@ -31,33 +31,28 @@ import { toast } from "sonner";
 import { checkIsAdmin } from "@/app/actions/user";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 import LoadingPage from "@/components/loading-page";
+import { useUser } from "@clerk/nextjs";
+import Loadingpage from "@/components/loading-page";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [isAdmin, setAdmin] = useState(false);
+  const user = useUser();
 
+  if (!user) {
+    return <Loadingpage />;
+  }
   useEffect(() => {
     const checkAdminState = async () => {
-      if (user?.email) {
-        const isAdmin = await checkIsAdmin(user.email);
+      if (user.user?.emailAddresses[0].emailAddress) {
+        const isAdmin = await checkIsAdmin(
+          user.user?.emailAddresses[0].emailAddress
+        );
         setAdmin(isAdmin);
       }
     };
     checkAdminState();
-  }, [user?.email]);
-
-  if (!user?.email) {
-    return (
-      <div className="flex flex-col items-center justify-center border p-4 rounded-lg">
-        <div className="text-2xl mb-4">🔒</div>
-        <Link href="/login">
-          <Button>Iniciar Sesión como Admin</Button>
-        </Link>
-        <LoadingPage />
-      </div>
-    );
-  }
+  }, [user.user?.emailAddresses[0].emailAddress]);
 
   if (!isAdmin) {
     return (
@@ -69,7 +64,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </Link>
         <LoadingPage />
       </div>
-      
     );
   }
 
@@ -161,7 +155,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
               <div>
-                <Avatar seed={user?.email || ""} />
+                <Avatar seed={user.user?.emailAddresses[0].emailAddress || ""} />
               </div>
             </SidebarBody>
           </MobileSidebar>
@@ -182,9 +176,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               <div>
                 <SidebarLink
                   link={{
-                    label: user.email || "User",
+                    label: user.user?.emailAddresses[0].emailAddress || "User",
                     href: "#",
-                    icon: <Avatar seed={user?.email || ""} />,
+                    icon: (
+                      <Avatar
+                        seed={user.user?.emailAddresses[0].emailAddress || ""}
+                      />
+                    ),
                   }}
                 />
               </div>

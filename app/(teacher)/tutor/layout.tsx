@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
 import Link from "next/link";
-import { useAuth } from "@/providers/AuthProvider";
 import {
   BookOpen,
   Calendar,
@@ -28,43 +27,34 @@ import Avatar from "@/components/icon-avatar";
 import { toast } from "sonner";
 import { checkIsTeacher } from "@/app/actions/user";
 import LoadingPage from "@/components/loading-page";
+import { useUser } from "@clerk/nextjs";
 
 const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
+  const user = useUser();
   const [open, setOpen] = useState(false);
-  const [isTeacher, setTeacher] = useState(false)
+  const [isTeacher, setTeacher] = useState(false);
 
-  useEffect(()=> {
-    const checkTeacherstatus = async() => {
-      if(user?.email){
-        const status = await checkIsTeacher(user?.email)
-        setTeacher(status)
+  useEffect(() => {
+    const checkTeacherstatus = async () => {
+      if (user.user?.emailAddresses[0].emailAddress) {
+        const status = await checkIsTeacher(
+          user.user?.emailAddresses[0].emailAddress
+        );
+        setTeacher(status);
       }
-      
-    }
-    checkTeacherstatus()
-  }, [user?.email])
-
-  if (!user?.email) {
-    return (
-      <div className="flex flex-col items-center justify-center  border p-4 rounded-lg">
-        <div className="text-2xl mb-4">🔒</div>
-        <h1 className="text-3xl font-bold mb-2">Acceso Restringido</h1>
-        <p className="text-lg mb-4">Por favor, inicia sesión para continuar.</p>
-        <Link href="/login">
-          <Button>Comienza aquí</Button>
-        </Link>
-        <LoadingPage />
-      </div>
-    );
-  }
+    };
+    checkTeacherstatus();
+  }, [user.user?.emailAddresses[0].emailAddress]);
 
   if (!isTeacher) {
     return (
       <div className="flex flex-col items-center justify-center  border p-4 rounded-lg">
         <div className="text-2xl mb-4 mt-4">🚫</div>
         <h1 className="text-3xl font-bold mb-2">Acceso Denegado</h1>
-        <p className="text-lg">Lo siento, no estás registrado como profesor. Aplica para convertirte en tutor en la plataforma.</p>
+        <p className="text-lg">
+          Lo siento, no estás registrado como profesor. Aplica para convertirte
+          en tutor en la plataforma.
+        </p>
         <Link href="/become-tutor" className="mt-4">
           <Button>Aplicar</Button>
         </Link>
@@ -72,6 +62,7 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
     );
   }
+
   const links = [
     {
       label: "Panel",
@@ -114,13 +105,13 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       icon: (
         <Locate className="text-yellow-500 dark:text-yellow-400 h-5 w-5 flex-shrink-0" />
       ),
-    }
+    },
   ];
-  
+
   const handleSignOut = async () => {
     await signOut(auth);
-    toast.success('Sesión cerrada');
-    window.location.href = '/'; 
+    toast.success("Sesión cerrada");
+    window.location.href = "/";
   };
 
   return (
@@ -139,7 +130,9 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
               <div>
-                <Avatar seed={user?.email || ""} />
+                <Avatar
+                  seed={user.user?.emailAddresses[0].emailAddress || ""}
+                />
               </div>
             </SidebarBody>
           </MobileSidebar>
@@ -160,9 +153,13 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
               <div>
                 <SidebarLink
                   link={{
-                    label: user.email || "User",
+                    label: user.user?.emailAddresses[0].emailAddress || "User",
                     href: "#",
-                    icon: <Avatar seed={user?.email || ""} />,
+                    icon: (
+                      <Avatar
+                        seed={user.user?.emailAddresses[0].emailAddress || ""}
+                      />
+                    ),
                   }}
                 />
               </div>
@@ -172,17 +169,17 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
-        <Link href={"/dashboard"}>
+          <Link href={"/dashboard"}>
             <Button className="flex items-center border bg-white text-black font-mono  hover:bg-violet-400 ">
               🎓 Modo estudiante
             </Button>
           </Link>
-        <Button
+          <Button
             onClick={handleSignOut}
             variant={"outline"}
             className="flex items-center"
           >
-            <LogOut className="m-auto  h-4 w-4" />            
+            <LogOut className="m-auto  h-4 w-4" />
           </Button>
           <Link href={"/"}>
             <Button className="flex items-center bg-violet-800 text-white">

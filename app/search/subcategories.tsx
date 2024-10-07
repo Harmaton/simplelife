@@ -1,11 +1,14 @@
-import { SubCategory } from "@prisma/client";
+import { SubCategory, Course, Category } from "@prisma/client";
 import React from "react";
 import SubcategoryItem from "./subcategory-item";
 
-
 interface Props {
-  subcategories: SubCategory[];
+  subcategories: (SubCategory & {
+    Courses: Course[];
+    category: Category;
+  })[];
 }
+
 
 export default function SubCategories({ subcategories }: Props) {
   return (
@@ -15,7 +18,9 @@ export default function SubCategories({ subcategories }: Props) {
           <SubcategoryItem key={subcategory.id} subcategory={subcategory} />
         ))
       ) : (
-        <div> Selecciona una categoría</div>
+        <div className="col-span-3 text-center text-gray-500">
+          Selecciona una categoría
+        </div>
       )}
     </div>
   );

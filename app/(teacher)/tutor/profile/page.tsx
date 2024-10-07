@@ -8,20 +8,22 @@ import { getTeacherDeatails } from "@/app/actions/user";
 import { Banner } from "@/components/banner";
 import { User } from "@prisma/client";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { useAuth } from "@/providers/AuthProvider";
 import Loadingpage from "@/components/loading-page";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";
 
 const queryClient = new QueryClient();
 
 function ProfilePage() {
-  const { user } = useAuth(); // Use useAuth to get the current user
+  const user = useUser()
+
+  const email = user.user?.emailAddresses[0].emailAddress
 
   const { data: teacherdata, isLoading } = useQuery<User | null>(
-    ['teacherDetails', user?.email],
+    ['teacherDetails', email],
     async () => {
-      const userid = user?.email; 
+      const userid = email; 
       if (!userid) {
         return null;
       }

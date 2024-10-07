@@ -31,13 +31,23 @@ export const siteConfig = {
   },
   footerNav: [
     {
-      title: "The SimpleLife",
+      title: "Plataforma",
       items: [
+        {
+          title: "Conviértete en tutora",
+          href: "/become-tutor",
+          external: false,
+        },
+        {
+          title: "Explorar todas las certificaciones",
+          href: "/search",
+          external: false,
+        },
         {
           title: "Sobre nosotros",
           href: "/aboutus",
           external: false,
-        },
+        }
       ],
     },
     {

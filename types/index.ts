@@ -55,3 +55,24 @@ export const categorySchema = z.object({
 });
 
 export type CategoryInput = z.infer<typeof categorySchema>;
+
+
+
+import { User, Category, SubCategory, Chapter } from '@prisma/client'
+
+export type ExtendedCourse = {
+  id: string;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  price: number | null;
+  isPublished: boolean;
+  categoryId: string | null;
+  teacherId: string;
+  startDate: Date | null;
+  averageRating: number | null;
+  User: User | null;
+  category: Category | null;
+  subcategory: SubCategory | null;
+  Chapter: (Chapter & { position: number })[];
+};

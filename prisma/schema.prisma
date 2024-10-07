@@ -119,19 +119,22 @@ model Category {
 }
 
 model Chapter {
-  id             String   @id @default(uuid())
-  title          String
-  description    String?
-  videoUrl       String?
-  position       Int
-  isPublished    Boolean  @default(false)
-  isFree         Boolean  @default(false)
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  videoUrl    String?
+  position    Int
+  isPublished Boolean  @default(false)
+  courseId    String
+  youtubeLink String?
   googleFormLink String?
-  youtubeLink    String?
-  courseId       String
-  course         Course   @relation(fields: [courseId], references: [id])
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  isFree Boolean @default(false)
+
+  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userProgress UserProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([courseId])
 }
@@ -205,7 +208,7 @@ model Course {
   createdAt      DateTime     @default(now())
   updatedAt      DateTime
   categoryId     String?
-
+  
   category       Category?        @relation(fields: [categoryId], references: [id])
   CoursePurchase CoursePurchase[]
   Chapter        Chapter[]
@@ -407,12 +410,14 @@ model Referral {
 }
 
 model UserProgress {
-  id          String   @id
+  id          String   @id @default(uuid())
   userId      String
   chapterId   String
   isCompleted Boolean  @default(false)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime @updatedAt
+
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@unique([userId, chapterId])
   @@index([chapterId])
@@ -498,7 +503,7 @@ model SubCategoryPurchase {
 model CategoryPurchase {
   id         String @id @default(uuid())
   userId     String 
-  user       User   @relation(fields: [userId], references: [id])
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   categoryId String
 
   category  Category @relation(fields: [categoryId], references: [id])

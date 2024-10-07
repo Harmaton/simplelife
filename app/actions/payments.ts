@@ -74,14 +74,13 @@ export async function updateSaleAndAccess(data: PurchaseData) {
     for (const category of matchedCategories) {
       console.log("category found --->", category);
 
-      const boughtCourse = await db.course.updateMany({
-        where: { categoryId: category.id },
-        data: { isBought: true },
-      });
-
-      console.log("Bought Courses ---->", boughtCourse);
-
+      // const boughtCourse = await db.course.updateMany({
+      //   where: { categoryId: category.id },
+      //   data: { isBought: true },
+      // })
+      // console.log("Bought Courses ---->", boughtCourse);
       // Create CategoryPurchase records for each matched category
+     
       const categorypurchase = await db.categoryPurchase.create({
         data: {
           userId: user.id,

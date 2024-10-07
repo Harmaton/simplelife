@@ -28,6 +28,7 @@ import { useRouter } from "next/navigation";
 import esLocale from "@fullcalendar/core/locales/es";
 import { auth } from "@/firebase";
 import { isAdmin } from "@/lib/isAdmin";
+import { useUser } from "@clerk/nextjs";
 
 interface Event {
   title: string;
@@ -40,7 +41,7 @@ interface Event {
 }
 
 export default function Calendar() {
-  const user = auth.currentUser
+  const user = useUser()
   const [showmodal, setShowmodal] = useState(false);
   const [showdeletemodal, setShowDeleteModal] = useState(false);
 
@@ -175,7 +176,7 @@ export default function Calendar() {
 
   return (
     <div>
-      {user && isAdmin(user.uid) && (
+      {user.user && isAdmin(user.user.id) && (
         <div className="p-4 m-2">
           <AlertDialog>
             <AlertDialogTrigger>

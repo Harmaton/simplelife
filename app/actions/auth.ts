@@ -1,7 +1,8 @@
-'use server'
+"use server";
 
-import { db } from '@/lib/db';
-import { nanoid } from 'nanoid';
+import { db } from "@/lib/db";
+import { currentUser } from "@clerk/nextjs/server";
+import { nanoid } from "nanoid";
 
 export async function generateReferralLink(userId: string): Promise<string> {
   // Check if the user already has a referral link
@@ -21,8 +22,49 @@ export async function generateReferralLink(userId: string): Promise<string> {
   }
 
   // Construct the full referral URL
-  const baseUrl = 'https://simplelifeofficial.com/signup?ref=';
+  const baseUrl = "https://simplelifeofficial.com/signup?ref=";
   const referralLink = baseUrl + referral.link;
 
   return referralLink;
+}
+
+export async function getTeacherStatus() {
+  try {
+    const clerkuser = await currentUser();
+    if (!clerkuser) {
+      return false;
+    }
+    const teacher = await db.user.findUnique({
+      where: {
+        clerkId: clerkuser.id,
+      },
+    });
+
+    const isteacher = teacher?.isTeacher;
+    return isteacher;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function getAdminStatus() {
+  try {
+    const clerkuser = await currentUser();
+    if (!clerkuser) {
+      return false;
+    }
+
+    const teacher = await db.user.findUnique({
+      where: {
+        clerkId: clerkuser.id,
+      },
+    });
+
+    const isteacher = teacher?.isadmin;
+    return isteacher;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }

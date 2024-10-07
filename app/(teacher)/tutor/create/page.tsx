@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createCourse } from "@/app/actions/courses";
-import { useAuth } from "@/providers/AuthProvider";
+import { useUser } from "@clerk/nextjs";
 
 // Update schema to handle productCode as a string
 const createCourseformSchema = z.object({
@@ -38,15 +38,17 @@ const CreatePage = () => {
 
   const { isSubmitting, isValid } = form.formState;
 
-  const { user } = useAuth();
+  const user = useUser()
+
+  const email = user.user?.emailAddresses[0].emailAddress
 
   const onSubmit = async (values: z.infer<typeof createCourseformSchema>) => {
     try {
-      if (!user || !user.email) {
+      if (!user || !email) {
         toast.error("Please Log in to continue");
         return null;
       }
-      const response = await createCourse(values, user.email);
+      const response = await createCourse(values, email);
 
       console.log(response);
       if (response) {

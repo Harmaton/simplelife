@@ -10,13 +10,18 @@ import { ChapterAccessForm } from "./_components/chapter-access-form";
 import { ChapterActions } from "./_components/chapter-actions";
 import { EvaluationsForm } from "./_components/evaluation";
 import { ChapterYoutubeForm } from "./_components/youtube-link";
+import { auth } from "@clerk/nextjs/server";
 
 const ChapterIdPage = async ({
   params,
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
-  // fetch the user and compare to the userid in the course from this courseid
+  const { userId } = auth();
+
+  if (!userId) {
+    redirect("/");
+  }
   const chapter = await db.chapter.findUnique({
     where: {
       id: params.chapterId,
@@ -28,7 +33,11 @@ const ChapterIdPage = async ({
     return redirect("/");
   }
 
-  const requiredFields = [chapter.title, chapter.description, chapter.youtubeLink];
+  const requiredFields = [
+    chapter.title,
+    chapter.description,
+    chapter.youtubeLink
+  ];
 
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
@@ -93,7 +102,7 @@ const ChapterIdPage = async ({
               courseId={params.courseId}
               chapterId={params.chapterId}
             />
-             <div className="flex items-center mt-4 gap-x-2">
+            <div className="flex items-center mt-4 gap-x-2">
               <IconBadge icon={BookCopy} />
               <h2 className="text-xl">Personaliza tu capítulo</h2>
             </div>

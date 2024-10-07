@@ -10,19 +10,24 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useAuth } from "@/providers/AuthProvider";
-import { ArrowRightCircle, MenuIcon } from "lucide-react";
+import {  ArrowUp, ArrowUpRight, Loader, MenuIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { NavigationMenuDemo } from "../navbar-shadcn";
 import { Logo } from "../logo";
 import Image from "next/image";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Navbar() {
-  const { user } = useAuth();
-
   return (
     <header
-      className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 lg:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky"
+      className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 border-b lg:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky"
       style={{
         position: "sticky",
         top: "-100px",
@@ -124,39 +129,35 @@ export default function Navbar() {
               </Link>
             </nav>
             <div className="mt-auto flex flex-col gap-4">
-              {user ? (
-                <>
-                  <Button className="rounded-full flex items-center justify-center p-2">
-                    {user?.photoURL ? (
-                      <Image
-                        src={user.photoURL}
-                        alt="User Avatar"
-                        className="w-8 h-8 rounded-full"
-                        width={50}
-                        height={50}
-                      />
-                    ) : (
-                      <span className="text-xl">
-                        {user?.email?.charAt(0).toUpperCase()}
-                      </span>
-                    )}
-                  </Button>
+              <ClerkLoading>
+                <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
+              </ClerkLoading>
+
+              <ClerkLoaded>
+                <SignedOut>
+                  <SignInButton
+                    mode="modal"
+                    signUpFallbackRedirectUrl={"/dashboard"}
+                  >
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-blue-400 font-bold border flex"
+                    >
+                      Login
+                      <ArrowUpRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
                   <Link href="/dashboard">
                     <Button className="bg-background border text-center border-violet-500 m-auto">
-                      Panel de control
+                    Acceso
                     </Button>
                   </Link>
-                </>
-              ) : (
-                <>
-                  <Link href="/login">
-                    <Button variant="outline">Iniciar sesión</Button>
-                  </Link>
-                  <Link href="/signup">
-                    <Button className="bg-background">Comenzar</Button>
-                  </Link>
-                </>
-              )}
+                </SignedIn>
+              </ClerkLoaded>
             </div>
           </SheetContent>
         </Sheet>
@@ -168,42 +169,35 @@ export default function Navbar() {
         </div>
 
         <div className="hidden lg:flex items-center gap-4">
-          {user ? (
-            <>
-              <div className="rounded-full flex items-center bg-gray-300 m-auto justify-center p-2">
-                {user?.photoURL ? (
-                  <Image
-                    src={user.photoURL}
-                    alt="User Avatar"
-                    width={32}
-                    height={32}
-                    className="w-8 h-8 rounded-full"
-                  />
-                ) : (
-                  <span className="text-xl">
-                    {user?.email?.charAt(0).toUpperCase()}
-                  </span>
-                )}
-              </div>
-              <Link href={"/dashboard"}>
-                <Button className="bg-violet-500 hover:bg-blue-300 text-white p-2 border border-violet-500 m-auto">
-                  <span className="text-xl mr-2 font-mono">
-                    Panel de control
-                  </span>
-                  <ArrowRightCircle className="h-4 w-4 mr-2" />
+          <ClerkLoading>
+            <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
+          </ClerkLoading>
+          <ClerkLoaded>
+            <SignedOut>
+              <SignInButton
+                mode="modal"
+                signUpFallbackRedirectUrl={"/dashboard"}
+              >
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-blue-400 rounded-lg  border flex"
+                >
+                 Acceso
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
+                </Button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+              <Link href="/dashboard">
+                <Button className="bg-blue-500 text-white flex font-bold border text-center  border-violet-500 m-auto">
+                  Panel
+                  <ArrowUp className="h-4 w-4 ml-2 justify-end" />
                 </Button>
               </Link>
-            </>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button variant="outline">Iniciar sesión</Button>
-              </Link>
-              <Link href="/sign-up">
-                <Button>Comenzar</Button>
-              </Link>
-            </>
-          )}
+            </SignedIn>
+          </ClerkLoaded>
         </div>
       </div>
     </header>

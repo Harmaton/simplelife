@@ -15,7 +15,7 @@ export default function CompanyPartners() {
     <div className="mt-8 p-2">
       <div className="text-center mb-4">
         <h1 className="font-bold border rounded-full p-4  text-gray-400 font-serif text-2xl">
-          In partnership with
+        En asociación con
         </h1>
       </div>
       <Marquee pauseOnHover >

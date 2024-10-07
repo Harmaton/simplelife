@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { DM_Sans, Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "@/providers/AuthProvider";
+// import { esES } from "@clerk/localizations";
 import { cn } from "@/lib/utils";
-import { Toaster } from '@/components/ui/sonner'
+import { Toaster } from "@/components/ui/sonner";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   icons: {
@@ -14,18 +15,17 @@ export const metadata: Metadata = {
 };
 
 const fontHeading = DM_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-heading',
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-heading",
+});
 
 const fontBody = Space_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-body',
-  weight: '400'
-})
-
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+  weight: "400",
+});
 
 export default function RootLayout({
   children,
@@ -33,19 +33,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
-    <html lang="en" className="scrollbar-thumb-sky-700 scrollbar-track-sky-200 scrollbar-thin overflow-y-scroll">
-    <body 
-        className={cn(
-          'antialiased',
-          fontHeading.variable,
-          fontBody.variable
-        )}
+    <ClerkProvider
+    //  localization={esES}
+     >
+      <html
+        lang="en"
+        className="scrollbar-thumb-sky-700 scrollbar-track-sky-200 scrollbar-thin overflow-y-scroll"
       >
-       {children}
-      <Toaster />
-      </body>
-    </html>
-    </AuthProvider>
+        <body
+          className={cn("antialiased", fontHeading.variable, fontBody.variable)}
+        >
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

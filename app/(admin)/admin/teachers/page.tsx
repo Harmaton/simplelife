@@ -1,23 +1,12 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { getAllTeachers } from "@/app/actions/user";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { User } from "@prisma/client";
 
-export default function Page() {
-  const [teachers, setTeachers] = useState<User[]>([]);
-  useEffect(() => {
-    const fetchTeachers = async () => {
-      const fetchedTeachers = await getAllTeachers();
-      setTeachers(fetchedTeachers);
-    };
-    fetchTeachers();
-  }, []);
-
+export default async function Page() {
+  const teachers = await getAllTeachers();
   return (
-    <div className="p-8 ">
+    <div className="p-8">
       <div className="mb-4">
         <h1 className="text-xl font-bold">Todos los Profesores Registrados</h1>
         <p className="text-gray-600 font-mono">

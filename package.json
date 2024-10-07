@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/localizations": "^3.1.2",
+    "@clerk/nextjs": "^5.7.1",
     "@dicebear/collection": "^9.2.1",
     "@dicebear/core": "^9.2.1",
     "@fullcalendar/core": "^6.1.15",
@@ -43,6 +45,7 @@
     "@tanstack/react-table": "^8.20.1",
     "@types/three": "^0.168.0",
     "@uploadthing/react": "^6.7.2",
+    "aos": "3.0.0-beta.6",
     "axios": "^1.7.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

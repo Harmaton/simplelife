@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation";
-import { File, Link2, MessageCircle } from "lucide-react";
+import { File, Link2 } from "lucide-react";
 import { Banner } from "@/components/banner";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
-import { Input } from "@/components/ui/input";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -16,50 +15,40 @@ import {
 
 import { QueueListIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import { getChapter, getCourseById } from "@/app/actions/chapter";
+import { getChapter } from "@/app/actions/chapter";
 import { CommentTextarea } from "../_components/comment";
 import { YouTubePlayer } from "../_components/youtube-player";
+import { currentUser } from "@clerk/nextjs/server";
 
 const ChapterIdPage = async ({
   params,
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
-  
-  const dbcourse = await getCourseById(params.courseId);
+  const currentuser = await currentUser();
 
-
-
-  const userId = dbcourse?.teacherId;
-
-  if (!userId || userId === null) {
+  if (!currentuser) {
     return redirect("/");
   }
 
+  const user = await db.user.findUnique({
+    where: {
+      clerkId: currentuser.id,
+    },
+  });
 
-  const { chapter, course, attachments, nextChapter, userProgress, purchase } =
+  if (!user) {
+    return redirect("/");
+  }
+
+  const userId = user.id;
+
+  const { chapter, course, attachments, nextChapter, userProgress } =
     await getChapter({
       userId,
       chapterId: params.chapterId,
       courseId: params.courseId,
     });
-
-  const user = await db.user.findUnique({
-    where: {
-      clerkId: userId,
-    },
-    select: {
-      isStudent: true,
-    },
-  });
-
-  const teacher = await db.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  const isStudent = user?.isStudent;
 
   const allComments = await db.comment.findMany({
     where: {
@@ -67,16 +56,24 @@ const ChapterIdPage = async ({
     },
   });
 
-  if (!chapter) {
+  if (!chapter || !course.categoryId || !course.teacherId) {
     return redirect("/");
   }
 
-  if (!course.paymentLink) {
-    console.log("Free Course");
-  }
+  const purchase = await db.categoryPurchase.findMany({
+    where: {
+      userId: userId,
+      categoryId: course.categoryId,
+    },
+  });
 
-  const isLocked = !chapter.isFree || !isStudent;
-  const completeOnEnd = !userProgress?.isCompleted;
+  console.log("purchase -->", purchase);
+
+  const teacher = await db.user.findUnique({
+    where: {
+      clerkId: course.teacherId,
+    },
+  });
 
   return (
     <div>
@@ -84,62 +81,14 @@ const ChapterIdPage = async ({
         <Banner variant="success" label="Ya completaste este capítulo.." />
       )}
 
-      {!isStudent && (
-        // <OfferBanner
-        //   variant="warning"
-        //   label="Descubre los paquetes hechos a tu medida, hasta un 75% de descuento"
-        // />
-        <div>No student</div>
-      )}
-
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
         <div className="p-4">
-          {isStudent && chapter.youtubeLink ? (
+          {chapter.youtubeLink ? (
             <YouTubePlayer isLocked={false} videoId={chapter.youtubeLink} />
           ) : (
             <div className=" flex items-center justify-center">
-              <div className="flex mb-4 items-center justify-center h-auto rounded-2xl w-full ">
-                {/* <TextRevealCard
-                  text="Desbloquear una oferta especial!"
-                  revealText="Contacta con la profesora para un descuento exclusivo."
-                >
-                  <TextRevealCardTitle>
-                    Mejore su experiencia de aprendizaje con SimpleLife
-                  </TextRevealCardTitle>
-                  <TextRevealCardDescription>
-                    Descubre los secretos del éxito en tus cursos en SimpleLife.
-                    Llegar a con tu profesor usando el botón a continuación para
-                    solicitar información sobre un descuento especial.
-                  </TextRevealCardDescription>
-                </TextRevealCard> */}
-                Text Reveal
-              </div>
+              <div className="flex mb-4 items-center justify-center h-auto rounded-2xl w-full "></div>
             </div>
-          )}
-          {!isStudent && (
-            <>
-              <Card className="mt-4">
-                <CardHeader className="text-center">
-                  No eres un estudiante oficial, elige entre las siguientes
-                  opciones para ver el curso más a fondo
-                </CardHeader>
-                <div className="p-4 flex flex-row space-x-5">
-                  <h3>¿Quieres seguir aprendiendo?</h3>
-                  <Link href={`${course.whatsapp}`}>
-                    <Button className="bg-green-500">
-                      <MessageCircle className="mr-2 h-4 w-4" />
-                      Obtén 75% de descuento
-                    </Button>
-                  </Link>
-                  <Button
-                    variant={"ghost"}
-                    className="flex border border-orange-500  "
-                  >
-                    Pricing
-                  </Button>
-                </div>
-              </Card>
-            </>
           )}
         </div>
         <div>
@@ -168,7 +117,6 @@ const ChapterIdPage = async ({
                   />
                 )}
               </div>
-
               <div>
                 <p className="uppercase mb-2">{teacher?.nickname}</p>
                 <p className="font-serif text-left">
@@ -179,7 +127,7 @@ const ChapterIdPage = async ({
             </CardContent>
             <CardFooter>
               <Link
-                href={`https://www.simplelifeofficial.com/teachers/${teacher?.id}`}
+                href={`https://www.simplelifeofficial.com/tutors/${teacher?.id}`}
               >
                 <Button className="mr-4 text-blue-500 " variant={"ghost"}>
                   <Link2 className="mr-2 h-4 w-4" />
@@ -216,15 +164,6 @@ const ChapterIdPage = async ({
               <Separator />
             </>
           )}
-
-          {/* <div className="p-4">
-            {course.evaluationQuestions.map((quiz) => (
-              <div key={quiz.id}>
-                {quiz.text}
-                <Input placeholder="Ingrese su respuesta de evaluación aquí" />
-              </div>
-            ))}
-          </div> */}
 
           {userProgress?.isCompleted && (
             <>
@@ -273,7 +212,6 @@ const ChapterIdPage = async ({
                         </svg>
 
                         {/* <RatingInputButton courseId={params.courseId} /> */}
-
                       </div>
                     </div>
                   </div>

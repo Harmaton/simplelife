@@ -1,9 +1,5 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import TeacherCard from "./teacher-card";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import axios from "axios";
 import { User } from "@prisma/client";
 import Loadingpage from "@/components/loading-page";
 import { GetAllTutors } from "@/app/actions/user";
@@ -11,49 +7,37 @@ import Navbar from "@/components/landing-page/navbar";
 import Top from "@/components/top-page";
 import Link from "next/link";
 
-const queryClient = new QueryClient();
+// This function will be called at build time on the server-side.
+// It won't be called on client-side, so you can even do
+// direct database queries here
+async function getTeachers() {
+  try {
+    const teachers = await GetAllTutors();
+    return teachers;
+  } catch (error) {
+    console.error("Failed to fetch teachers:", error);
+    return [];
+  }
+}
 
-// Function to fetch teachers
-const fetchTeachers = async (): Promise<User[]> => {
-  const response = await GetAllTutors();
-  return response;
-};
+export default async function TeacherDirectory() {
+  const teachers = await getTeachers();
 
-const TeacherDirectory = () => {
-  const {
-    data: teachers = [],
-    isLoading,
-    isError,
-  } = useQuery<User[]>(["teachers"], fetchTeachers);
-
-  if (isLoading) {
-    <Loadingpage />;
+  if (!teachers) {
+    return <Loadingpage />;
   }
 
-  if (isError) {
-    <div>Error</div>;
-  }
-
-  const [currentPage, setCurrentPage] = useState(1);
   const teachersPerPage = 6;
-
-  const indexOfLastTeacher = currentPage * teachersPerPage;
-  const indexOfFirstTeacher = indexOfLastTeacher - teachersPerPage;
-  const currentTeachers = teachers.slice(
-    indexOfFirstTeacher,
-    indexOfLastTeacher
-  );
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(teachers.length / teachersPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const totalPages = Math.ceil(teachers.length / teachersPerPage);
 
   return (
     <>
       <Navbar />
-      <Top header={"Nuestros Educadores"} text={"Empoderando a los estudiantes con conocimiento y experiencia"} />
-      <div className="container m-2 mx-auto px-6 py-10 bg-gray-100">
+      <Top
+        header={"Nuestros Educadores"}
+        text={"Empoderando a los estudiantes con conocimiento y experiencia"}
+      />
+      <div className="container m-2 mx-auto p-6  bg-gray-100">
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-2">
             Un Equipo de Expertos Impulsado por la Excelencia
@@ -63,46 +47,33 @@ const TeacherDirectory = () => {
             experiencia y logros, colaboran para inspirar la innovación y
             ofrecer soluciones impactantes en la educación.
           </p>
-
           <Link
             href="/become-tutor"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-violet-500 transition-colors"
+            className="bg-blue-500 text-white p-2 rounded-full mt-4 hover:bg-violet-500 transition-colors"
           >
             Conviértete en tutora →
           </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentTeachers.map((teacher) => (
+          {teachers.slice(0, teachersPerPage).map((teacher) => (
             <TeacherCard teacher={teacher} key={teacher.id} {...teacher} />
           ))}
         </div>
+
+        {/* Pagination will need to be handled client-side or through separate pages */}
         <div className="flex justify-center mt-8">
-          {pageNumbers.map((number) => (
-            <button
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+            <Link
               key={number}
-              onClick={() => setCurrentPage(number)}
-              className={`mx-1 px-3 py-1 rounded ${
-                currentPage === number
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              href={`/teachers?page=${number}`}
+              className={`mx-1 px-3 py-1 rounded bg-gray-200 text-gray-700 hover:bg-gray-300`}
             >
               {number}
-            </button>
+            </Link>
           ))}
         </div>
       </div>
     </>
   );
-};
-
-const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TeacherDirectory />
-    </QueryClientProvider>
-  );
-};
-
-export default App;
+}
