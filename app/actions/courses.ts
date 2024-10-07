@@ -105,33 +105,50 @@ export type CourseWithProgressWithCategory = Course & {
   progress: number | null;
 };
 
-export async function getDashboardCourses(userId: string) {
+export async function getDashboardCourses(userId: string): Promise<{
+  completedCourses: CourseWithProgressWithCategory[];
+  coursesInProgress: CourseWithProgressWithCategory[];
+}> {
   try {
-    const purchasedCourses = await db.coursePurchase.findMany({
+    const categoryPurchases = await db.categoryPurchase.findMany({
       where: {
-        userId: userId,
+        userId: userId
       },
-      select: {
-        course: {
+      include: {
+        category: {
           include: {
-            category: true,
-            Chapter: {
-              where: {
-                isPublished: true,
+            Courses: {
+              include: {
+                category: true,
+                Chapter: {
+                  where: {
+                    isPublished: true,
+                  },
+                },
               },
             },
           },
         },
       },
     });
-    const courses = purchasedCourses.map(
-      (purchase) => purchase.course
-    ) as unknown as CourseWithProgressWithCategory[];
 
+    // Transform the data to match CourseWithProgressWithCategory
+    let courses = categoryPurchases.flatMap(purchase =>
+      purchase.category.Courses.map(course => ({
+        ...course,
+        chapters: course.Chapter, // Rename Chapter to chapters
+        progress: null, // Will be populated later
+      }))
+    ) as CourseWithProgressWithCategory[];
+
+    // Remove duplicates
+    courses = Array.from(new Set(courses.map(c => c.id)))
+      .map(id => courses.find(c => c.id === id)!);
+
+    // Get progress for each course
     for (let course of courses) {
       const progress = await getProgress(userId, course.id);
-
-      course["progress"] = progress;
+      course.progress = progress;
     }
 
     const completedCourses = courses.filter(
@@ -153,6 +170,7 @@ export async function getDashboardCourses(userId: string) {
     };
   }
 }
+
 
 export const getProgress = async (
   userId: string,

@@ -67,7 +67,7 @@ const ChapterIdPage = async ({
     },
   });
 
-  console.log("purchase -->", purchase);
+  // console.log("purchase -->", purchase);
 
   const teacher = await db.user.findUnique({
     where: {
