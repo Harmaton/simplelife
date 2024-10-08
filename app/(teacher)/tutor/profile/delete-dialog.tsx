@@ -15,10 +15,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { redirect, useRouter } from "next/navigation";
-import { deleteTeacherProfile } from "@/app/actions/user";
 
 
-export default function DeleteProfileDialog() {
+export default  function DeleteProfileDialog() {
     const router = useRouter()
   const handleDeleteProfile = async () => {
     // await deleteTeacherProfile();

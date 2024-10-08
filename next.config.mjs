@@ -14,6 +14,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'static.hotmart.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.clerk.com'
       }
     ],
   },

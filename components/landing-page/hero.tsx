@@ -77,7 +77,7 @@ const Hero: React.FC = () => {
   }
 
   function TeacherLogin() {
-    router.push("/tutor/profile");
+    router.push("/tutor/dashboard");
   }
 
   function exploreCoursesRoue() {

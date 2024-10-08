@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CircleArrowRight } from "lucide-react";
+import { ArrowUpRightFromSquare, CircleArrowRight } from "lucide-react";
 import { Select } from "@headlessui/react";
 import {
   checkIsTeacher,
@@ -90,6 +90,9 @@ export default function TutorRegForm({ userId }: { userId: string }) {
     checkRegistrationStatus();
     checkTeacherStatus();
   }, [email]);
+ console.log(email)
+  console.log("teacher", isTeacher);
+  console.log("registred", registered);
 
   async function onSubmit(data: FormValues) {
     setIsSubmitting(true);
@@ -128,8 +131,8 @@ export default function TutorRegForm({ userId }: { userId: string }) {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button className="bg-violet-500 text-white px-6 py-3 rounded-lg transition duration-300 flex items-center space-x-2 hover:bg-blue-500">
-          <span>Apply</span>
-          <CircleArrowRight />
+          <span>Aplicar</span>
+          <ArrowUpRightFromSquare className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -159,7 +162,10 @@ export default function TutorRegForm({ userId }: { userId: string }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>LinkedIn or Resume Website</FormLabel>
-                    <FormControl>
+                    <FormControl className="flex">
+                      <div className="mr-2 border ">
+                        <p >https://</p>
+                      </div>
                       <Input placeholder="https://..." {...field} />
                     </FormControl>
                     <FormMessage />

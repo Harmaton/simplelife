@@ -56,12 +56,11 @@ export async function checkIsTeacher(email: string) {
         isTeacher: true,
       },
     });
-
-    if (user === undefined || user === null) {
+    if (user) {
+      return user.isTeacher;
+    } else {
       return false;
     }
-
-    return user.isTeacher;
   } catch (error) {
     console.log(error);
     return false;
@@ -116,11 +115,6 @@ export async function getTeacherDeatails(email: string) {
         isTeacher: true,
       },
     });
-
-    if (!teacherDetails) {
-      return null;
-    }
-
     return teacherDetails;
   } catch (error) {
     return null;

@@ -11,12 +11,11 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
-import { auth } from "@/firebase";
-import { db } from "@/lib/db";
 import { updateUser } from "@/app/actions/user";
+import { useUser } from "@clerk/nextjs";
 
 export interface ImageTeacherProps {
-  teacherToEdit: User;
+  teacherToEdit: User
 }
 
 export const imgSchema = z.object({
@@ -30,11 +29,11 @@ export const updateImgSchema = imgSchema.extend({
 });
 
 export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
-  const user = auth.currentUser;
+  const user = useUser();
 
-  if (!user){
-    redirect('/login')
-  } 
+  if (!user.user) {
+    redirect("/");
+  }
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -44,11 +43,8 @@ export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
 
   const onSubmit = async (values: z.infer<typeof imgSchema>) => {
     try {
-
-    if(user.uid){
-      await updateUser( user.uid, values)
+      await updateUser(user.user.id, values);
       toast.success("Imagen Actualizada");
-    }
       toggleEdit();
       router.refresh();
     } catch {
@@ -106,5 +102,6 @@ export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
           />
         </div>
       )}
-    </div>)
-}
+    </div>
+  );
+};

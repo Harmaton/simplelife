@@ -41,19 +41,19 @@ const Dashboard = async () => {
         <StatCard
           icon={<Play className="text-orange-500" />}
           value={enrolledCourses.toString()}
-          label="Enrolled courses"
+          label="Mis cursos totales"
           bgColor="bg-orange-100"
         />
         <StatCard
           icon={<CheckSquare className="text-indigo-500" />}
           value={activeCourses.toString()}
-          label="Active courses"
+          label="Mis Cursos activados"
           bgColor="bg-indigo-100"
         />
         <StatCard
           icon={<Trophy className="text-green-500" />}
           value={completedCourses.toString()}
-          label="Completed courses"
+          label="Cursos completados"
           bgColor="bg-green-100"
         />
         <StatCard

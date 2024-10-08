@@ -16,11 +16,11 @@ import {
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import { teacherSchema, TeacherSchema } from "@/lib/validations/teacher";
-import { useAuth } from "@/providers/AuthProvider";
 import { getUserByUID, updateUser } from "@/app/actions/user";
+import { useUser } from "@clerk/nextjs";
 
 interface EditTeacherProps {
   teacherToEdit: User;
@@ -28,8 +28,12 @@ interface EditTeacherProps {
 
 export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
   const router = useRouter();
-  const { user } = useAuth();
+  const user = useUser();
   const [loading, setLoading] = useState(false);
+
+  if (!user.user) {
+    redirect("/");
+  }
 
   const form = useForm<TeacherSchema>({
     resolver: zodResolver(teacherSchema),
@@ -43,23 +47,17 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
       facebook: teacherToEdit.facebook || "",
       mail: teacherToEdit.mail || "",
       instagram: teacherToEdit.instagram || "",
-      profession:  teacherToEdit.profession || ""
+      profession: teacherToEdit.profession || "",
     },
   });
 
   const onSubmit = async (values: TeacherSchema) => {
-    if (!user) {
-      toast.error("No se ha iniciado sesión");
-      return;
-    }
-
     try {
       setLoading(true);
-      if (user) {
-        
-          await updateUser(teacherToEdit.email, values);
-          toast.success("Actualizada")
-      }
+
+      await updateUser(teacherToEdit.email, values);
+      toast.success("Actualizada");
+
       router.refresh();
       toast.success("Actualizada");
     } catch {

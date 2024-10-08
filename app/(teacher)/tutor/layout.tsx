@@ -28,41 +28,12 @@ import { toast } from "sonner";
 import { checkIsTeacher } from "@/app/actions/user";
 import LoadingPage from "@/components/loading-page";
 import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useUser();
   const [open, setOpen] = useState(false);
-  const [isTeacher, setTeacher] = useState(false);
-
-  useEffect(() => {
-    const checkTeacherstatus = async () => {
-      if (user.user?.emailAddresses[0].emailAddress) {
-        const status = await checkIsTeacher(
-          user.user?.emailAddresses[0].emailAddress
-        );
-        setTeacher(status);
-      }
-    };
-    checkTeacherstatus();
-  }, [user.user?.emailAddresses[0].emailAddress]);
-
-  if (!isTeacher) {
-    return (
-      <div className="flex flex-col items-center justify-center  border p-4 rounded-lg">
-        <div className="text-2xl mb-4 mt-4">🚫</div>
-        <h1 className="text-3xl font-bold mb-2">Acceso Denegado</h1>
-        <p className="text-lg">
-          Lo siento, no estás registrado como profesor. Aplica para convertirte
-          en tutor en la plataforma.
-        </p>
-        <Link href="/become-tutor" className="mt-4">
-          <Button>Aplicar</Button>
-        </Link>
-        <LoadingPage />
-      </div>
-    );
-  }
-
+ 
   const links = [
     {
       label: "Panel",

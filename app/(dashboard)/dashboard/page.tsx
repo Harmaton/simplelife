@@ -3,18 +3,12 @@ import { CheckCircle, Clock, Book, Code, Palette, Music } from "lucide-react";
 import { InfoCard } from "./_components/info-card";
 import { CoursesList } from "./_components/course-list";
 import {
-  CourseWithProgressWithCategory,
   getDashboardCourses,
 } from "@/app/actions/courses";
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { NewCourseCard } from "@/app/search/subcategory/course-card";
 
-interface CoursesState {
-  completedCourses: CourseWithProgressWithCategory[];
-  coursesInProgress: CourseWithProgressWithCategory[];
-}
 
 export default async function Dashboard() {
   const user = await currentUser();
@@ -26,6 +20,7 @@ export default async function Dashboard() {
   let dbuser = await db.user.findUnique({
     where: {
       clerkId: user.id,
+      email: user.emailAddresses[0].emailAddress,
     },
   });
 
@@ -42,9 +37,21 @@ export default async function Dashboard() {
     dbuser.id
   );
 
-  const courses = await db.course.findMany({
-    take: 4,
-  });
+  async function getRandomCourses(count = 4) {
+    // Get all courses
+    const allCourses = await db.course.findMany();
+  
+    // Shuffle the courses
+    const shuffledCourses = allCourses.sort(() => Math.random() - 0.5);
+  
+    // Take the first 'count' courses
+    const randomCourses = shuffledCourses.slice(0, count);
+  
+    return randomCourses;
+  }
+  
+  // Usage
+  const courses = await getRandomCourses(4);
 
   return (
     <div className="p-8">
@@ -56,8 +63,9 @@ export default async function Dashboard() {
       )}
 
       <div className="mt-4 text-sm text-muted-foreground">
-        Todos los cursos y certificaciones que pagues aparecerán aquí. Los
-        cursos terminados y en curso se rastrearán aquí.
+        <h1 className="font-semibold ">Tus cursos</h1>
+       <p className="text-sm"> Todos los cursos y certificaciones que pagues aparecerán aquí. Los
+        cursos terminados y en curso se rastrearán aquí. </p>
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
