@@ -15,21 +15,44 @@ export default async function TutorHero() {
     return <Loadingpage />;
   }
 
-  let dbuser = await db.user.findUnique({
-    where: {
-      clerkId: user?.id,
-      email: user?.emailAddresses[0].emailAddress,
-    },
-  });
+  const email = user?.emailAddresses[0].emailAddress;
 
-  if (!dbuser) {
-    dbuser = await db.user.create({
-      data: {
-        clerkId: user.id,
-        email: user?.emailAddresses[0].emailAddress,
-      },
+  let dbuser;
+  
+  try {
+    // First, try to find the user
+    dbuser = await db.user.findFirst({
+      where: {
+        OR: [
+          { clerkId: user.id },
+          { email: email }
+        ]
+      }
     });
+
+    // If user doesn't exist, create a new one
+    if (!dbuser) {
+      dbuser = await db.user.create({
+        data: {
+          clerkId: user.id,
+          email: email,
+        },
+      });
+    } else {
+      // If user exists but clerkId doesn't match, update it
+      if (dbuser.clerkId !== user.id) {
+        dbuser = await db.user.update({
+          where: { id: dbuser.id },
+          data: { clerkId: user.id }
+        });
+      }
+    }
+  } catch (error) {
+    console.error("Error handling user data:", error);
+    // You might want to add proper error handling here
+    return <div>Something went wrong. Please try again later.</div>;
   }
+
   return (
     <div className="container mx-auto px-4 py-2">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-2">
