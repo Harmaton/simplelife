@@ -12,11 +12,8 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-
-import { QueueListIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import { getChapter } from "@/app/actions/chapter";
-import { CommentTextarea } from "../_components/comment";
 import { YouTubePlayer } from "../_components/youtube-player";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -67,30 +64,63 @@ const ChapterIdPage = async ({
     },
   });
 
-  // console.log("purchase -->", purchase);
-
   const teacher = await db.user.findUnique({
     where: {
       clerkId: course.teacherId,
     },
   });
 
+  const hasPurchase = purchase.length > 0;
+  const now = new Date();
+
   return (
     <div>
       {userProgress?.isCompleted && (
-        <Banner variant="success" label="Ya completaste este capítulo.." />
+        <Banner variant="success" label="Ya completaste este capítulo." />
       )}
 
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
         <div className="p-4">
-          {chapter.youtubeLink ? (
-            <YouTubePlayer isLocked={false} videoId={chapter.youtubeLink} />
+          {hasPurchase ? (
+            chapter.youtubeLink ? (
+              <YouTubePlayer isLocked={false} videoId={chapter.youtubeLink} />
+            ) : (
+              <div className="flex items-center justify-center">
+                <div className="flex mb-4 items-center justify-center h-auto rounded-2xl w-full">
+                  No hay video disponible para este capítulo.
+                </div>
+              </div>
+            )
           ) : (
-            <div className=" flex items-center justify-center">
-              <div className="flex mb-4 items-center justify-center h-auto rounded-2xl w-full "></div>
+            <div className="flex items-center justify-center bg-red-100 p-4 rounded-md">
+              <svg
+                className="w-6 h-6 text-red-500 mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span>
+                Paga para acceder al descuento en las próximas 24 horas.
+              </span>
             </div>
           )}
         </div>
+
+        {hasPurchase && (
+          <div className="mt-4 text-center">
+            <Link href={chapter.videoUrl || "#"}>
+              <Button className="bg-blue-500 text-white">
+                Unirse a la clase en Zoom
+              </Button>
+            </Link>
+          </div>
+        )}
+
         <div>
           <div className="p-4 flex flex-col md:flex-row items-center justify-between">
             <h2 className="text-2xl font-semibold mb-2 uppercase">
@@ -143,93 +173,6 @@ const ChapterIdPage = async ({
               <div className="p-4 ">{course.prerequisites}</div>
             </div>
           </Card>
-
-          {!!attachments.length && (
-            <>
-              <Separator />
-
-              <div className="p-4">
-                {attachments.map((attachment) => (
-                  <a
-                    href={attachment.url}
-                    target="_blank"
-                    key={attachment.id}
-                    className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
-                  >
-                    <File />
-                    <p className="line-clamp-1">{attachment.name}</p>
-                  </a>
-                ))}
-              </div>
-              <Separator />
-            </>
-          )}
-
-          {userProgress?.isCompleted && (
-            <>
-              <Card className="p-4 ">
-                <div className="max-w-xl mx-auto mt-8">
-                  <div className="mb-4">
-                    <h2 className="text-2xl font-semibold mb-2">
-                      {" "}
-                      Comentarios
-                    </h2>
-
-                    {allComments.map((comment) => (
-                      <div key={comment.id} className=" p-4 rounded-md mb-2">
-                        <div className="bg-gray-100 p-4 rounded-md">
-                          {comment.content}
-                        </div>
-                        <span className="m-2 text-blue-500 p-2 ">
-                          {comment.email}
-                        </span>
-                      </div>
-                    ))}
-                    {allComments.length == 0 && (
-                      <div className="bg-gray-100 p-4 rounded-md">
-                        Aún no hay comentarios sobre este curso.
-                      </div>
-                    )}
-                    <div className="mt-2 mb-2 p-2 m-auto">
-                      <CommentTextarea courseId={params.courseId} />
-                    </div>
-                  </div>
-
-                  <div className="space-x-5">
-                    <h2 className="text-2xl font-semibold mb-2">
-                      Clasificación
-                    </h2>
-                    <div className="flex items-center space-x-5">
-                      <span className="text-3xl font-bold mr-2">
-                        {course.averageRating}
-                      </span>
-                      <div className="flex">
-                        <svg
-                          className="w-6 h-6 fill-current text-yellow-500 mr-4"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-13h4v6h-1v-4h-3v4H9v-6z" />
-                        </svg>
-
-                        {/* <RatingInputButton courseId={params.courseId} /> */}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-              <Separator className="m-4" />
-              <Card className="mt-4 p-2 flex flex-row ">
-                <div className="flex flex-row m-auto">
-                  <Link href={`${chapter.googleFormLink}`}>
-                    <Button className="bg-red-500 animate animate-pulse">
-                      <QueueListIcon className="w-4 h-4 mr-2" />
-                      Rellena este formulario como evaluación del curso
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            </>
-          )}
         </div>
       </div>
     </div>
