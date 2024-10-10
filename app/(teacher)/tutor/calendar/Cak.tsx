@@ -16,19 +16,18 @@ const Calendar: React.FC = () => {
   const [currentEvents, setCurrentEvents] = useState<ChapterWithCountdown[]>(
     []
   );
-  const user = useUser();
-  const email = user.user?.emailAddresses[0].emailAddress;
-  if (!email) {
-    return <div>Sign Up</div>;
-  }
+  const { user } = useUser();
   useEffect(() => {
-    async function fetchEvents(email: string) {
-      const chapters = await getMyLessons(email);
-      setCurrentEvents(chapters);
+    async function fetchEvents() {
+      const email = user?.emailAddresses[0]?.emailAddress;
+      if (email) {
+        const chapters = await getMyLessons(email);
+        setCurrentEvents(chapters);
+      }
     }
 
-    fetchEvents(email);
-  }, [email]);
+    fetchEvents();
+  }, [user]);
 
   return (
     <div>
