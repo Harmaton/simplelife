@@ -14,11 +14,8 @@ export default async function ProfilePage() {
   if (!user) {
     redirect("/");
   }
-
   const email = user.emailAddresses[0].emailAddress;
   const teacherdata = await getTeacherDeatails(email);
-
-  console.log(teacherdata)
 
   if(!teacherdata){
     return <div>No teacher details</div>

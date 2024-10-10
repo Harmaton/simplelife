@@ -67,10 +67,10 @@ export default async function TutorHero() {
             internacional.
           </p>
           {!dbuser.isTeacher && !dbuser.isRegistered ? (
-            <TutorRegForm userId={user.id} />
+            <TutorRegForm  />
           ) : (
             <div>
-              <Link href={"/tutor/profile"}>
+              <Link href={"/tutor/dashboard"}>
                 <Button className="bg-indigo-500">Ir a mi perfil</Button>
               </Link>
             </div>

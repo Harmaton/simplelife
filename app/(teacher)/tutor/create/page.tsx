@@ -49,8 +49,6 @@ const CreatePage = () => {
         return null;
       }
       const response = await createCourse(values, email);
-
-      console.log(response);
       if (response) {
         router.push(`/tutor/courses/${response.id}`);
         toast.success("Curso Creado");

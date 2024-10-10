@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { currentUser } from "@clerk/nextjs/server";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -210,7 +211,6 @@ export async function submitTutorRegistration({
   description,
   whatsappFull,
   linkedin,
-  userId,
   email,
 }: {
   name: string;
@@ -218,12 +218,17 @@ export async function submitTutorRegistration({
   description: string;
   whatsappFull: string;
   linkedin: string;
-  userId: string;
   email: string;
 }) {
   try {
+    const clerkuser = await currentUser();
+
+    if (!clerkuser) {
+      return { success: false, message: "Failed to Request Approval" };
+    }
+
     const user = await db.user.upsert({
-      where: { clerkId: userId },
+      where: { email: email },
       update: {
         nickname: name,
         linkedIn: linkedin,
@@ -233,7 +238,7 @@ export async function submitTutorRegistration({
         isRegistered: true,
       },
       create: {
-        clerkId: userId,
+        clerkId: clerkuser.id,
         nickname: name,
         linkedIn: linkedin,
         whatsapp: whatsappFull,
@@ -314,7 +319,6 @@ export async function updateUser(email: string, values: any) {
         ...values,
       },
     });
-    console.log(user.image)
     return { success: true, user };
   } catch (error) {
     console.log("[Update User Image]", error);

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, BookCopy, Eye, LayoutDashboard, Video } from "lucide-react";
+import { ArrowLeft, BookCopy, Camera, Eye, LayoutDashboard, Video } from "lucide-react";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
@@ -11,6 +11,8 @@ import { ChapterActions } from "./_components/chapter-actions";
 import { EvaluationsForm } from "./_components/evaluation";
 import { ChapterYoutubeForm } from "./_components/youtube-link";
 import { auth } from "@clerk/nextjs/server";
+import { FaMeetup } from "react-icons/fa";
+import { VideoUrlForm } from "./_components/video-url";
 
 const ChapterIdPage = async ({
   params,
@@ -36,7 +38,8 @@ const ChapterIdPage = async ({
   const requiredFields = [
     chapter.title,
     chapter.description,
-    chapter.youtubeLink
+    chapter.youtubeLink,
+    chapter.videoUrl
   ];
 
   const totalFields = requiredFields.length;
@@ -124,7 +127,7 @@ const ChapterIdPage = async ({
             />
           </div>
         </div>
-        <div>
+        <div className="space-y-4">
           <div className="flex items-center gap-x-2">
             <IconBadge icon={Video} />
             <h2 className="text-xl">Añadir un vídeo</h2>
@@ -135,12 +138,16 @@ const ChapterIdPage = async ({
             chapterId={params.chapterId}
             courseId={params.courseId}
           />
-          {/* <AttachmentForm initialData={chapterone} courseId={params.courseId} chapterId={params.chapterId}   /> */}
-          {/* <EvaluationsForm
+         <div className="flex items-center mt-4 gap-x-2">
+            <IconBadge icon={Camera} />
+            <h2 className="text-xl">Enlace de Zoom en vivo</h2>
+          </div>
+
+          <VideoUrlForm
             initialData={chapter}
-            courseId={params.courseId}
             chapterId={params.chapterId}
-          /> */}
+            courseId={params.courseId}
+          />
         </div>
       </div>
     </div>

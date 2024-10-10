@@ -2,6 +2,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -109,9 +110,9 @@ model CalendarEvent {
 model Category {
   id            String             @id @default(uuid())
   name          String             @unique
-  productCode   String ?             
+  productCode   String?
   imageUrl      String?            @db.Text()
-  isPaid  Boolean @default(false)
+  isPaid        Boolean            @default(false)
   SubCategories SubCategory[]
   Courses       Course[]
   purchases     CategoryPurchase[]
@@ -119,16 +120,18 @@ model Category {
 }
 
 model Chapter {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  videoUrl    String?
-  position    Int
-  isPublished Boolean  @default(false)
-  courseId    String
-  youtubeLink String?
+  id             String  @id @default(uuid())
+  title          String
+  description    String?
+  videoUrl       String?
+  position       Int
+  isPublished    Boolean @default(false)
+  courseId       String
+  youtubeLink    String?
   googleFormLink String?
-  isFree Boolean @default(false)
+  isFree         Boolean @default(false)
+
+  isTaught Boolean @default(false)
 
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   userProgress UserProgress[]
@@ -208,7 +211,7 @@ model Course {
   createdAt      DateTime     @default(now())
   updatedAt      DateTime
   categoryId     String?
-  
+
   category       Category?        @relation(fields: [categoryId], references: [id])
   CoursePurchase CoursePurchase[]
   Chapter        Chapter[]
@@ -417,7 +420,7 @@ model UserProgress {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@unique([userId, chapterId])
   @@index([chapterId])
@@ -502,7 +505,7 @@ model SubCategoryPurchase {
 
 model CategoryPurchase {
   id         String @id @default(uuid())
-  userId     String 
+  userId     String
   user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   categoryId String
 
@@ -532,46 +535,46 @@ model PackPurchase {
 }
 
 model Allpurchase {
-  id           String   @id @default(uuid())
-  userId       String
-  productId    Int 
-  productUcode String 
-  productName  String
-  buyerEmail   String
-  price        Int
-  checkoutCountry String ?
-  paymentType String ?
-  buyerName String ?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  productId       Int
+  productUcode    String
+  productName     String
+  buyerEmail      String
+  price           Int
+  checkoutCountry String?
+  paymentType     String?
+  buyerName       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
-model CancelledPurchase{
-   id           String   @id @default(uuid())
-  userId       String
-  productId    Int 
-  productUcode String 
-  productName  String
-  buyerEmail   String
-  price        Int
-  checkoutCountry String ?
-  paymentType String ?
-  buyerName String ?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+model CancelledPurchase {
+  id              String   @id @default(uuid())
+  userId          String
+  productId       Int
+  productUcode    String
+  productName     String
+  buyerEmail      String
+  price           Int
+  checkoutCountry String?
+  paymentType     String?
+  buyerName       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model ApprovedPurchase {
-    id           String   @id @default(uuid())
-  userId       String
-  productId    Int 
-  productUcode String 
-  productName  String
-  buyerEmail   String
-  price        Int
-  checkoutCountry String ?
-  paymentType String ?
-  buyerName String ?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  productId       Int
+  productUcode    String
+  productName     String
+  buyerEmail      String
+  price           Int
+  checkoutCountry String?
+  paymentType     String?
+  buyerName       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

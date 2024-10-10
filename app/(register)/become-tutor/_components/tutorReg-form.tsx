@@ -49,7 +49,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function TutorRegForm({ userId }: { userId: string }) {
+export default function TutorRegForm() {
   const [dialogOpen, setDialogOpen] = useState(true);
   const [registered, setRegistered] = useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
@@ -90,7 +90,7 @@ export default function TutorRegForm({ userId }: { userId: string }) {
     checkRegistrationStatus();
     checkTeacherStatus();
   }, [email]);
- console.log(email)
+  console.log(email);
   console.log("teacher", isTeacher);
   console.log("registred", registered);
 
@@ -108,7 +108,6 @@ export default function TutorRegForm({ userId }: { userId: string }) {
         description: data.description,
         whatsappFull,
         linkedin: data.linkedin,
-        userId,
         email,
       });
 
@@ -164,7 +163,7 @@ export default function TutorRegForm({ userId }: { userId: string }) {
                     <FormLabel>LinkedIn or Resume Website</FormLabel>
                     <FormControl className="flex">
                       <div className="mr-2 border ">
-                        <p >https://</p>
+                        <p>https://</p>
                       </div>
                       <Input placeholder="https://..." {...field} />
                     </FormControl>
