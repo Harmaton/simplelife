@@ -57,26 +57,26 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     },
     {
-      label: "Programar Clases",
+      label: "Calendario y Tareas",
       href: "/tutor/calendar",
       icon: (
         <Calendar className="text-purple-500 dark:text-purple-400 h-5 w-5 flex-shrink-0" />
       ),
     },
-    {
-      label: "Sesiones de Mentoría",
-      href: "/tutor/mentor",
-      icon: (
-        <Users className="text-teal-500 dark:text-teal-400 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Meditación",
-      href: "/tutor/meditation",
-      icon: (
-        <Locate className="text-yellow-500 dark:text-yellow-400 h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    // {
+    //   label: "Sesiones de Mentoría",
+    //   href: "/tutor/mentor",
+    //   icon: (
+    //     <Users className="text-teal-500 dark:text-teal-400 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
+    // {
+    //   label: "Meditación",
+    //   href: "/tutor/meditation",
+    //   icon: (
+    //     <Locate className="text-yellow-500 dark:text-yellow-400 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
   ];
 
   const handleSignOut = async () => {

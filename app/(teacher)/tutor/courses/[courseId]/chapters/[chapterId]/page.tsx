@@ -1,6 +1,14 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, BookCopy, Camera, Eye, LayoutDashboard, Video } from "lucide-react";
+import {
+  ArrowLeft,
+  BookCopy,
+  Calendar,
+  Camera,
+  Eye,
+  LayoutDashboard,
+  Video,
+} from "lucide-react";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
@@ -8,11 +16,11 @@ import { ChapterTitleForm } from "./_components/chapter-title-form";
 import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 import { ChapterAccessForm } from "./_components/chapter-access-form";
 import { ChapterActions } from "./_components/chapter-actions";
-import { EvaluationsForm } from "./_components/evaluation";
 import { ChapterYoutubeForm } from "./_components/youtube-link";
 import { auth } from "@clerk/nextjs/server";
-import { FaMeetup } from "react-icons/fa";
 import { VideoUrlForm } from "./_components/video-url";
+import { ChapterLiveTime } from "./_components/chapter-leeson-time";
+import { ChapterLiveDay } from "./_components/chapter-day";
 
 const ChapterIdPage = async ({
   params,
@@ -39,7 +47,9 @@ const ChapterIdPage = async ({
     chapter.title,
     chapter.description,
     chapter.youtubeLink,
-    chapter.videoUrl
+    chapter.videoUrl,
+    chapter.LiveDay,
+    chapter.liveTime
   ];
 
   const totalFields = requiredFields.length;
@@ -138,12 +148,35 @@ const ChapterIdPage = async ({
             chapterId={params.chapterId}
             courseId={params.courseId}
           />
-         <div className="flex items-center mt-4 gap-x-2">
+          <div className="flex items-center mt-4 gap-x-2">
             <IconBadge icon={Camera} />
             <h2 className="text-xl">Enlace de Zoom en vivo</h2>
           </div>
 
           <VideoUrlForm
+            initialData={chapter}
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+          />
+          <div className="flex items-center mt-4 gap-x-2">
+            <IconBadge icon={Calendar} />
+            <h2 className="text-xl">Día de transmisión de lecciones por Zoom</h2>
+          </div>
+
+          <ChapterLiveDay
+            initialData={chapter}
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+          />
+
+          <div className="flex items-center mt-4 gap-x-2">
+            <IconBadge icon={Camera} />
+            <h2 className="text-xl">
+              Hora de transmisión de la lección por Zoom
+            </h2>
+          </div>
+
+          <ChapterLiveTime
             initialData={chapter}
             chapterId={params.chapterId}
             courseId={params.courseId}

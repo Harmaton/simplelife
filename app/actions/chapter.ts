@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { currentUser } from "@clerk/nextjs/server";
 import { Attachment, Chapter } from "@prisma/client";
 
 interface GetChapterProps {
@@ -41,7 +42,7 @@ export const getChapter = async ({
         averageRating: true,
         googleFormLink: true,
         categoryId: true,
-        teacherId: true
+        teacherId: true,
       },
     });
 
@@ -58,7 +59,6 @@ export const getChapter = async ({
 
     let attachments: Attachment[] = [];
     let nextChapter: Chapter | null = null;
-
 
     if (chapter.isFree) {
       nextChapter = await db.chapter.findFirst({
@@ -89,7 +89,7 @@ export const getChapter = async ({
       course,
       attachments,
       nextChapter,
-      userProgress
+      userProgress,
     };
   } catch (error) {
     console.log("[GET_CHAPTER]", error);
@@ -119,5 +119,59 @@ export async function updateChapterTitle(chapterId: string, title: string) {
   } catch (error) {
     console.log(error);
     return { success: true, message: "Error" };
+  }
+}
+
+export interface ChapterWithCountdown extends Chapter {
+  countdown: number;
+}
+
+export async function getMyLessons(): Promise<ChapterWithCountdown[]> {
+  try {
+    const user = await currentUser();
+    if (!user) {
+      return [];
+    }
+
+    const dbuser = await db.user.findUnique({
+      where: {
+        email: user.emailAddresses[0].emailAddress,
+      },
+    });
+
+    if (!dbuser) {
+      return [];
+    }
+
+    const courses = await db.course.findMany({
+      where: {
+        teacherId: dbuser.id,
+      },
+      select: {
+        Chapter: {
+          where: {
+            LiveDay: {
+              gte: new Date(),
+            },
+          },
+        },
+      },
+    });
+
+    const chapters = courses.flatMap(course => course.Chapter);
+
+    const sortedChapters = chapters
+      .filter(chapter => chapter.LiveDay !== null)
+      .sort((a, b) => (a.LiveDay as Date).getTime() - (b.LiveDay as Date).getTime());
+
+    const chaptersWithCountdown = sortedChapters.map(chapter => ({
+      ...chapter,
+      countdown: Math.ceil(((chapter.LiveDay as Date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+    }));
+
+    return chaptersWithCountdown;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
 }
