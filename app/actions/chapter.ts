@@ -122,16 +122,15 @@ export async function updateChapterTitle(chapterId: string, title: string) {
   }
 }
 
-export async function getMyLessons() {
-  try {
-    const user = await currentUser();
-    if (!user) {
-      return [];
-    }
+export interface ChapterWithCountdown extends Chapter {
+  countdown: number;
+}
 
+export async function getMyLessons(email: string): Promise<ChapterWithCountdown[]> {
+  try {
     const dbuser = await db.user.findUnique({
       where: {
-        email: user.emailAddresses[0].emailAddress,
+        email: email,
       },
     });
 
@@ -160,9 +159,12 @@ export async function getMyLessons() {
       .filter(chapter => chapter.LiveDay !== null)
       .sort((a, b) => (a.LiveDay as Date).getTime() - (b.LiveDay as Date).getTime());
 
+    const chaptersWithCountdown = sortedChapters.map(chapter => ({
+      ...chapter,
+      countdown: Math.ceil(((chapter.LiveDay as Date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+    }));
 
-
-    return sortedChapters
+    return chaptersWithCountdown;
   } catch (error) {
     console.log(error);
     return [];

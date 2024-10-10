@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  formatDate
-} from "@fullcalendar/core";
+import { formatDate } from "@fullcalendar/core";
 import esLocale from "@fullcalendar/core/locales/es";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -11,19 +9,26 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import Interaction, { DropArg } from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import { Chapter } from "@prisma/client";
-import {  getMyLessons } from "@/app/actions/chapter";
+import { ChapterWithCountdown, getMyLessons } from "@/app/actions/chapter";
+import { useUser } from "@clerk/nextjs";
 
 const Calendar: React.FC = () => {
-  const [currentEvents, setCurrentEvents] = useState<Chapter[]>([]);
-
+  const [currentEvents, setCurrentEvents] = useState<ChapterWithCountdown[]>(
+    []
+  );
+  const user = useUser();
+  const email = user.user?.emailAddresses[0].emailAddress;
+  if (!email) {
+    return <div>Sign Up</div>;
+  }
   useEffect(() => {
-    async function fetchEvents() {
-      const chapters = await getMyLessons();
+    async function fetchEvents(email: string) {
+      const chapters = await getMyLessons(email);
       setCurrentEvents(chapters);
     }
 
-    fetchEvents();
-  }, []);
+    fetchEvents(email);
+  }, [email]);
 
   return (
     <div>
@@ -47,10 +52,10 @@ const Calendar: React.FC = () => {
                 >
                   <div key={event.id} className="flex items-center space-x-4">
                     <h3>{event.title}</h3>
-                    {/* <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500">
                       {event.countdown} day{event.countdown !== 1 ? "s" : ""}{" "}
                       until live
-                    </span> */}
+                    </span>
                   </div>
                   <br />
                   <label className="text-slate-950">
