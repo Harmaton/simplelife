@@ -23,10 +23,7 @@ export default async function TutorHero() {
     // First, try to find the user
     dbuser = await db.user.findFirst({
       where: {
-        OR: [
-          { clerkId: user.id },
-          { email: email }
-        ]
+          email: email 
       }
     });
 
@@ -38,6 +35,7 @@ export default async function TutorHero() {
           email: email,
         },
       });
+      
     } else {
       // If user exists but clerkId doesn't match, update it
       if (dbuser.clerkId !== user.id) {

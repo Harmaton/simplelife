@@ -43,7 +43,7 @@ export const ImageForm = ({ teacherToEdit }: ImageTeacherProps) => {
 
   const onSubmit = async (values: z.infer<typeof imgSchema>) => {
     try {
-      await updateUser(user.user.id, values);
+      await updateUser(user.user.emailAddresses[0].emailAddress, values);
       toast.success("Imagen Actualizada");
       toggleEdit();
       router.refresh();

@@ -304,16 +304,17 @@ export async function DisApproveTeacher(teacherId: string) {
 //   }
 // }
 
-export async function updateUser(uid: string, values: any) {
+export async function updateUser(email: string, values: any) {
   try {
     const user = await db.user.update({
       where: {
-        email: uid,
+        email: email,
       },
       data: {
         ...values,
       },
     });
+    console.log(user.image)
     return { success: true, user };
   } catch (error) {
     console.log("[Update User Image]", error);

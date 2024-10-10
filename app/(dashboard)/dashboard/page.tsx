@@ -19,7 +19,6 @@ export default async function Dashboard() {
 
   let dbuser = await db.user.findUnique({
     where: {
-      clerkId: user.id,
       email: user.emailAddresses[0].emailAddress,
     },
   });

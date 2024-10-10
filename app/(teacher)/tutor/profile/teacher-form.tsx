@@ -14,13 +14,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { redirect, useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import { teacherSchema, TeacherSchema } from "@/lib/validations/teacher";
-import { getUserByUID, updateUser } from "@/app/actions/user";
-import { useUser } from "@clerk/nextjs";
+import {  updateUser } from "@/app/actions/user";
 
 interface EditTeacherProps {
   teacherToEdit: User;
@@ -28,12 +26,8 @@ interface EditTeacherProps {
 
 export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
   const router = useRouter();
-  const user = useUser();
-  const [loading, setLoading] = useState(false);
 
-  if (!user.user) {
-    redirect("/");
-  }
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<TeacherSchema>({
     resolver: zodResolver(teacherSchema),
@@ -66,10 +60,6 @@ export default function EditTeacherPage({ teacherToEdit }: EditTeacherProps) {
       setLoading(false);
     }
   };
-
-  if (!user) {
-    return <div>No se ha iniciado sesión</div>;
-  }
 
   return (
     <>
