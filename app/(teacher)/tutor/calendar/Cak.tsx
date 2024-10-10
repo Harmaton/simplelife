@@ -11,10 +11,10 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import Interaction, { DropArg } from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import { Chapter } from "@prisma/client";
-import { ChapterWithCountdown, getMyLessons } from "@/app/actions/chapter";
+import {  getMyLessons } from "@/app/actions/chapter";
 
 const Calendar: React.FC = () => {
-  const [currentEvents, setCurrentEvents] = useState<ChapterWithCountdown[]>([]);
+  const [currentEvents, setCurrentEvents] = useState<Chapter[]>([]);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -47,10 +47,10 @@ const Calendar: React.FC = () => {
                 >
                   <div key={event.id} className="flex items-center space-x-4">
                     <h3>{event.title}</h3>
-                    <span className="text-sm text-gray-500">
+                    {/* <span className="text-sm text-gray-500">
                       {event.countdown} day{event.countdown !== 1 ? "s" : ""}{" "}
                       until live
-                    </span>
+                    </span> */}
                   </div>
                   <br />
                   <label className="text-slate-950">

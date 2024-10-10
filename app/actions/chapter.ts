@@ -122,11 +122,7 @@ export async function updateChapterTitle(chapterId: string, title: string) {
   }
 }
 
-export interface ChapterWithCountdown extends Chapter {
-  countdown: number;
-}
-
-export async function getMyLessons(): Promise<ChapterWithCountdown[]> {
+export async function getMyLessons() {
   try {
     const user = await currentUser();
     if (!user) {
@@ -164,12 +160,9 @@ export async function getMyLessons(): Promise<ChapterWithCountdown[]> {
       .filter(chapter => chapter.LiveDay !== null)
       .sort((a, b) => (a.LiveDay as Date).getTime() - (b.LiveDay as Date).getTime());
 
-    const chaptersWithCountdown = sortedChapters.map(chapter => ({
-      ...chapter,
-      countdown: Math.ceil(((chapter.LiveDay as Date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
-    }));
 
-    return chaptersWithCountdown;
+
+    return sortedChapters
   } catch (error) {
     console.log(error);
     return [];
