@@ -8,18 +8,14 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { useState } from "react";
-import { IconBrandTabler } from "@tabler/icons-react";
+import { IconBrandTabler, IconCertificate2 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
-  BellDot,
   CalendarCheck,
-  CalendarCog,
   Goal,
   Home,
-  ListVideoIcon,
-  LogOut,
-  TicketSlash,
+
 } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import { FaMoneyBill } from "react-icons/fa";
@@ -47,40 +43,40 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     },
     {
-      label: "Horario del curso",
+      label: "Mi horario",
       href: "/dashboard/schedule",
       icon: (
         <CalendarCheck className="text-green-500 dark:text-green-400 h-5 w-5 flex-shrink-0" />
       ),
     },
+    // {
+    //   label: "Entradas de clase",
+    //   href: "/dashboard/tickets",
+    //   icon: (
+    //     <ListVideoIcon className="text-red-500 dark:text-red-400 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
     {
-      label: "Entradas de clase",
-      href: "/dashboard/tickets",
+      label: "Mis certificados",
+      href: "/dashboard/certificates",
       icon: (
-        <ListVideoIcon className="text-red-500 dark:text-red-400 h-5 w-5 flex-shrink-0" />
+        <IconCertificate2 className="text-purple-500 dark:text-purple-400 h-5 w-5 flex-shrink-0" />
       ),
     },
-    {
-      label: "Calendario de tutorías",
-      href: "/dashboard/free-mentoring",
-      icon: (
-        <CalendarCog className="text-purple-500 dark:text-purple-400 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Eventos",
-      href: "/dashboard/inperson-events",
-      icon: (
-        <TicketSlash className="text-orange-500 dark:text-orange-400 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Meditación",
-      href: "/dashboard/meditation",
-      icon: (
-        <BellDot className="text-yellow-500 dark:text-yellow-400 h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    // {
+    //   label: "Eventos",
+    //   href: "/dashboard/inperson-events",
+    //   icon: (
+    //     <TicketSlash className="text-orange-500 dark:text-orange-400 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
+    // {
+    //   label: "Meditación",
+    //   href: "/dashboard/meditation",
+    //   icon: (
+    //     <BellDot className="text-yellow-500 dark:text-yellow-400 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
     {
       label: "Teillen Team",
       href: "https://teilenteam.com/",

@@ -22,7 +22,12 @@ export default function Page() {
 
       const now = new Date();
       const today = now.setHours(0, 0, 0, 0);
-      const yesterday = new Date(now.setDate(now.getDate() - 1)).setHours(0, 0, 0, 0);
+      const yesterday = new Date(now.setDate(now.getDate() - 1)).setHours(
+        0,
+        0,
+        0,
+        0
+      );
 
       // Count users signed in today
       const signedInToday = fetchedUsers.filter(
@@ -42,7 +47,8 @@ export default function Page() {
 
       // Check if there's an increase in teachers in the last 24 hours
       const teachersYesterday = fetchedUsers.filter(
-        (user) => user.isTeacher === true && new Date(user.createdAt) < new Date(today)
+        (user) =>
+          user.isTeacher === true && new Date(user.createdAt) < new Date(today)
       ).length;
       setTeacherIncrease(teachers.length > teachersYesterday);
 
@@ -55,16 +61,25 @@ export default function Page() {
     fetchUsers();
   }, []);
 
-  const StatBox = ({ title, value, showTrend }: {title: string, value: number, showTrend: boolean}) => (
+  const StatBox = ({
+    title,
+    value,
+    showTrend,
+  }: {
+    title: string;
+    value: number;
+    showTrend: boolean;
+  }) => (
     <div className="bg-white shadow rounded-lg p-4">
       <h2 className="text-lg font-semibold mb-2">{title}</h2>
       <div className="flex justify-between">
         <p className="text-3xl font-bold">{value}</p>
-        
+
         {showTrend ? (
           <TrendingUp className="ml-2 text-blue-500" size={12} />
-        ) : <Ruler className="ml-2 text-blue-500" size={12} /> }
-
+        ) : (
+          <Ruler className="ml-2 text-blue-500" size={12} />
+        )}
       </div>
     </div>
   );
@@ -79,10 +94,26 @@ export default function Page() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatBox title="Total de Usuarios" value={users.length} showTrend={userIncrease} />
-        <StatBox title="Registros de Hoy" value={todaySignIns} showTrend={todaySignIns > 0} />
-        <StatBox title="Total de Profesores" value={totalTeachers} showTrend={teacherIncrease} />
-        <StatBox title="Profesores en Revisión" value={teachersAwaitingReview} showTrend={false} />
+        <StatBox
+          title="Total de Usuarios"
+          value={users.length}
+          showTrend={userIncrease}
+        />
+        <StatBox
+          title="Registros de Hoy"
+          value={todaySignIns}
+          showTrend={todaySignIns > 0}
+        />
+        <StatBox
+          title="Total de Profesores"
+          value={totalTeachers}
+          showTrend={teacherIncrease}
+        />
+        <StatBox
+          title="Profesores en Revisión"
+          value={teachersAwaitingReview}
+          showTrend={false}
+        />
       </div>
       <DataTable columns={columns} data={users} />
     </div>
