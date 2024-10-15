@@ -35,6 +35,10 @@ export const POST = async (req: Request) => {
     // Handle different event types
     switch (event) {
       case "PURCHASE_COMPLETE":
+        // await updateSaleAndAccess(data);
+        console.log('complete')
+        break;
+        case "PURCHASE_APPROVED":
         await updateSaleAndAccess(data);
         break;
       case "PURCHASE_CANCELED":
