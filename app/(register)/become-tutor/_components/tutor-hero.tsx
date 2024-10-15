@@ -16,14 +16,13 @@ export default async function TutorHero() {
   }
 
   const email = user?.emailAddresses[0].emailAddress;
-
   let dbuser;
-  
+
   try {
     // First, try to find the user
     dbuser = await db.user.findFirst({
       where: {
-          email: email 
+        email: email
       }
     });
 
@@ -35,7 +34,6 @@ export default async function TutorHero() {
           email: email,
         },
       });
-      
     } else {
       // If user exists but clerkId doesn't match, update it
       if (dbuser.clerkId !== user.id) {
@@ -47,7 +45,6 @@ export default async function TutorHero() {
     }
   } catch (error) {
     console.error("Error handling user data:", error);
-    // You might want to add proper error handling here
     return <div>Something went wrong. Please try again later.</div>;
   }
 
@@ -67,20 +64,19 @@ export default async function TutorHero() {
             internacional.
           </p>
           {!dbuser.isTeacher && !dbuser.isRegistered ? (
-            <TutorRegForm  />
+            <TutorRegForm />
           ) : (
-            <div>
-              <Link href={"/tutor/dashboard"}>
-                <Button className="bg-indigo-500">Ir a mi perfil</Button>
+            <div className="space-y-4">
+              <Link href="/tutor/dashboard">
+                <Button className="bg-indigo-500 w-full">Ir a mi perfil</Button>
               </Link>
+              {dbuser.isRegistered && (
+                <Link href="/dashboard">
+                  <Button className="w-full">Regresar a Aprendizaje</Button>
+                </Link>
+              )}
             </div>
           )}
-          {/* {dbuser.isRegistered && 
-          <div>
-            <Link href={'/dashboard'}>
-            <Button>Regresar a Aprendizaje</Button> 
-            </Link>
-            </div>} */}
         </div>
       </div>
     </div>
