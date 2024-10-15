@@ -16,26 +16,26 @@ export default async function Page() {
     redirect("/");
   }
 
-  let isteacher = false;
-  let isregistered = false;
+  // let isteacher = false;
+  // let isregistered = false;
 
-  let dbuser = await db.user.findUnique({
-    where: {
-      clerkId: user.id,
-    },
-  });
+  // let dbuser = await db.user.findUnique({
+  //   where: {
+  //     clerkId: user.id,
+  //   },
+  // });
 
-  if (!dbuser) {
-    dbuser = await db.user.create({
-      data: {
-        clerkId: user.id,
-        email: user.emailAddresses[0].emailAddress,
-      },
-    });
-  }
+  // if (!dbuser) {
+  //   dbuser = await db.user.create({
+  //     data: {
+  //       clerkId: user.id,
+  //       email: user.emailAddresses[0].emailAddress,
+  //     },
+  //   });
+  // }
 
-  isteacher = dbuser.isTeacher;
-  isregistered = dbuser.isRegistered;
+  // isteacher = dbuser.isTeacher;
+  // isregistered = dbuser.isRegistered;
 
   return (
     <div>
@@ -59,11 +59,11 @@ export default async function Page() {
               tutores. Crece junto a 10 000 estudiantes. Crece a nivel
               internacional.
             </p>
-            {!isteacher ? (
+            
               <Link href="/register">
                 <Button className="bg-indigo-500 w-full">Empezar</Button>
               </Link>
-            ) : (
+            {/* ) : (
               <div className="space-y-4">
                 <Link href="/tutor/dashboard">
                   <Button className="bg-indigo-500 w-full">
@@ -71,15 +71,15 @@ export default async function Page() {
                   </Button>
                 </Link>
               </div>
-            )}
-            {isregistered && (
+            )} */}
+            {/* {isregistered && (
               <Link
                 href="/tutors"
                 className="border p-2 border-red-500 rounded-md"
               >
                 Pendiente de aprobación ...
               </Link>
-            )}
+            )} */}
           </div>
         </div>
       </div>
