@@ -1,5 +1,4 @@
 import React from "react";
-import TutorHero from "./_components/tutor-hero";
 import Navbar from "@/components/landing-page/navbar";
 import How from "./_components/how";
 import { Footer } from "@/components/landing-page/footer";

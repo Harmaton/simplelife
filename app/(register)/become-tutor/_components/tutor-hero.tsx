@@ -1,6 +1,5 @@
 import React from "react";
 import { CardSpotlightDemo } from "./card-spotlight-steps";
-import TutorRegForm from "./tutorReg-form";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -27,7 +26,8 @@ export default  function TutorHero({isteacher, isregistered}: HeroProps) {
             internacional.
           </p>
           {!isteacher && !isregistered ? (
-            <TutorRegForm />
+            // <TutorRegForm /> 
+            <div>reg</div>
           ) : (
             <div className="space-y-4">
               <Link href="/tutor/dashboard">
