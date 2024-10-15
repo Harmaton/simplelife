@@ -1,8 +1,11 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { teacherformSchema } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import { Resend } from "resend";
+import { z } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 export async function checkIsStudent(email: string) {
@@ -205,21 +208,9 @@ export async function checkTeacherMode(userid: string): Promise<boolean> {
   }
 }
 
-export async function submitTutorRegistration({
-  name,
-  profession,
-  description,
-  whatsappFull,
-  linkedin,
-  email,
-}: {
-  name: string;
-  profession: string;
-  description: string;
+export async function submitTutorRegistration( input: z.infer<typeof teacherformSchema> & {
   whatsappFull: string;
-  linkedin: string;
-  email: string;
-}) {
+} ) {
   try {
     const clerkuser = await currentUser();
 
@@ -227,27 +218,30 @@ export async function submitTutorRegistration({
       return { success: false, message: "Failed to Request Approval" };
     }
 
+    const email = clerkuser.emailAddresses[0].emailAddress
+
     const user = await db.user.upsert({
       where: { email: email },
       update: {
-        nickname: name,
-        linkedIn: linkedin,
-        whatsapp: whatsappFull,
-        description: description,
-        profession: profession,
+        nickname: input.name,
+        linkedIn: input.linkedin,
+        whatsapp: input.whatsappFull,
+        description: input.description,
+        profession: input.profession,
         isRegistered: true,
       },
       create: {
         clerkId: clerkuser.id,
-        nickname: name,
-        linkedIn: linkedin,
-        whatsapp: whatsappFull,
-        description: description,
         email: email,
-        profession: profession,
+        nickname: input.name,
+        linkedIn: input.linkedin,
+        whatsapp: input.whatsappFull,
+        description: input.description,
+        profession: input.profession,
         isRegistered: true,
       },
     });
+    redirect('/become-tutor')
     return { success: true, message: "Registro de tutor enviado con éxito" };
   } catch (error) {
     console.error("Error submitting tutor registration:", error);

@@ -2,6 +2,23 @@
 
 import { db } from "@/lib/db";
 
+
+
+  export async function createApplication(formData: FormData) { 
+    
+    const rawFormData = {
+      customerId: formData.get('customerId'),
+      amount: formData.get('amount'),
+      status: formData.get('status'),
+    }
+ 
+    // mutate data
+    // revalidate cache
+  }
+ 
+
+
+
 export async function calculateProfileCompletion(userId: string) {
     const user = await db.user.findUnique({
       where: { id: userId },

@@ -1,52 +1,15 @@
 import React from "react";
 import { CardSpotlightDemo } from "./card-spotlight-steps";
 import TutorRegForm from "./tutorReg-form";
-import { SignInButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
-import { db } from "@/lib/db";
-import Loadingpage from "@/components/loading-page";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default async function TutorHero() {
-  const user = await currentUser();
+interface HeroProps {
+  isteacher: boolean,
+  isregistered: boolean
+}
 
-  if (!user) {
-    return <Loadingpage />;
-  }
-
-  const email = user?.emailAddresses[0].emailAddress;
-  let dbuser;
-
-  try {
-    // First, try to find the user
-    dbuser = await db.user.findFirst({
-      where: {
-        email: email
-      }
-    });
-
-    // If user doesn't exist, create a new one
-    if (!dbuser) {
-      dbuser = await db.user.create({
-        data: {
-          clerkId: user.id,
-          email: email,
-        },
-      });
-    } else {
-      // If user exists but clerkId doesn't match, update it
-      if (dbuser.clerkId !== user.id) {
-        dbuser = await db.user.update({
-          where: { id: dbuser.id },
-          data: { clerkId: user.id }
-        });
-      }
-    }
-  } catch (error) {
-    console.error("Error handling user data:", error);
-    return <div>Something went wrong. Please try again later.</div>;
-  }
+export default  function TutorHero({isteacher, isregistered}: HeroProps) {
 
   return (
     <div className="container mx-auto px-4 py-2">
@@ -63,14 +26,14 @@ export default async function TutorHero() {
             tutores. Crece junto a 10 000 estudiantes. Crece a nivel
             internacional.
           </p>
-          {!dbuser.isTeacher && !dbuser.isRegistered ? (
+          {!isteacher && !isregistered ? (
             <TutorRegForm />
           ) : (
             <div className="space-y-4">
               <Link href="/tutor/dashboard">
                 <Button className="bg-indigo-500 w-full">Ir a mi perfil</Button>
               </Link>
-              {dbuser.isRegistered && (
+              {isregistered && (
                 <Link href="/dashboard">
                   <Button className="w-full">Regresar a Aprendizaje</Button>
                 </Link>

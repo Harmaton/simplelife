@@ -76,3 +76,13 @@ export type ExtendedCourse = {
   subcategory: SubCategory | null;
   Chapter: (Chapter & { position: number })[];
 };
+
+export const teacherformSchema = z.object({
+  name: z.string().min(2, { message: "El nombre debe tener al menos 2 caracteres." }),
+  profession: z.string().min(2, { message: "La profesión es requerida." }),
+  description: z.string().min(10, { message: "La descripción debe tener al menos 10 caracteres." }),
+  country: z.string().min(2, { message: "El país es requerido." }),
+  linkedin: z.string().url({ message: "Por favor, ingrese una URL válida." }),
+  countryCode: z.string().min(1, { message: "El código de país es requerido." }),
+  whatsappNumber: z.string().regex(/^\d+$/, { message: "Por favor, ingrese un número de teléfono válido." }),
+});
