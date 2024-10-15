@@ -11,18 +11,12 @@ import { useState } from "react";
 import { IconBrandTabler, IconCertificate2 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  CalendarCheck,
-  Goal,
-  Home,
-
-} from "lucide-react";
+import { CalendarCheck, Goal, Home } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import { FaMoneyBill } from "react-icons/fa";
 import Avatar from "@/components/icon-avatar";
 import Loadingpage from "@/components/loading-page";
-import { toast } from "sonner";
-import { SignOutButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import TeacherMode from "./_components/teacher-mode";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {

@@ -75,12 +75,12 @@ export default async function TutorHero() {
               </Link>
             </div>
           )}
-          {dbuser.isRegistered && 
+          {/* {dbuser.isRegistered && 
           <div>
             <Link href={'/dashboard'}>
             <Button>Regresar a Aprendizaje</Button> 
             </Link>
-            </div>}
+            </div>} */}
         </div>
       </div>
     </div>

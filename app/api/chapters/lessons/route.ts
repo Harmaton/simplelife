@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { getMyLessons } from "@/app/actions/chapter";
 
-export async function GET() {
+export async function POST() {
   try {
     const { userId } = auth();
 

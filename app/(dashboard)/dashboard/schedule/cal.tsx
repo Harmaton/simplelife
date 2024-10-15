@@ -8,25 +8,27 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import Interaction from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import { ChapterWithCountdown, getMyLessons } from "@/app/actions/chapter";
-import { useUser } from "@clerk/nextjs";
+import { ChapterWithCountdown } from "@/app/actions/chapter";
 
 const Calendar: React.FC = () => {
   const [currentEvents, setCurrentEvents] = useState<ChapterWithCountdown[]>(
     []
   );
-  const { user } = useUser();
+
   useEffect(() => {
     async function fetchEvents() {
-      const email = user?.emailAddresses[0]?.emailAddress;
-      if (email) {
-        const chapters = await getMyLessons(email);
-        setCurrentEvents(chapters);
+      try {
+        const response = await fetch(`/api/studentchapters`);
+        if (!response.ok) throw new Error("Failed to fetch events");
+        const data = await response.json();
+        setCurrentEvents(data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
       }
     }
 
     fetchEvents();
-  }, [user]);
+  }, []);
 
   return (
     <div>
@@ -81,7 +83,7 @@ const Calendar: React.FC = () => {
               right: "dayGridMonth,timeGridWeek,timeGridDay, listWeek",
             }}
             events={{
-              url: "/api/chapters/lessons",
+              url: "/api/studentchapters",
             }}
             nowIndicator={true}
             editable={true}

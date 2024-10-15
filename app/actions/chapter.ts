@@ -170,3 +170,46 @@ export async function getMyLessons(email: string): Promise<ChapterWithCountdown[
     return [];
   }
 }
+
+export async function getMyChapters(email: string): Promise<Chapter[]> {
+  try {
+    const dbuser = await db.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!dbuser) {
+      return [];
+    }
+
+    const courses = await db.course.findMany({
+      where: {
+        teacherId: dbuser.id,
+      },
+      select: {
+        Chapter: {
+          where: {
+            LiveDay: {
+              gte: new Date(),
+            },
+          },
+        },
+      },
+    });
+
+    const chapters = courses.flatMap((course) => course.Chapter);
+
+    const sortedChapters = chapters
+      .filter((chapter) => chapter.LiveDay !== null)
+      .sort(
+        (a, b) =>
+          (a.LiveDay as Date).getTime() - (b.LiveDay as Date).getTime()
+      );
+
+    return sortedChapters;
+  } catch (error) {
+    console.error("Error fetching lessons:", error);
+    return [];
+  }
+}
