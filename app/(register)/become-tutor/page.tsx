@@ -9,6 +9,8 @@ import { CardSpotlightDemo } from "./_components/card-spotlight-steps";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
+import { confirmIsRegistred, confirmIsTeacher } from "@/app/actions/user";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
 export default async function Page() {
   const user = await currentUser();
@@ -16,26 +18,13 @@ export default async function Page() {
     redirect("/");
   }
 
-  // let isteacher = false;
-  // let isregistered = false;
+  const isteacher = await confirmIsTeacher();
 
-  // let dbuser = await db.user.findUnique({
-  //   where: {
-  //     clerkId: user.id,
-  //   },
-  // });
+  console.log(isteacher);
 
-  // if (!dbuser) {
-  //   dbuser = await db.user.create({
-  //     data: {
-  //       clerkId: user.id,
-  //       email: user.emailAddresses[0].emailAddress,
-  //     },
-  //   });
-  // }
+  // const isregistred = await confirmIsRegistred();
 
-  // isteacher = dbuser.isTeacher;
-  // isregistered = dbuser.isRegistered;
+  // console.log(isregistred);
 
   return (
     <div>
@@ -59,11 +48,22 @@ export default async function Page() {
               tutores. Crece junto a 10 000 estudiantes. Crece a nivel
               internacional.
             </p>
-            
-              <Link href="/register">
-                <Button className="bg-indigo-500 w-full">Empezar</Button>
-              </Link>
-            {/* ) : (
+            <Link href="/register">
+              <Button className="bg-indigo-500 w-full">
+                Empezar <ArrowLeftEndOnRectangleIcon className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            {isteacher && (
+              <div className="space-y-4">
+                <Link href="/tutor/dashboard">
+                  <Button className="bg-blue-500 w-full">
+                    Ir a mi perfil
+                    <ArrowLeftEndOnRectangleIcon className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            )}
+            {/* isteacher  : (
               <div className="space-y-4">
                 <Link href="/tutor/dashboard">
                   <Button className="bg-indigo-500 w-full">
@@ -72,7 +72,7 @@ export default async function Page() {
                 </Link>
               </div>
             )} */}
-            {/* {isregistered && (
+            {/* {isregistred && (
               <Link
                 href="/tutors"
                 className="border p-2 border-red-500 rounded-md"
@@ -83,7 +83,7 @@ export default async function Page() {
           </div>
         </div>
       </div>
-
+      <hr className="mt-2" />
       <How />
       <Footer />
     </div>

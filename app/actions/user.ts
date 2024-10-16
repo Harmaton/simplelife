@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { teacherformSchema } from "@/types";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Resend } from "resend";
 import { z } from "zod";
@@ -391,5 +391,58 @@ export async function getUserID(id: string) {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+
+export async function confirmIsTeacher(){
+  try {
+
+    const {userId} = auth()
+    if(!userId){
+      return false
+    }
+
+    const user = await db.user.findUnique({
+      where: {
+        clerkId: userId
+      }
+    })
+
+    if(user){
+      return user.isTeacher
+    }
+
+    return false
+
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
+export async function confirmIsRegistred(){
+  try {
+
+    const {userId} = auth()
+    if(!userId){
+      return false
+    }
+
+    const user = await db.user.findUnique({
+      where: {
+        clerkId: userId
+      }
+    })
+
+    if(user){
+      return user.isRegistered
+    }
+
+    return false
+
+  } catch (error) {
+    console.log(error)
+    return false
   }
 }
