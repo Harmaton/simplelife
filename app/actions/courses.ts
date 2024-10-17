@@ -295,6 +295,7 @@ export async function GetCoursesInCategory(subcategoryId: string) {
     const courses = await db.course.findMany({
       where: {
         subcategoryId: subcategoryId,
+        isPublished: true
       },
     });
     return courses;

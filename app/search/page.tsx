@@ -22,8 +22,8 @@ async function SearchPage({ searchParams }: SearchPageProps) {
     : await GetAllSubCategories(); // New function to get all subcategories
 
   const headerText = searchParams.categoryId
-    ? categories.find(cat => cat.id === searchParams.categoryId)?.name || 'Diplomados'
-    : 'Todos los Diplomados';
+    ? categories.find(cat => cat.id === searchParams.categoryId)?.name || 'Certificaciones'
+    : 'Todos los Certificaciones';
 
   return (
     <>
@@ -40,7 +40,7 @@ async function SearchPage({ searchParams }: SearchPageProps) {
         <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-2 border rounded-full p-2">
           {headerText}
         </h2>
-        <p className='lg:ml-8 ml-4'>Explora los cursos dentro de los diplomados</p>
+        <p className='lg:ml-8 ml-4'>Explora los cursos dentro de los Certificaciones</p>
         {subcategories && subcategories.length > 0 ? (
           <SubCategories subcategories={subcategories} />
         ) : (

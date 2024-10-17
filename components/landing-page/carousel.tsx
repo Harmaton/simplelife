@@ -17,7 +17,6 @@ const CarouselHero: React.FC = React.memo(({}) => {
   const [count, setCount] = React.useState(0);
   const images = [
     "/images/1.jpg",
-    "/images/shero.jpeg",
     "/images/2.jpg",
     "/images/3.jpg",
   ];

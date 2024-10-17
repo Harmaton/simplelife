@@ -20,7 +20,7 @@ export default async function Page() {
 
   const isteacher = await confirmIsTeacher();
 
-  console.log(isteacher);
+  // console.log(isteacher);
 
   // const isregistred = await confirmIsRegistred();
 

@@ -54,7 +54,7 @@ const Calendar: React.FC = () => {
                     <h3>{event.title}</h3>
                     <span className="text-sm text-gray-500">
                       {event.countdown} day{event.countdown !== 1 ? "s" : ""}{" "}
-                      until live
+                      hasta vivir
                     </span>
                   </div>
                   <br />

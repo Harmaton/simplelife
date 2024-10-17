@@ -126,9 +126,15 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="text-violet-500"> Cursos online en vivo </span>
-              para encontrar tu equilibrio emocional y{" "}
-              <span className="text-violet-500">transformar tu vida</span>
+              <span className="text-violet-500">
+                {" "}
+                Formación en habilidades blandas y transversales{" "}
+              </span>
+              para el despertar emocional y espiritual{" "}
+              <span className="text-violet-500">
+                {" "}
+                a través de una plataforma virtual
+              </span>
             </motion.h1>
             <motion.p
               className="mb-5 text-lg"
@@ -137,9 +143,8 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               Movimiento global que facilita la conexión con personas en
-              búsqueda de crecimiento personal, bienestar integral y programas
-              educativos como cursos y diplomados enfocados al bienestar
-              emocional.
+              busqueda de crecimiento personal y bienestar integral enfocados en
+              el bienestar emocional.
             </motion.p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

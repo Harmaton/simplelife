@@ -79,7 +79,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       ),
     },
     {
-      label: "Donación",
+      label: "Invítanos a un café",
       href: "https://paypal.me/BiblioOnlineCoaching?country.x=PE&locale.x=en_US",
       icon: (
         <FaMoneyBill className="text-indigo-500 dark:text-indigo-400 h-5 w-5 flex-shrink-0" />

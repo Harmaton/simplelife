@@ -3,21 +3,13 @@ import { db } from "@/lib/db";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string; userId: string } }
+  { params }: { params: { courseId: string; } }
 ) {
   try {
-    const user = await db.user.findUnique({
-      where: {
-        clerkId: params.userId,
-      },
-    });
-    if (!user) {
-      return NextResponse.json({ message: "No user" }, { status: 401 });
-    }
+  
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
-        teacherId: user.id,
       },
       include: {
         Chapter: true,

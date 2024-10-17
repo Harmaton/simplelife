@@ -1,33 +1,55 @@
 
+
 const { PrismaClient } = require("@prisma/client");
 
 const database = new PrismaClient();
 
-async function adminhack() {
+
+async function seedCategoryPurchases() {
   try {
-    
-    const adminEmail = "njagiiharmaton@gmail.com"; // Replace with the hardcoded admin email
-    const adminUser = await database.user.findUnique({
-      where: { email: adminEmail },
+    // First, let's get some existing users and categories
+    const user = await database.user.findUnique({
+      where: {
+        email: 'njagiiharmaton@gmailcom'
+      }
+    })
+
+    console.log(user)
+
+    const categories = await database.category.findMany({ take: 2 });
+
+    if (!user || categories.length === 0) {
+      console.log("No users or categories found. Please seed users and categories first.");
+      return;
+    }
+
+    const categoryPurchases = [];
+
+    // Create 2 sample category purchases
+    for (let i = 0; i < 2; i++) {
+      const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+
+      categoryPurchases.push({
+        userId: user.id,
+        categoryId: randomCategory.id,
+        price: parseFloat((Math.random() * 100).toFixed(2)), // Random price between 0 and 100
+        isPaid: true
+      });
+    }
+
+    // Bulk create the category purchases
+    await database.categoryPurchase.createMany({
+      data: categoryPurchases,
     });
 
-    if (adminUser) {
-      await database.user.update({
-        where: { email: adminEmail },
-        data: { isadmin: true , isTeacher: true}, // Assuming isAdmin is the field to make the user an admin
-      });
-      console.log(`User with email ${adminEmail} has been made an admin.`);
-    } else {
-      console.log(`No user found with email ${adminEmail}.`);
-    }
-    
-    console.log("Success");
+    console.log(`Successfully seeded ${categoryPurchases.length} category purchases.`);
   } catch (error) {
-    console.log("Error seeding the database categories", error);
+    console.error("Error seeding category purchases:", error);
   } finally {
-    await database.$disconnect();
+    await database .$disconnect();
   }
 }
 
+seedCategoryPurchases();
 
 

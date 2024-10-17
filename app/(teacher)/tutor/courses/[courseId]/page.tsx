@@ -1,11 +1,10 @@
 import { redirect } from "next/navigation";
 import {
   TimerIcon,
-  File,
   Clock10Icon,
   LayoutDashboard,
   ListChecks,
-  CheckSquareIcon,
+  CheckSquareIcon
 } from "lucide-react";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";

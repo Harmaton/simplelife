@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
+import * as React from "react";
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 import {
   NavigationMenu,
@@ -13,20 +13,18 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Sobre nosotras",
     href: "/aboutus",
-    description:
-      "Conozca nuestra misión y visión.",
+    description: "Conozca nuestra misión y visión.",
   },
   {
     title: "Preguntas frecuentes",
     href: "/faq",
-    description:
-      "Explora las preguntas frecuentes sobre nuestra plataforma.",
+    description: "Explora las preguntas frecuentes sobre nuestra plataforma.",
   },
   {
     title: "Contacta con nosotras",
@@ -34,7 +32,7 @@ const components: { title: string; href: string; description: string }[] = [
     description:
       "Contáctenos directamente a través del formulario de comentarios.",
   },
-]
+];
 
 export function NavigationMenuDemo() {
   return (
@@ -55,19 +53,20 @@ export function NavigationMenuDemo() {
                       SimpleLife
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                    La mejor plataforma de aprendizaje para el crecimiento y la mejora personal.
+                      La mejor plataforma de aprendizaje para el crecimiento y
+                      la mejora personal.
                     </p>
                   </a>
                 </NavigationMenuLink>
               </li>
               <ListItem href="/search" title="Certificaciones">
-              Obtenga certificados al completar cursos seleccionados
+                Obtenga certificados al completar cada certificación
               </ListItem>
               <ListItem href="/tutors" title="Tutores">
-              Explora los mejores instructores.
+                Explora los mejores instructores.
               </ListItem>
-              <ListItem href="/courses" title="Diploma y cursos">
-              Accede a nuestros cursos basados ​​en paquetes de diploma
+              <ListItem href="/courses" title="Contenido">
+                Accede a nuestro contenido basado en paquetes
               </ListItem>
             </ul>
           </NavigationMenuContent>
@@ -91,20 +90,22 @@ export function NavigationMenuDemo() {
         <NavigationMenuItem>
           <Link href="/pricing" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            Paquetes
+              Paquetes
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/tutors" legacyBehavior passHref>
-            <NavigationMenuLink className={`${navigationMenuTriggerStyle()} border bg-white border-violet-500 rounded-md`}>
-           Maestros
+            <NavigationMenuLink
+              className={`${navigationMenuTriggerStyle()} border bg-white border-violet-500 rounded-md`}
+            >
+              Maestros
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  )
+  );
 }
 
 const ListItem = React.forwardRef<
@@ -129,6 +130,6 @@ const ListItem = React.forwardRef<
         </a>
       </NavigationMenuLink>
     </li>
-  )
-})
-ListItem.displayName = "ListItem"
+  );
+});
+ListItem.displayName = "ListItem";

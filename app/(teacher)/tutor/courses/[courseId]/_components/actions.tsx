@@ -54,7 +54,7 @@ export const Actions = ({
 
       toast.success("Curso eliminado");
       router.refresh();
-      router.push(`/dashboard/teacher/courses`);
+      router.push(`/tutor/courses`);
     } catch {
       toast.error("Algo salió mal");
     } finally {
