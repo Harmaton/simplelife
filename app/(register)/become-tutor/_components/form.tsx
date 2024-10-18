@@ -166,12 +166,38 @@ export function ApplicationForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="+1">🇺🇸 +1 (EE.UU.)</SelectItem>
-                    <SelectItem value="+34">🇪🇸 +34 (España)</SelectItem>
+                    <SelectItem value="+1">🇺🇸 +1 (Estados Unidos)</SelectItem>
+                    <SelectItem value="+1">🇨🇦 +1 (Canadá)</SelectItem>
                     <SelectItem value="+52">🇲🇽 +52 (México)</SelectItem>
+                    <SelectItem value="+1">🇺🇸 +1 (EE.UU.)</SelectItem>
+                    <SelectItem value="+501">🇧🇿 +501 (Belice)</SelectItem>
+                    <SelectItem value="+502">🇬🇹 +502 (Guatemala)</SelectItem>
+                    <SelectItem value="+503">🇸🇻 +503 (El Salvador)</SelectItem>
+                    <SelectItem value="+504">🇭🇳 +504 (Honduras)</SelectItem>
+                    <SelectItem value="+505">🇳🇮 +505 (Nicaragua)</SelectItem>
+                    <SelectItem value="+506">🇨🇷 +506 (Costa Rica)</SelectItem>
+                    <SelectItem value="+507">🇵🇦 +507 (Panamá)</SelectItem>
+                    <SelectItem value="+53">🇨🇺 +53 (Cuba)</SelectItem>
+                    <SelectItem value="+1809">
+                      🇩🇴 +1 809 (República Dominicana)
+                    </SelectItem>
+                    <SelectItem value="+509">🇭🇹 +509 (Haití)</SelectItem>
+                    <SelectItem value="+1868">
+                      🇹🇹 +1 868 (Trinidad y Tobago)
+                    </SelectItem>
                     <SelectItem value="+54">🇦🇷 +54 (Argentina)</SelectItem>
+                    <SelectItem value="+591">🇧🇴 +591 (Bolivia)</SelectItem>
+                    <SelectItem value="+55">🇧🇷 +55 (Brasil)</SelectItem>
+                    <SelectItem value="+56">🇨🇱 +56 (Chile)</SelectItem>
                     <SelectItem value="+57">🇨🇴 +57 (Colombia)</SelectItem>
-                    {/* Add more country codes as needed */}
+                    <SelectItem value="+593">🇪🇨 +593 (Ecuador)</SelectItem>
+                    <SelectItem value="+592">🇬🇾 +592 (Guyana)</SelectItem>
+                    <SelectItem value="+595">🇵🇾 +595 (Paraguay)</SelectItem>
+                    <SelectItem value="+51">🇵🇪 +51 (Perú)</SelectItem>
+                    <SelectItem value="+597">🇸🇷 +597 (Surinam)</SelectItem>
+                    <SelectItem value="+598">🇺🇾 +598 (Uruguay)</SelectItem>
+                    <SelectItem value="+58">🇻🇪 +58 (Venezuela)</SelectItem>
+                    <SelectItem value="+34">🇪🇸 +34 (España)</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

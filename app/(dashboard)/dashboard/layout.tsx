@@ -8,16 +8,15 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { useState } from "react";
-import { IconBrandTabler, IconCertificate2 } from "@tabler/icons-react";
+import { IconBrandTabler } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { CalendarCheck, Goal, Home } from "lucide-react";
+import { CalendarCheck, CoffeeIcon, Goal, Home } from "lucide-react";
 import { Logo, LogoIcon } from "@/components/logo";
 import { FaMoneyBill } from "react-icons/fa";
 import Avatar from "@/components/icon-avatar";
 import Loadingpage from "@/components/loading-page";
 import { useUser } from "@clerk/nextjs";
-import TeacherMode from "./_components/teacher-mode";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
@@ -43,34 +42,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <CalendarCheck className="text-green-500 dark:text-green-400 h-5 w-5 flex-shrink-0" />
       ),
     },
-    // {
-    //   label: "Entradas de clase",
-    //   href: "/dashboard/tickets",
-    //   icon: (
-    //     <ListVideoIcon className="text-red-500 dark:text-red-400 h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
-    {
-      label: "Mis certificados",
-      href: "/dashboard/certificates",
-      icon: (
-        <IconCertificate2 className="text-purple-500 dark:text-purple-400 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    // {
-    //   label: "Eventos",
-    //   href: "/dashboard/inperson-events",
-    //   icon: (
-    //     <TicketSlash className="text-orange-500 dark:text-orange-400 h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
-    // {
-    //   label: "Meditación",
-    //   href: "/dashboard/meditation",
-    //   icon: (
-    //     <BellDot className="text-yellow-500 dark:text-yellow-400 h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
     {
       label: "Teillen Team",
       href: "https://teilenteam.com/",
@@ -82,7 +53,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       label: "Invítanos a un café",
       href: "https://paypal.me/BiblioOnlineCoaching?country.x=PE&locale.x=en_US",
       icon: (
-        <FaMoneyBill className="text-indigo-500 dark:text-indigo-400 h-5 w-5 flex-shrink-0" />
+        <CoffeeIcon className="text-indigo-500 dark:text-indigo-400 h-5 w-5 flex-shrink-0" />
       ),
     },
   ];
@@ -142,7 +113,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <main className="p-2 md:p-10 rounded-tl-2xl border flex flex-col gap-2 flex-1 w-full h-full">
         <div className="flex flex-row space-x-4 justify-end ">
-          {user.user && <TeacherMode userId={user.user.id} />}
           <Link href={"/"}>
             <Button className="flex items-center bg-violet-800 text-white">
               <Home className="m-auto  h-4 w-4" />

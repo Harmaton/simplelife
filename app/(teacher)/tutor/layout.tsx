@@ -56,13 +56,13 @@ const TeacherLayout = ({ children }: { children: React.ReactNode }) => {
         <BookOpen className="text-green-500 dark:text-green-400 h-5 w-5 flex-shrink-0" />
       ),
     },
-    {
-      label: "Calendario y Tareas",
-      href: "/tutor/calendar",
-      icon: (
-        <Calendar className="text-purple-500 dark:text-purple-400 h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    // {
+    //   label: "Calendario y Tareas",
+    //   href: "/tutor/calendar",
+    //   icon: (
+    //     <Calendar className="text-purple-500 dark:text-purple-400 h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
     // {
     //   label: "Sesiones de Mentoría",
     //   href: "/tutor/mentor",

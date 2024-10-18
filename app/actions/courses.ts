@@ -118,6 +118,9 @@ export async function getDashboardCourses(userId: string): Promise<{
         category: {
           include: {
             Courses: {
+              where: {
+              isPublished: true
+              },
               include: {
                 category: true,
                 Chapter: {

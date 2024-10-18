@@ -13,19 +13,6 @@ import { confirmIsRegistred, confirmIsTeacher } from "@/app/actions/user";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
 export default async function Page() {
-  const user = await currentUser();
-  if (!user) {
-    redirect("/");
-  }
-
-  const isteacher = await confirmIsTeacher();
-
-  // console.log(isteacher);
-
-  // const isregistred = await confirmIsRegistred();
-
-  // console.log(isregistred);
-
   return (
     <div>
       <Navbar />
@@ -53,16 +40,16 @@ export default async function Page() {
                 Empezar <ArrowLeftEndOnRectangleIcon className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            {isteacher && (
-              <div className="space-y-4">
-                <Link href="/tutor/dashboard">
-                  <Button className="bg-blue-500 w-full">
-                    Ir a mi perfil
-                    <ArrowLeftEndOnRectangleIcon className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            )}
+
+            <div className="space-y-4">
+              <Link href="/tutor/dashboard">
+                <Button className="bg-blue-500 w-full">
+                  Ir a mi perfil
+                  <ArrowLeftEndOnRectangleIcon className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+
             {/* isteacher  : (
               <div className="space-y-4">
                 <Link href="/tutor/dashboard">

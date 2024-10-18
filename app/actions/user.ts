@@ -242,7 +242,6 @@ export async function submitTutorRegistration( input: z.infer<typeof teacherform
       },
     });
     redirect('/become-tutor')
-    return { success: true, message: "Registro de tutor enviado con éxito" };
   } catch (error) {
     console.error("Error submitting tutor registration:", error);
     return { success: false, message: "Failed to Request Approval" };

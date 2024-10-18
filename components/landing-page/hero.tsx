@@ -9,24 +9,19 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-
 import { motion } from "framer-motion";
-
 import { ArrowRight, PenBox } from "lucide-react";
 import { Button } from "../ui/button";
 import CarouselHero from "./carousel";
 import {
   checkIsAdmin,
-  checkIsStudent,
   checkIsTeacher,
 } from "@/app/actions/user";
 import { useUser } from "@clerk/nextjs";
 
 const Hero: React.FC = () => {
   const user = useUser();
-
   const router = useRouter();
-
   const [isTeacher, setIsTeacher] = useState(false);
   const [admin, setAdmin] = useState(false);
   const email = user.user?.emailAddresses[0].emailAddress;

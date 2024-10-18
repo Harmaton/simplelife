@@ -32,25 +32,35 @@ export async function GET() {
     }
 
     // // Extract category IDs from purchases
-    const categoryIds = purchases.map((purchase) => purchase.categoryId);
+    const categoryIds = purchases.map(purchase => purchase.categoryId);
 
     // Fetch all courses and their chapters that belong to the purchased categories
     const chapters = await db.chapter.findMany({
       where: {
-        liveTime: {not: null},
-        LiveDay: {not: null},
-        course: {
-          categoryId: { in: categoryIds },
-        },
+        liveTime: { not: null },
+        LiveDay: { not: null },
       },
       include: {
         course: {
-          select: { title: true, category: { select: { name: true } } },
+          select: { title: true },
         },
       },
     });
 
-    return new NextResponse(JSON.stringify(chapters), {
+    // Transform chapters into FullCalendar event format
+    const events = chapters.map(chapter => {
+      return {
+        id: chapter.id,
+        title: `${chapter.course.title}: ${chapter.title}`,
+        start: chapter.liveTime,
+        end: chapter.liveTime,
+        allDay: false,
+        description: chapter.description
+      };
+    });
+
+
+    return new NextResponse(JSON.stringify(events), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
