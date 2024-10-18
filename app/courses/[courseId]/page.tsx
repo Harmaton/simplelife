@@ -144,10 +144,11 @@ const CourseIdPage = async ({
           <CardContent>
             <div className="aspect-video relative">
               {course.imageUrl && (
-                <img
+                <Image
                   src={course.imageUrl}
                   alt={course.title}
-                  className="object-cover rounded-md"
+                  fill
+                  className="object-cover w-full rounded-md"
                 />
               )}
             </div>
