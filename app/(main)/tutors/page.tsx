@@ -7,9 +7,6 @@ import Navbar from "@/components/landing-page/navbar";
 import Top from "@/components/top-page";
 import Link from "next/link";
 
-// This function will be called at build time on the server-side.
-// It won't be called on client-side, so you can even do
-// direct database queries here
 async function getTeachers() {
   try {
     const teachers = await GetAllTutors();

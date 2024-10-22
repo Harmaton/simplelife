@@ -340,6 +340,8 @@ export async function GetAllTutors() {
     const tutors = await db.user.findMany({
       where: {
         isTeacher: true,
+        nickname: {not: null},
+        image: {not: null}
       },
     });
 
