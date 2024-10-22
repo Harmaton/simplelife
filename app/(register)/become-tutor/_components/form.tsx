@@ -55,9 +55,9 @@ export function ApplicationForm() {
           ...data,
           whatsappFull,
         });
-        toast.success("Perfil creado con éxito.");
+        toast.success("Espere la verificación de nuestra parte.");
         form.reset();
-        router.push("/valores");
+        router.push("/tutors");
       } catch (err) {
         toast.error("Error al crear el perfil. Por favor, inténtelo de nuevo.");
       }

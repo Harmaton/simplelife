@@ -27,7 +27,9 @@ export default async function page() {
         header={"Página de aplicación"}
         text={"Complete los detalles a continuación y espere"}
       />
+      <div className="max-w-[33%] mx-auto">
       <ApplicationForm />
+      </div>
     </div>
   );
 }
