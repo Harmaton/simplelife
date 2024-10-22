@@ -9,12 +9,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CardSpotlightDemo } from "./_components/card-spotlight-steps";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
-import { useUser } from "@clerk/nextjs";
 import { confirmIsTeacher } from "@/app/actions/user";
 
 export default function Page() {
-  const { user } = useUser();
-
   const [isteacher, setTeacher] = useState(false);
 
   useEffect(() => {
