@@ -1,6 +1,5 @@
 import React from "react";
 import TeacherCard from "./teacher-card";
-import { User } from "@prisma/client";
 import Loadingpage from "@/components/loading-page";
 import { GetAllTutors } from "@/app/actions/user";
 import Navbar from "@/components/landing-page/navbar";

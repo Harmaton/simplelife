@@ -17,7 +17,7 @@ import {
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Sobre nosotras",
+    title: "Sobre nosotros",
     href: "/aboutus",
     description: "Conozca nuestra misión y visión.",
   },
@@ -27,7 +27,7 @@ const components: { title: string; href: string; description: string }[] = [
     description: "Explora las preguntas frecuentes sobre nuestra plataforma.",
   },
   {
-    title: "Contacta con nosotras",
+    title: "Contacta con nosotros",
     href: "/contact",
     description:
       "Contáctenos directamente a través del formulario de comentarios.",

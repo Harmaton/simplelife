@@ -5,6 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import { esES } from '@clerk/localizations'
 
 export const metadata: Metadata = {
   icons: {
@@ -34,7 +35,15 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-    //  localization={esES}
+     localization={esES}
+     appearance={{
+      layout: {
+        socialButtonsPlacement: 'bottom',
+        socialButtonsVariant: 'iconButton',
+        termsPageUrl: 'https://simplelifeofficial.com/faq',
+        logoImageUrl: '/logo-1.png'
+      }
+    }}
      >
       <html
         lang="en"

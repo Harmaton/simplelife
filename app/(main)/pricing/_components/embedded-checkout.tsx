@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
 import { ShoppingCart } from "lucide-react";
+import { Button } from "@/components/ui/button";
 interface EmbeddedHotmartCheckoutProps {
   link: string;
 }
@@ -32,18 +33,11 @@ const EmbeddedHotmartCheckout: React.FC<EmbeddedHotmartCheckoutProps> = ({
 
   return (
     <div className="flex">
-      <ShoppingCart className="mr-2 h-4 w-4" />
-      <Link
-        href={`${link}?checkoutMode=2`}
-        className="hotmart-fb hotmart__button-checkout"
-        onClick={(e) => e.preventDefault()}
-      >
-        <Image
-          src="https://static.hotmart.com/img/btn-buy-green.png"
-          alt="Buy Now"
-          width={100} // You need to specify the width
-          height={100} // You need to specify the height
-        />
+      <Link href={`${link}?checkoutMode=2`} onClick={(e) => e.preventDefault()}>
+        <Button className="flex space-x-4 bg-green-500 rounded-md hover:translate-x-2">
+          <h3 className="text-white">Comprar Ahora</h3>
+          <ShoppingCart className="ml-2 text-white h-4 w-4" />
+        </Button>
       </Link>
     </div>
   );

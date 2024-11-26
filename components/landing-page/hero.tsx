@@ -13,10 +13,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, PenBox } from "lucide-react";
 import { Button } from "../ui/button";
 import CarouselHero from "./carousel";
-import {
-  checkIsAdmin,
-  checkIsTeacher,
-} from "@/app/actions/user";
+import { checkIsAdmin, checkIsTeacher } from "@/app/actions/user";
 import { useUser } from "@clerk/nextjs";
 
 const Hero: React.FC = () => {
@@ -123,9 +120,10 @@ const Hero: React.FC = () => {
             >
               <span className="text-violet-500">
                 {" "}
-                Formación en habilidades blandas y transversales{" "}
+                Certificaciones on line en habilidades blandas y transversales
               </span>
-              para el despertar emocional y espiritual{" "}
+              para el despertar emocional y
+              espiritua
               <span className="text-violet-500">
                 {" "}
                 a través de una plataforma virtual
@@ -219,7 +217,7 @@ const Hero: React.FC = () => {
               <CarouselHero />
             </div>
 
-            <motion.div
+            {/* <motion.div
               className="absolute top-4 right-4/5 text-white text-center border bg-blue-400 p-2 rounded-lg flex flex-row items-center"
               data-aos="fade-up"
               {...slideInFromTop}
@@ -256,7 +254,7 @@ const Hero: React.FC = () => {
                 <span className="block text-2xl font-bold">50+</span>
                 <span>Tutores</span>
               </div>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </div>

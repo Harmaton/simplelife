@@ -56,7 +56,7 @@ export const CategoryItem = ({
       type="button"
     >
       {Icon && <Icon size={20} className="mr-2" />}
-      <div className="truncate font-mono">{label}</div>
+      <div>{label}</div>
       {/* {isPaid && <CheckCircle size={16} className="ml-2 text-green-500" />} */}
     </button>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import CategoryCard from "./category";
 import { Category } from "@prisma/client";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 interface TopCategoriesProps {
   categories: Category[];
@@ -12,12 +13,19 @@ const TopCategories: React.FC<TopCategoriesProps> = ({ categories }) => {
     <section className="py-8 px-4 max-w-10xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
         <div className="mb-4 sm:mb-0">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-2">Certificaciones principales</h2>
-          <p className="text-gray-600">Explora nuestras certificaciones más populares</p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2">
+            Certificaciones principales
+          </h2>
+          <p className="text-gray-600">
+            Explora nuestras certificaciones más populares
+          </p>
         </div>
-        <Link href={'/search'}>
-          <button className="bg-white text-gray-800 px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors">
-            Todas las certificaciones
+        <Link href={"/search"}>
+          <button className="bg-white text-gray-800 hover:translate-x-2 transition-transform flex px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 ">
+            
+              Todas las certificaciones
+              <ArrowUpRight className="h-4 w-4 ml-2 " />
+            
           </button>
         </Link>
       </div>

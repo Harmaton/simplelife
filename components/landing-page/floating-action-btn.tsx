@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 const FloatingActionButton: React.FC = () => {
   const redirectToWhatsApp = () => {
-    const phoneNumber = "+51980354269";
+    const phoneNumber = "+59170133430";
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.location.href = whatsappUrl;
   };
