@@ -82,7 +82,7 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <svg
+      <svg data-aos="fade-in"
         className="absolute inset-0 z-[-1] h-full w-full stroke-gray-200 animate-scroll-up"
         style={{
           maskImage: "radial-gradient(100% 100% at center, white, transparent)",
@@ -109,25 +109,22 @@ const Hero: React.FC = () => {
         />
       </svg>
 
-      <div className="container relative mt-4 antialiased ">
+      <div className="container relative mt-6 antialiased min-h-[75vh] ">
         <div className="flex flex-wrap md:flex-nowrap justify-between items-center p-2  rounded-lg">
           <div className="md:w-1/2 w-full text-center md:text-left p-2">
             <motion.h1
-              className="text-2xl sm:text-6xl font-bold mb-4"
+              className="text-2xl sm:text-5xl font-bold mb-4"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <span className="text-violet-500">
                 {" "}
-                Certificaciones on line en habilidades blandas y transversales
+                Certificaciones on line en habilidades blandas y transversales {" "}
               </span>
               para el despertar emocional y
               espiritua
-              <span className="text-violet-500">
-                {" "}
-                a través de una plataforma virtual
-              </span>
+              
             </motion.h1>
             <motion.p
               className="mb-5 text-lg"
@@ -146,7 +143,7 @@ const Hero: React.FC = () => {
                 variant={"ghost"}
                 onClick={exploreCoursesRoue}
               >
-                Nuestras Certificaciones
+                Nuestros Certificaciones
               </Button>
 
               {isTeacher && (

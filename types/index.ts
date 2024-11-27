@@ -86,3 +86,10 @@ export const teacherformSchema = z.object({
   countryCode: z.string().min(1, { message: "El código de país es requerido." }),
   whatsappNumber: z.string().regex(/^\d+$/, { message: "Por favor, ingrese un número de teléfono válido." }),
 });
+
+export type Testimonial = {
+  text: string;
+  imageUrl: string;
+  name: string;
+  role: string;
+};

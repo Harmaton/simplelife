@@ -29,8 +29,8 @@ export default function Ad() {
   const seconds = timeLeft % 60
 
   return (
-    <div className="relative bg-yellow-100 text-black py-2">
-      <div className="container mx-auto text-center mr-2">
+    <div data-aos="fade-down" className="relative bg-yellow-100 text-black py-2 m-auto">
+      <div className="container mx-auto text-center m-auto">
         <p className="font-bold">
         ¡Solo hoy! Oferta relámpago de 24 horas. | Certificaciones con hasta un 15 % de descuento.
         </p>

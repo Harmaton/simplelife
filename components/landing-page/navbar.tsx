@@ -27,7 +27,7 @@ import {
 export default function Navbar() {
   return (
     <header
-      className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 border-b lg:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky"
+      className="top-0 left-0 right-0 flex h-16 w-full items-center justify-between px-4 border-b lg:px-6 p-4 bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out sticky max-w-7xl mx-auto"
       style={{
         position: "sticky",
         top: "-100px",
@@ -172,6 +172,7 @@ export default function Navbar() {
           <ClerkLoading>
             <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
           </ClerkLoading>
+          <div className="flex space-x-2">
           <ClerkLoaded>
             <SignedOut>
               <SignInButton
@@ -193,11 +194,12 @@ export default function Navbar() {
               <Link href="/dashboard">
                 <Button className="bg-blue-500 text-white flex font-bold border text-center  border-violet-500 m-auto">
                   Panel
-                  <ArrowUp className="h-4 w-4 ml-2 justify-end" />
+                  <ArrowUpRight className="h-4 w-4 ml-2 justify-end" />
                 </Button>
               </Link>
             </SignedIn>
           </ClerkLoaded>
+          </div>
         </div>
       </div>
     </header>
