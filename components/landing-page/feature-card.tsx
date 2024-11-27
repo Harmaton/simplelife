@@ -12,7 +12,7 @@ interface FeatureCardProps {
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, iconColor, title, description }) => {
   return (
     <Card
-      className="w-[350px] bg-white p-6 justify-center items-center text-center shadow-md rounded-lg relative overflow-hidden"
+      className="w-[350px] bg-white m-auto p-6 justify-center items-center text-center shadow-md rounded-lg relative overflow-hidden"
       data-aos="fade-up"
     >
       <div className="absolute inset-0 z-0">
