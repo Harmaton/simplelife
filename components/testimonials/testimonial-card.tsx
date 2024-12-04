@@ -8,13 +8,13 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
         <QuoteIcon className="text-purple-500 h-6 w-6 text-left" />
       <p className="text-gray-700 mb-4">{testimonial.text}</p>
       <div className="flex flex-col items-center">
-        <Image
+        {/* <Image
           src={testimonial.imageUrl || "/person.jpg"}
           alt="testimonials"
           width={60}
           height={60}
           className="rounded-full m-auto"
-        />
+        /> */}
         <div className="text-center">
            
           <h4 className="text-gray-800 font-bold">{testimonial.name}</h4>

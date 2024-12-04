@@ -10,7 +10,7 @@ import { AOSInit } from "@/components/aos";
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/newlogo.png",
+    icon: "/logo-1.png",
   },
   title: "SimpleLife Official",
   description: "Multifaceted Learning and Therapy AI platform",
