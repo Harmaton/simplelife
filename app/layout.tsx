@@ -46,7 +46,7 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en" className="scrollbar-thin overflow-y-scroll">
+      <html lang="en" className="scrollbar-thin overflow-x-hidden">
         <AOSInit />
         <body
           className={cn("antialiased", fontHeading.variable, fontBody.variable)}
