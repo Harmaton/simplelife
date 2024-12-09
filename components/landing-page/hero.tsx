@@ -123,7 +123,7 @@ const Hero: React.FC = () => {
                 Certificaciones on line en habilidades blandas y transversales {" "}
               </span>
               para el despertar emocional y
-              espiritua
+              espiritual
               
             </motion.h1>
             <motion.p
