@@ -1,0 +1,166 @@
+[
+  {
+    "id": 1,
+    "name": "Parche de Energía",
+    "slug": "parche-de-energia",
+    "description": "Despierta tu potencial con nuestro parche transdérmico de energía. Una fórmula avanzada diseñada para potenciar tu rendimiento físico, activar tu mente y mejorar tu equilibrio emocional sin sobrecargar tu cuerpo.",
+    "shortDescription": "Energía limpia y sostenida sin pastillas ni picos.",
+    "price": "66,55 €",
+    "image": "/mind/2.png",
+    "color": "orange",
+    "category": "energy",
+    "benefits": [
+      "Energía constante sin picos ni bajones",
+      "Mayor resistencia física y claridad mental",
+      "Mejora del equilibrio, la fuerza y la recuperación post-esfuerzo",
+      "Disminución del cansancio, con efecto natural y sostenido",
+      "Activación del ánimo y del rendimiento físico/cognitivo"
+    ],
+    "ingredients": [
+      "Cafeína natural",
+      "Beta-alanina",
+      "L-Citrulina",
+      "Ginseng rojo",
+      "Vitaminas del complejo B"
+    ],
+    "contraindications": [
+      "No usar durante embarazo o lactancia",
+      "No utilizar si eres alérgico a alguno de los componentes",
+      "Consultar con médico si tienes enfermedades crónicas"
+    ],
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-energia-54e",
+    "rating": 4.7,
+    "reviews": 89,
+    "featuredReview": "Este parche cambió mi rutina matutina. Sin nerviosismo, sin caídas. ¡Recomendado!"
+  },
+  {
+    "id": 2,
+    "name": "Parche de Sueño",
+    "slug": "parche-de-sueno",
+    "description": "Dormir bien no debería ser un lujo. Nuestro Parche de Sueño 54e revoluciona el descanso nocturno con una fórmula avanzada que actúa durante toda la noche de forma natural y sin generar dependencia.",
+    "shortDescription": "Dormí profundo, natural y reparador — sin pastillas.",
+    "price": "66,55 €",
+    "image": "/mind/3.png",
+    "color": "purple",
+    "category": "sleep",
+    "benefits": [
+      "Induce un sueño profundo y natural",
+      "Mejora la calidad del descanso nocturno",
+      "Ayuda a regular el ciclo de sueño-vigilia",
+      "Reduce los despertares nocturnos y la ansiedad asociada",
+      "Favorece la recuperación mental y física"
+    ],
+    "ingredients": [
+      "Melatonina",
+      "Magnesio",
+      "Raíz de valeriana",
+      "GABA",
+      "L-teanina"
+    ],
+    "contraindications": [
+      "No usar durante embarazo o lactancia",
+      "No utilizar si eres alérgico a alguno de los componentes"
+    ],
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-sueno-54e",
+    "rating": 4.9,
+    "reviews": 134,
+    "featuredReview": "Por fin duermo toda la noche. No me levanto cansado. ¡Mil gracias!"
+  },
+  {
+    "id": 3,
+    "name": "Parche de Antiestrés",
+    "slug": "parche-de-antiestres",
+    "description": "Nuestro Parche de Antiestrés 54e fue desarrollado con una sinergia de extractos naturales adaptógenos y neurocalmantes que ayudan a reducir los niveles de ansiedad, calmar la mente y mejorar el enfoque.",
+    "shortDescription": "Calma mental sin somnolencia. Ideal para el día a día.",
+    "price": "66,55 €",
+    "image": "/mind/4.png",
+    "color": "blue",
+    "category": "stress",
+    "benefits": [
+      "Reduce los síntomas de estrés y ansiedad",
+      "Promueve el equilibrio emocional",
+      "Aumenta la claridad y el enfoque",
+      "No genera somnolencia: puedes usarlo en el trabajo",
+      "Acción progresiva y sostenida sin alterar tu estado natural"
+    ],
+    "ingredients": [
+      "Ashwagandha",
+      "Rhodiola rosea",
+      "L-teanina",
+      "GABA",
+      "Extracto de pasionaria"
+    ],
+    "contraindications": [
+      "No usar durante embarazo o lactancia",
+      "No utilizar si eres alérgico a alguno de los componentes"
+    ],
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-antiestres-54e",
+    "rating": 4.8,
+    "reviews": 97,
+    "featuredReview": "Me ayuda a mantener la calma en el trabajo. Lo uso todos los días."
+  },
+  {
+    "id": 4,
+    "name": "Parche de Omega 3",
+    "slug": "parche-de-omega-3",
+    "description": "El Parche OMEGA 3 de 54e ofrece los beneficios comprobados de los ácidos grasos esenciales sin necesidad de cápsulas. Ideal para salud cerebral, cardiovascular y celular.",
+    "shortDescription": "Omega 3 transdérmico: sin digestión, sin sabor, sin esfuerzo.",
+    "price": "66,55 €",
+    "image": "/mind/5.png",
+    "color": "teal",
+    "category": "omega",
+    "benefits": [
+      "Apoya la salud cardiovascular",
+      "Mejora la concentración y memoria",
+      "Efecto antioxidante y antiinflamatorio celular",
+      "Mejora la flexibilidad celular",
+      "Ideal para quienes no toleran cápsulas"
+    ],
+    "ingredients": [
+      "Omega-3 (EPA y DHA)",
+      "Aceite de kril antártico",
+      "Coenzima Q10",
+      "Astaxantina natural"
+    ],
+    "contraindications": [
+      "No usar durante embarazo o lactancia",
+      "No utilizar si eres alérgico a mariscos"
+    ],
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-omega-3-54e",
+    "rating": 4.6,
+    "reviews": 76,
+    "featuredReview": "Perfecto para quienes no toleran cápsulas de omega 3. Noté diferencia en mi piel y energía."
+  },
+  {
+    "id": 5,
+    "name": "Parche de Concentración",
+    "slug": "parche-de-concentracion",
+    "description": "El Parche de Concentración 54e está diseñado para liberar el potencial de tu mente y ayudarte a mantener la atención sostenida, la claridad mental y el foco necesario en momentos clave.",
+    "shortDescription": "Enfócate más, rinde mejor, sin nerviosismo.",
+    "price": "66,55 €",
+    "image": "/mind/6.png",
+    "color": "blue",
+    "category": "focus",
+    "benefits": [
+      "Mejora la claridad mental y retención",
+      "Aumenta la capacidad de enfoque",
+      "Reduce el cansancio mental",
+      "Favorece la productividad sin nerviosismo",
+      "Ideal para estudio y trabajo intenso"
+    ],
+    "ingredients": [
+      "Vitaminas del complejo B",
+      "Vitamina C",
+      "Cromo",
+      "Citrato de zinc"
+    ],
+    "contraindications": [
+      "No usar durante embarazo o lactancia",
+      "No utilizar si eres alérgico a alguno de los componentes"
+    ],
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-concentracion-54e",
+    "rating": 4.7,
+    "reviews": 82,
+    "featuredReview": "Lo uso para estudiar. Me ayuda a mantener el foco sin sentirme acelerado."
+  }
+]

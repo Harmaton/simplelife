@@ -21,14 +21,14 @@ interface CartItem {
   quantity: number;
 }
 
-export default function Nav({ totalCartItems = 0, wishlistSize = 0 }: { totalCartItems: number , wishlistSize: number;}) {
+export default function Nav({ totalCartItems = 0 }: { totalCartItems: number}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Mock cart items (replace with real data if needed)
   const cartItems: CartItem[] = [
-    { id: 1, name: 'REM Super Patch', price: '66,55 €', image: '/patch1.png', quantity: 1 },
-    { id: 2, name: 'Peace Super Patch', price: '66,55 €', image: '/patch2.png', quantity: 2 },
+    { id: 1, name: 'REM Super Patch', price: '66,55 €', image: '/mind/3.png', quantity: 1 },
+    { id: 2, name: 'Peace Super Patch', price: '66,55 €', image: '/mind/2.png', quantity: 2 },
   ].slice(0, totalCartItems > 0 ? Math.min(totalCartItems, 2) : 0);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -41,13 +41,13 @@ export default function Nav({ totalCartItems = 0, wishlistSize = 0 }: { totalCar
         <div className="bg-gray-50 px-4 sm:px-6 md:px-8 lg:px-12 py-2 text-sm hidden sm:flex justify-between items-center text-gray-600 max-w-screen-xl mx-auto w-full">
           <div className="flex items-center gap-2">
             <Phone className="w-4 h-4" />
-            <span>Contacte con nosotros: 655 538 782</span>
+            <span>Contacte con nosotros: +54 351 756 8043</span>
           </div>
           <div>Mi lista de deseos ({totalCartItems})</div>
         </div>
 
         {/* Main Header */}
-        <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-4">
+        <div className="px-2 sm:px-6 md:px-4 lg:px-12 py-4">
           <div className="max-w-screen-xl mx-auto flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
