@@ -11,7 +11,6 @@ import Whatsapp from './_components/whatsapp';
 import TestimonialsAndFAQ from './_components/testimonials';
 import ReturnPolicy from './_components/return-policy';
 
-// Product data
 const products: Product[] = [
   {
     id: 1,
@@ -50,6 +49,7 @@ const products: Product[] = [
     count: 28,
   },
 ];
+
 export default function SuperPatchesWebsite() {
   const [cartItems, setCartItems] = useState<CartItems>({});
   const [wishlist, setWishlist] = useState<Set<number>>(new Set());
@@ -128,7 +128,7 @@ export default function SuperPatchesWebsite() {
       <section id="testimonials">
         <TestimonialsAndFAQ />
       </section>
-      
+
        <section id="contact">
         <Contact />
       </section>
@@ -137,7 +137,6 @@ export default function SuperPatchesWebsite() {
         <Footer />
         </section>
 
-      {/* WhatsApp Float Button */}
     <Whatsapp />
     </div>
   );

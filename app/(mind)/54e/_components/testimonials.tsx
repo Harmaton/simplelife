@@ -197,7 +197,7 @@ export default function TestimonialsAndFAQ() {
               >
                 <blockquote className="text-gray-700 leading-relaxed mb-3">
                   <p className="text-lg md:text-xl font-medium italic text-gray-800">
-                    "{item.quote}"
+                    &quot;{item.quote}&quot;
                   </p>
                 </blockquote>
                 <cite className="not-italic text-purple-700 font-semibold block">
