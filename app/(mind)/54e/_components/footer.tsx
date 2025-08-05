@@ -3,9 +3,13 @@
 import { Facebook, Instagram, Twitter, Phone, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { Product } from '../type';
 
 // Enhanced Footer Wave SVG (now clearly visible with energy dots)
 const FooterWave = () => (
+  
+    
   <svg
     viewBox="0 0 1440 180"
     preserveAspectRatio="none"
@@ -66,6 +70,14 @@ const FooterWave = () => (
 );
 
 export default function Footer() {
+   const [products, setProducts] = useState<Product[]>([]);
+  
+    // Load products from JSON
+    useEffect(() => {
+      fetch('/data/products.json')
+        .then(res => res.json())
+        .then(data => setProducts(data));
+    }, []);
   return (
     <footer className="bg-white relative overflow-hidden">
       {/* Creative Full-Bottom SVG Wave */}
@@ -96,7 +108,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <Link
-                href="https://facebook.com/simplelifemind"
+                href="https://www.facebook.com/simplelifemindset/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-600 hover:text-purple-800 transition-transform hover:scale-110"
@@ -105,7 +117,7 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </Link>
               <Link
-                href="https://instagram.com/simplelifemind"
+                href="https://www.instagram.com/parche54e/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-600 hover:text-purple-800 transition-transform hover:scale-110"
@@ -113,15 +125,7 @@ export default function Footer() {
               >
                 <Instagram className="w-5 h-5" />
               </Link>
-              <Link
-                href="https://x.com/simplelifemind"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple-600 hover:text-purple-800 transition-transform hover:scale-110"
-                aria-label="Síguenos en X (Twitter)"
-              >
-                <Twitter className="w-5 h-5" />
-              </Link>
+              
             </div>
           </div>
 
@@ -151,19 +155,13 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-gray-800 mb-5 text-lg">Productos</h4>
             <ul className="space-y-3">
-              {[
-                'Parche de Energía',
-                'Parche de Sueño',
-                'Parche de Antiestrés',
-                'Parche de Omega 3',
-                'Parche de Concentración'
-              ].map((product) => (
-                <li key={product}>
+              {products.map((product) => (
+                <li key={product.id}>
                   <Link
-                    href="#products"
+                    href={`/54e/${product.slug}`}
                     className="text-gray-600 hover:text-purple-600 transition-colors duration-200 text-sm"
                   >
-                    {product}
+                    {product.name}
                   </Link>
                 </li>
               ))}
@@ -193,10 +191,10 @@ export default function Footer() {
         {/* Legal & Copyright */}
         <div className="mt-12 pt-8 border-t border-purple-100 space-y-4">
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
-            <Link href="/legal/aviso-legal" className="text-gray-500 hover:text-purple-600 transition-colors">
+            <Link href="/legal" className="text-gray-500 hover:text-purple-600 transition-colors">
               Aviso Legal
             </Link>
-            <Link href="/legal/privacidad" className="text-gray-500 hover:text-purple-600 transition-colors">
+            <Link href="/legal/privacy" className="text-gray-500 hover:text-purple-600 transition-colors">
               Política de Privacidad
             </Link>
             <Link href="/legal/cookies" className="text-gray-500 hover:text-purple-600 transition-colors">

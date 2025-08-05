@@ -3,19 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Hero from './_components/Hero';
 import Nav from './_components/nav';
-import Contact from './_components/contact';
 import Footer from './_components/footer';
 import Whatsapp from './_components/whatsapp';
-import TestimonialsAndFAQ from './_components/testimonials';
 import ReturnPolicy from './_components/return-policy';
-import Philosophy from './_components/philosophy';
 import HowItWorks from './_components/HowItWorks';
 import UsageGuide from './_components/user-guide';
 import Products from './_components/products';
 import { Product } from './type';
-import About from './_components/about';
-
-
 
 export default function SuperPatchesWebsite() {
 
