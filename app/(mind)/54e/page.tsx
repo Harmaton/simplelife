@@ -2,9 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Hero from './_components/Hero';
-import ProductCard, { Product } from './_components/product-card';
 import Nav from './_components/nav';
-import About from './_components/about';
 import Contact from './_components/contact';
 import Footer from './_components/footer';
 import Whatsapp from './_components/whatsapp';
@@ -14,6 +12,10 @@ import Philosophy from './_components/philosophy';
 import HowItWorks from './_components/HowItWorks';
 import UsageGuide from './_components/user-guide';
 import Products from './_components/products';
+import { Product } from './type';
+import About from './_components/about';
+
+
 
 export default function SuperPatchesWebsite() {
 
@@ -49,28 +51,16 @@ export default function SuperPatchesWebsite() {
 
     <Products initialProducts={products} />
 
-      <section id="about">
-        <About />
-      </section>
-
       <section id="guide">
         <UsageGuide />
       </section>
-       <HowItWorks />
-      <Philosophy />
-     
+       <HowItWorks />     
               
       <section id="policy">
         <ReturnPolicy />
       </section>
 
-      <section id="testimonials">
-        <TestimonialsAndFAQ />
-      </section>
-
-       <section id="contact">
-        <Contact />
-      </section>
+     
 
       <section >
         <Footer />

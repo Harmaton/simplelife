@@ -132,8 +132,8 @@ export default function Footer() {
               {[
                 { name: 'Inicio', href: '#hero' },
                 { name: 'Productos', href: '#products' },
-                { name: 'Sobre Nosotros', href: '#about' },
-                { name: 'Contacto', href: '#contact' },
+                { name: 'Sobre Nosotros', href: '/54e/about' },
+                { name: 'Contacto', href: '/54e/contact' },
               ].map((item) => (
                 <li key={item.name}>
                   <Link
@@ -152,10 +152,11 @@ export default function Footer() {
             <h4 className="font-semibold text-gray-800 mb-5 text-lg">Productos</h4>
             <ul className="space-y-3">
               {[
-                'REM Super Patch',
-                'Peace Super Patch',
-                'Victory Super Patch',
-                'Kick It Super Patch',
+                'Parche de Energía',
+                'Parche de Sueño',
+                'Parche de Antiestrés',
+                'Parche de Omega 3',
+                'Parche de Concentración'
               ].map((product) => (
                 <li key={product}>
                   <Link
@@ -175,11 +176,11 @@ export default function Footer() {
             <ul className="space-y-4 text-sm">
               <li className="flex items-start space-x-3 text-gray-600">
                 <Phone className="w-4 h-4 mt-0.5 text-purple-600" />
-                <span>+54 9 351 123-4567</span>
+                <span>+54 351 756 8043</span>
               </li>
               <li className="flex items-start space-x-3 text-gray-600">
                 <Mail className="w-4 h-4 mt-0.5 text-purple-600" />
-                <span>hola@simplelifemind.com</span>
+                <span> simplelifesud@gmail.com</span>
               </li>
               <li className="flex items-start space-x-3 text-gray-600">
                 <MapPin className="w-4 h-4 mt-0.5 text-purple-600" />

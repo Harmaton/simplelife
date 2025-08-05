@@ -71,7 +71,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   return (
     <>
      <Nav totalCartItems={3} />
-    <section className="py-16 px-6 bg-white">
+    <section className="py-24 px-6 bg-white">
       <div className="max-w-5xl mx-auto">
 
         {/* Breadcrumbs */}
@@ -121,12 +121,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
             {/* Buttons */}
             <div className="space-y-3">
-              <Link
-                href={`/products/${product.slug}`}
-                className="block w-full text-center bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all"
-              >
-                Ver detalles
-              </Link>
+             
               <a
                 href={product.mercadolibre}
                 target="_blank"

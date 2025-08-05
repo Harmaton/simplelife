@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MoveLeft } from "lucide-react";
 import { BookActions } from "../_components/book-actions";
-import { auth } from "@/firebase";
+import { auth } from "@clerk/nextjs/server";
 
 const BookIdPage = async ({ params }: { params: { bookid: string } }) => {
-  const user = auth.currentUser;
+  const user = await auth();
 
-  const userId = user?.uid;
+  const userId = user?.userId;
 
   if (!userId) {
     return redirect("/");

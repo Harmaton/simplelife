@@ -5,7 +5,7 @@
     "slug": "parche-de-energia",
     "description": "Despierta tu potencial con nuestro parche transdérmico de energía. Una fórmula avanzada diseñada para potenciar tu rendimiento físico, activar tu mente y mejorar tu equilibrio emocional sin sobrecargar tu cuerpo.",
     "shortDescription": "Energía limpia y sostenida sin pastillas ni picos.",
-    "price": "66,55 €",
+    "price": "15,000 ₱",
     "image": "/mind/2.png",
     "color": "orange",
     "category": "energy",
@@ -28,7 +28,7 @@
       "No utilizar si eres alérgico a alguno de los componentes",
       "Consultar con médico si tienes enfermedades crónicas"
     ],
-    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-energia-54e",
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-2174450122-parche-de-vitalidad-y-bienestar-pack-7-_JM?attributes=Parche_transd%C3%A9rmico_vpp%3AUGFyY2hlIGRlIEVuZXJnw61h&quantity=1&picker=true",
     "rating": 4.7,
     "reviews": 89,
     "featuredReview": "Este parche cambió mi rutina matutina. Sin nerviosismo, sin caídas. ¡Recomendado!"
@@ -39,7 +39,7 @@
     "slug": "parche-de-sueno",
     "description": "Dormir bien no debería ser un lujo. Nuestro Parche de Sueño 54e revoluciona el descanso nocturno con una fórmula avanzada que actúa durante toda la noche de forma natural y sin generar dependencia.",
     "shortDescription": "Dormí profundo, natural y reparador — sin pastillas.",
-    "price": "66,55 €",
+    "price": "15,000 ₱",
     "image": "/mind/3.png",
     "color": "purple",
     "category": "sleep",
@@ -61,7 +61,7 @@
       "No usar durante embarazo o lactancia",
       "No utilizar si eres alérgico a alguno de los componentes"
     ],
-    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-sueno-54e",
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-2174450122-parche-de-vitalidad-y-bienestar-pack-7-_JM?attributes=Parche_transd%C3%A9rmico_vpp%3AUGFyY2hlIGRlIFN1ZcOxbw%3D%3D&quantity=1&picker=true",
     "rating": 4.9,
     "reviews": 134,
     "featuredReview": "Por fin duermo toda la noche. No me levanto cansado. ¡Mil gracias!"
@@ -72,7 +72,7 @@
     "slug": "parche-de-antiestres",
     "description": "Nuestro Parche de Antiestrés 54e fue desarrollado con una sinergia de extractos naturales adaptógenos y neurocalmantes que ayudan a reducir los niveles de ansiedad, calmar la mente y mejorar el enfoque.",
     "shortDescription": "Calma mental sin somnolencia. Ideal para el día a día.",
-    "price": "66,55 €",
+    "price": "15,000 ₱",
     "image": "/mind/4.png",
     "color": "blue",
     "category": "stress",
@@ -94,7 +94,7 @@
       "No usar durante embarazo o lactancia",
       "No utilizar si eres alérgico a alguno de los componentes"
     ],
-    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-antiestres-54e",
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-2174450122-parche-de-vitalidad-y-bienestar-pack-7-_JM?attributes=Parche_transd%C3%A9rmico_vpp%3AUGFyY2hlIGRlIEFudGllc3Ryw6lz&quantity=1&picker=true",
     "rating": 4.8,
     "reviews": 97,
     "featuredReview": "Me ayuda a mantener la calma en el trabajo. Lo uso todos los días."
@@ -105,8 +105,8 @@
     "slug": "parche-de-omega-3",
     "description": "El Parche OMEGA 3 de 54e ofrece los beneficios comprobados de los ácidos grasos esenciales sin necesidad de cápsulas. Ideal para salud cerebral, cardiovascular y celular.",
     "shortDescription": "Omega 3 transdérmico: sin digestión, sin sabor, sin esfuerzo.",
-    "price": "66,55 €",
-    "image": "/mind/5.png",
+    "price": "15,000 ₱",
+    "image": "/mind/6.png",
     "color": "teal",
     "category": "omega",
     "benefits": [
@@ -126,9 +126,9 @@
       "No usar durante embarazo o lactancia",
       "No utilizar si eres alérgico a mariscos"
     ],
-    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-omega-3-54e",
-    "rating": 4.6,
-    "reviews": 76,
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-2174450122-parche-de-vitalidad-y-bienestar-pack-7-_JM?attributes=Parche_transd%C3%A9rmico_vpp%3AUGFyY2hlIGRlIE9tZWdhIDM%3D&quantity=1&picker=true",
+    "rating": 4.9,
+    "reviews": 96,
     "featuredReview": "Perfecto para quienes no toleran cápsulas de omega 3. Noté diferencia en mi piel y energía."
   },
   {
@@ -137,8 +137,8 @@
     "slug": "parche-de-concentracion",
     "description": "El Parche de Concentración 54e está diseñado para liberar el potencial de tu mente y ayudarte a mantener la atención sostenida, la claridad mental y el foco necesario en momentos clave.",
     "shortDescription": "Enfócate más, rinde mejor, sin nerviosismo.",
-    "price": "66,55 €",
-    "image": "/mind/6.png",
+    "price": "15,000 ₱",
+    "image": "/mind/5.png",
     "color": "blue",
     "category": "focus",
     "benefits": [
@@ -158,7 +158,7 @@
       "No usar durante embarazo o lactancia",
       "No utilizar si eres alérgico a alguno de los componentes"
     ],
-    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-XXXXXXX-parche-de-concentracion-54e",
+    "mercadolibre": "https://articulo.mercadolibre.com.ar/MLA-2174450122-parche-de-vitalidad-y-bienestar-pack-7-_JM?attributes=Parche_transd%C3%A9rmico_vpp%3AUGFyY2hlIGRlIENvbmNlbnRyYWNpw7Nu&quantity=1&picker=true",
     "rating": 4.7,
     "reviews": 82,
     "featuredReview": "Lo uso para estudiar. Me ayuda a mantener el foco sin sentirme acelerado."

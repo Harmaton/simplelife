@@ -3,21 +3,7 @@
 import { Heart, Star, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-export interface Product {
-  id: number;
-  name: string;
-  shortDescription: string;
-  price: string;
-  image: string;
-  color: 'purple' | 'blue' | 'orange' | 'teal';
-  category: 'energy' | 'sleep' | 'stress' | 'omega' | 'focus';
-  slug: string;
-  rating: number;
-  reviews: number;
-  mercadolibre: string;
-  featuredReview: string;
-}
+import { Product } from '../type';
 
 interface ProductCardProps {
   product: Product;

@@ -15,15 +15,15 @@ import { AppLinkForm } from '../_components/whatsapp'
 import { SocialLinkForm } from '../_components/social-link'
 import { EventActions } from '../_components/event-actions'
 import { LocationForm } from '../_components/location'
-import { auth } from '@/firebase'
+import { auth } from '@clerk/nextjs/server'
 
 const EventIdPage = async ({
     params
   }: {
     params: { id: string }
   }) => {
-    const user = auth.currentUser
-    const  userId  = user?.uid
+    const user = await auth()
+    const  userId  = user?.userId
   
     if (!userId) {
       return redirect("/");
