@@ -14,7 +14,7 @@ export default function About() {
   return (
     <>
       {/* Navigation */}
-      <Nav totalCartItems={3} />
+      <Nav />
 
       {/* Main About Section */}
       <section

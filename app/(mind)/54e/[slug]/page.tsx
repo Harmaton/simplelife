@@ -220,7 +220,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-     <Nav totalCartItems={3} />
+     <Nav />
     <section className="py-24 px-6 bg-white">
       <div className="max-w-5xl mx-auto">
 

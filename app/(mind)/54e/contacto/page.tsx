@@ -5,7 +5,7 @@ import Contact from '../_components/contact'
 function page() {
   return (
     <div>
-        <Nav totalCartItems={3} />
+        <Nav  />
         <Contact />
     </div>
   )

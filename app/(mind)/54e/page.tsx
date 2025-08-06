@@ -37,7 +37,7 @@ export default function SuperPatchesWebsite() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Nav totalCartItems={3} />
+      <Nav />
 
       <section id="hero">
         <Hero />
