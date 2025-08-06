@@ -5,7 +5,7 @@ import TestimonialsAndFAQ from '../_components/testimonials'
 function page() {
   return (
     <div>
-        <Nav totalCartItems={3} />
+        <Nav />
        <section id="testimonials">
                 <TestimonialsAndFAQ />
      </section> 
