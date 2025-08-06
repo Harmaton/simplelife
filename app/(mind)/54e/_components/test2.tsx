@@ -13,7 +13,7 @@ const testimonials = [
   {
     id: 2,
     name: 'Carlos Reyes',
-    location: 'Cebu City',
+    location: 'La Paz',
     rating: 5,
     image:
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
@@ -49,7 +49,7 @@ export const TestimonialsSection = () => {
             What Our Customers Say
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Don't just take our word for it. Hear from people who have
+            Don&quot;t just take our word for it. Hear from people who have
             experienced the benefits of 54e Patches.
           </p>
         </div>
@@ -79,7 +79,7 @@ export const TestimonialsSection = () => {
         </div>
         <div className="mt-12 text-center">
           <p className="text-xl font-medium mb-6">
-            Join thousands of satisfied customers who've found relief with 54e
+            Join thousands of satisfied customers who&quot;ve found relief with 54e
             Patches
           </p>
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition">
